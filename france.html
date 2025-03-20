@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>France Quiz</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card {
+      margin-bottom: 20px;
+    }
+    .question {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .navigation {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <!-- Navigacijski gumbi -->
+    <div class="navigation">
+      <a href="index.html" class="btn btn-secondary">Home</a>
+      <button onclick="window.history.back()" class="btn btn-secondary">Back</button>
+    </div>
+
+    <!-- Naslov -->
+    <h1 class="text-center mb-4">France – A Beautiful and Famous Country</h1>
+
+    <!-- Kartica za Francusku -->
+    <div class="card">
+      <div class="card-body">
+        <!-- Sekcija 1: What Shape is France? -->
+        <div id="section1">
+          <h2 class="card-title">What Shape is France?</h2>
+          <p class="card-text">
+            France is often called <span class="highlight">"L'Hexagone"</span>, which means <span class="highlight">"The Hexagon"</span>, because its shape has <span class="highlight">six sides</span>, similar to a hexagon. This makes it <span class="highlight">easy to recognize</span> on a map.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section1', 'questions1')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 1 -->
+        <div id="questions1" class="hidden">
+          <div class="question" id="question1">
+            <h4>Question 1: What is France often called because of its shape?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1a" value="A">
+              <label class="form-check-label" for="q1a">A) The Circle</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1b" value="B">
+              <label class="form-check-label" for="q1b">B) The Hexagon</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1c" value="C">
+              <label class="form-check-label" for="q1c">C) The Triangle</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question1', 'B')">Submit</button>
+            <p id="feedback1" class="mt-2"></p>
+          </div>
+          <div class="question" id="question2">
+            <h4>Question 2: How many sides does France's shape have?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2a" value="A">
+              <label class="form-check-label" for="q2a">A) 4</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2b" value="B">
+              <label class="form-check-label" for="q2b">B) 6</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2c" value="C">
+              <label class="form-check-label" for="q2c">C) 8</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question2', 'B')">Submit</button>
+            <p id="feedback2" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section1', 'questions1')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section2', 'questions1')">Next</button>
+        </div>
+
+        <!-- Sekcija 2: Fact File About France -->
+        <div id="section2" class="hidden">
+          <h2 class="card-title">Fact File About France</h2>
+          <p class="card-text">
+            Here are some important facts about France:
+          </p>
+          <ul>
+            <li><span class="highlight">Capital City</span>: Paris</li>
+            <li><span class="highlight">Official Language</span>: French</li>
+            <li><span class="highlight">Population</span>: About 68 million people</li>
+            <li><span class="highlight">Currency</span>: Euro (€)</li>
+            <li><span class="highlight">Famous Landmarks</span>: Eiffel Tower, Louvre Museum, Notre-Dame Cathedral, Palace of Versailles</li>
+            <li><span class="highlight">Longest River</span>: The Loire River</li>
+            <li><span class="highlight">Famous for</span>: Fashion, art, food, wine, and history</li>
+            <li><span class="highlight">Borders</span>: France shares borders with Spain, Italy, Germany, Belgium, Switzerland, and Luxembourg.</li>
+          </ul>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section2', 'questions2')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 2 -->
+        <div id="questions2" class="hidden">
+          <div class="question" id="question3">
+            <h4>Question 3: What is the capital city of France?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3a" value="A">
+              <label class="form-check-label" for="q3a">A) London</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3b" value="B">
+              <label class="form-check-label" for="q3b">B) Paris</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3c" value="C">
+              <label class="form-check-label" for="q3c">C) Berlin</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question3', 'B')">Submit</button>
+            <p id="feedback3" class="mt-2"></p>
+          </div>
+          <div class="question" id="question4">
+            <h4>Question 4: What is the official language of France?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4a" value="A">
+              <label class="form-check-label" for="q4a">A) Spanish</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4b" value="B">
+              <label class="form-check-label" for="q4b">B) French</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4c" value="C">
+              <label class="form-check-label" for="q4c">C) German</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question4', 'B')">Submit</button>
+            <p id="feedback4" class="mt-2"></p>
+          </div>
+          <div class="question" id="question5">
+            <h4>Question 5: Which of the following are famous landmarks in France? (Select all that apply)</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question5" id="q5a" value="A">
+              <label class="form-check-label" for="q5a">A) Eiffel Tower</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question5" id="q5b" value="B">
+              <label class="form-check-label" for="q5b">B) Louvre Museum</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question5" id="q5c" value="C">
+              <label class="form-check-label" for="q5c">C) Big Ben</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkMultipleAnswer('question5', ['A', 'B'])">Submit</button>
+            <p id="feedback5" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section2', 'questions2')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section3', 'questions2')">Next</button>
+        </div>
+
+        <!-- Sekcija 3: What is France Famous For? -->
+        <div id="section3" class="hidden">
+          <h2 class="card-title">What is France Famous For?</h2>
+          <p class="card-text">
+            France is famous for many things, including:
+          </p>
+          <ol>
+            <li><span class="highlight">The Eiffel Tower</span> – One of the most iconic landmarks in the world, located in Paris.</li>
+            <li><span class="highlight">Fashion</span> – France is home to luxury fashion brands like Chanel, Louis Vuitton, and Dior.</li>
+            <li><span class="highlight">Art and Museums</span> – The Louvre Museum in Paris has the famous painting Mona Lisa by Leonardo da Vinci.</li>
+            <li><span class="highlight">Wine and Cheese</span> – France produces some of the best wines and cheeses in the world.</li>
+            <li><span class="highlight">History</span> – France played a big role in world history, including the French Revolution and Napoleon Bonaparte's rule.</li>
+            <li><span class="highlight">Disneyland Paris</span> – One of the most visited theme parks in Europe.</li>
+          </ol>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section3', 'questions3')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 3 -->
+        <div id="questions3" class="hidden">
+          <div class="question" id="question6">
+            <h4>Question 6: Which of the following is a famous French fashion brand?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6a" value="A">
+              <label class="form-check-label" for="q6a">A) Nike</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6b" value="B">
+              <label class="form-check-label" for="q6b">B) Chanel</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6c" value="C">
+              <label class="form-check-label" for="q6c">C) Adidas</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question6', 'B')">Submit</button>
+            <p id="feedback6" class="mt-2"></p>
+          </div>
+          <div class="question" id="question7">
+            <h4>Question 7: Where is the Mona Lisa located?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question7" id="q7a" value="A">
+              <label class="form-check-label" for="q7a">A) The British Museum</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question7" id="q7b" value="B">
+              <label class="form-check-label" for="q7b">B) The Louvre Museum</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question7" id="q7c" value="C">
+              <label class="form-check-label" for="q7c">C) The Vatican Museum</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question7', 'B')">Submit</button>
+            <p id="feedback7" class="mt-2"></p>
+          </div>
+          <div class="question" id="question8">
+            <h4>Question 8: What is Disneyland Paris?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question8" id="q8a" value="A">
+              <label class="form-check-label" for="q8a">A) A museum</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question8" id="q8b" value="B">
+              <label class="form-check-label" for="q8b">B) A theme park</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question8" id="q8c" value="C">
+              <label class="form-check-label" for="q8c">C) A river</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question8', 'B')">Submit</button>
+            <p id="feedback8" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section3', 'questions3')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section4', 'questions3')">Next</button>
+        </div>
+
+        <!-- Sekcija 4: French Food -->
+        <div id="section4" class="hidden">
+          <h2 class="card-title">French Food</h2>
+          <p class="card-text">
+            French cuisine is considered <span class="highlight">one of the best in the world</span>. Some traditional French foods include:
+          </p>
+          <ul>
+            <li><span class="highlight">Baguette</span> – A long, crispy bread that French people eat every day.</li>
+            <li><span class="highlight">Croissant</span> – A buttery, flaky pastry often eaten for breakfast.</li>
+            <li><span class="highlight">Escargots</span> – Snails cooked with butter and garlic (a famous delicacy!).</li>
+            <li><span class="highlight">Ratatouille</span> – A dish made from vegetables like tomatoes, zucchini, and eggplant.</li>
+            <li><span class="highlight">Crêpes</span> – Thin pancakes that can be filled with chocolate, fruit, or cheese.</li>
+            <li><span class="highlight">Coq au Vin</span> – Chicken cooked with wine, mushrooms, and bacon.</li>
+          </ul>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section4', 'questions4')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 4 -->
+        <div id="questions4" class="hidden">
+          <div class="question" id="question9">
+            <h4>Question 9: What is a baguette?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question9" id="q9a" value="A">
+              <label class="form-check-label" for="q9a">A) A type of cheese</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question9" id="q9b" value="B">
+              <label class="form-check-label" for="q9b">B) A long, crispy bread</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question9" id="q9c" value="C">
+              <label class="form-check-label" for="q9c">C) A type of wine</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question9', 'B')">Submit</button>
+            <p id="feedback9" class="mt-2"></p>
+          </div>
+          <div class="question" id="question10">
+            <h4>Question 10: What are escargots?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question10" id="q10a" value="A">
+              <label class="form-check-label" for="q10a">A) A type of bread</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question10" id="q10b" value="B">
+              <label class="form-check-label" for="q10b">B) Snails cooked with butter and garlic</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question10" id="q10c" value="C">
+              <label class="form-check-label" for="q10c">C) A type of cheese</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question10', 'B')">Submit</button>
+            <p id="feedback10" class="mt-2"></p>
+          </div>
+          <div class="question" id="question11">
+            <h4>Question 11: Which of the following are traditional French foods? (Select all that apply)</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question11" id="q11a" value="A">
+              <label class="form-check-label" for="q11a">A) Baguette</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question11" id="q11b" value="B">
+              <label class="form-check-label" for="q11b">B) Croissant</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question11" id="q11c" value="C">
+              <label class="form-check-label" for="q11c">C) Pizza</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkMultipleAnswer('question11', ['A', 'B'])">Submit</button>
+            <p id="feedback11" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section4', 'questions4')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section5', 'questions4')">Next</button>
+        </div>
+
+        <!-- Sekcija 5: Why is France Important? -->
+        <div id="section5" class="hidden">
+          <h2 class="card-title">Why is France Important?</h2>
+          <p class="card-text">
+            France is one of the most <span class="highlight">influential countries</span> in the world. It has a rich culture, history, and beautiful landscapes, from the beaches of the French Riviera to the snowy Alps. It is also a leader in <span class="highlight">fashion, art, and cuisine</span>, making it a top tourist destination.
+          </p>
+          <p class="card-text">
+            France is truly a country full of <span class="highlight">beauty, history, and delicious food!</span>
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section5', 'questions5')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 5 -->
+        <div id="questions5" class="hidden">
+          <div class="question" id="question12">
+            <h4>Question 12: What is France known for? (Select all that apply)</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question12" id="q12a" value="A">
+              <label class="form-check-label" for="q12a">A) Fashion</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question12" id="q12b" value="B">
+              <label class="form-check-label" for="q12b">B) Art</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question12" id="q12c" value="C">
+              <label class="form-check-label" for="q12c">C) Technology</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkMultipleAnswer('question12', ['A', 'B'])">Submit</button>
+            <p id="feedback12" class="mt-2"></p>
+          </div>
+          <div class="question" id="question13">
+            <h4>Question 13: What makes France a top tourist destination?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question13" id="q13a" value="A">
+              <label class="form-check-label" for="q13a">A) Its technology</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question13" id="q13b" value="B">
+              <label class="form-check-label" for="q13b">B) Its fashion, art, and cuisine</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question13" id="q13c" value="C">
+              <label class="form-check-label" for="q13c">C) Its deserts</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question13', 'B')">Submit</button>
+            <p id="feedback13" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section5', 'questions5')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="endQuiz()">Finish</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Završna poruka -->
+    <div id="quizEnd" class="hidden text-center mt-5">
+      <h2 class="text-success">🎉 Congratulations! 🎉</h2>
+      <p class="lead">You have completed the quiz about France!</p>
+      <p>You have learned a lot about its culture, history, and famous landmarks.</p>
+      <p class="fw-bold">Now you know why France is such an amazing country!</p>
+      <p>Great job! 👏</p>
+      <a href="index.html" class="btn btn-lg btn-success mt-3">🏠 Return to Home</a>
+    </div>
+
+    <!-- JavaScript za navigaciju i provjeru odgovora -->
+    <script>
+      function showQuestions(sectionId, questionsId) {
+        document.getElementById(sectionId).classList.add('hidden');
+        document.getElementById(questionsId).classList.remove('hidden');
+      }
+
+      function showSection(sectionId, questionsId) {
+        document.getElementById(sectionId).classList.remove('hidden');
+        document.getElementById(questionsId).classList.add('hidden');
+      }
+
+      function checkAnswer(questionId, correctAnswer) {
+        const selectedAnswer = document.querySelector(`input[name=${questionId}]:checked`);
+        const feedbackElement = document.getElementById(`feedback${questionId.replace('question', '')}`);
+
+        if (!feedbackElement) {
+          console.error(`Feedback element not found for question ${questionId}`);
+          return;
+        }
+
+        if (selectedAnswer) {
+          if (selectedAnswer.value === correctAnswer) {
+            feedbackElement.textContent = "Correct!";
+            feedbackElement.style.color = "green";
+          } else {
+            feedbackElement.textContent = `Incorrect. The correct answer is ${correctAnswer}.`;
+            feedbackElement.style.color = "red";
+          }
+        } else {
+          feedbackElement.textContent = "Please select an answer.";
+          feedbackElement.style.color = "red";
+        }
+      }
+
+      function checkMultipleAnswer(questionId, correctAnswers) {
+        const selectedAnswers = document.querySelectorAll(`input[name=${questionId}]:checked`);
+        const feedbackElement = document.getElementById(`feedback${questionId.replace('question', '')}`);
+
+        if (!feedbackElement) {
+          console.error(`Feedback element not found for question ${questionId}`);
+          return;
+        }
+
+        if (selectedAnswers.length > 0) {
+          const userAnswers = Array.from(selectedAnswers).map(input => input.value);
+          const isCorrect = correctAnswers.every(answer => userAnswers.includes(answer)) && userAnswers.length === correctAnswers.length;
+
+          if (isCorrect) {
+            feedbackElement.textContent = "Correct!";
+            feedbackElement.style.color = "green";
+          } else {
+            feedbackElement.textContent = `Incorrect. The correct answers are ${correctAnswers.join(', ')}.`;
+            feedbackElement.style.color = "red";
+          }
+        } else {
+          feedbackElement.textContent = "Please select at least one answer.";
+          feedbackElement.style.color = "red";
+        }
+      }
+
+      function endQuiz() {
+        document.querySelectorAll('.card-body > div').forEach(section => {
+          section.classList.add('hidden');
+        });
+        document.getElementById('quizEnd').classList.remove('hidden');
+      }
+    </script>
+  </body>
+</html>
