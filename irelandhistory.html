@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History - Ireland in the 1700-1800s</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card {
+      margin-bottom: 20px;
+    }
+    .question {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .navigation {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <!-- Navigacijski gumbi -->
+    <div class="navigation">
+      <a href="index.html" class="btn btn-secondary">Home</a>
+      <button onclick="window.history.back()" class="btn btn-secondary">Back</button>
+    </div>
+
+    <!-- Naslov -->
+    <h1 class="text-center mb-4">History - Ireland in the 1700-1800s</h1>
+
+    <!-- Kartica za Irsku -->
+    <div class="card">
+      <div class="card-body">
+        <!-- Sekcija 1: Ireland in the 1700-1800s – A Time of Struggle and Change -->
+        <div id="section1">
+          <h2 class="card-title">Ireland in the 1700-1800s – A Time of Struggle and Change</h2>
+          <p class="card-text">
+            During the 1700s and 1800s, Ireland was under British rule, and the Irish people, especially Catholics, faced many hardships. The <span class="highlight">Penal Laws</span>, battles, and treaties shaped Ireland’s history, making it a difficult time for many.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section1', 'questions1')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 1 -->
+        <div id="questions1" class="hidden">
+          <div class="question" id="question1">
+            <h4>Question 1: What were the Penal Laws?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1a" value="A">
+              <label class="form-check-label" for="q1a">A) Laws that helped Catholics</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1b" value="B">
+              <label class="form-check-label" for="q1b">B) Laws that took away rights from Catholics</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1c" value="C">
+              <label class="form-check-label" for="q1c">C) Laws that promoted education</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question1', 'B')">Submit</button>
+            <p id="feedback1" class="mt-2"></p>
+          </div>
+          <div class="question" id="question2">
+            <h4>Question 2: Who was most affected by the Penal Laws?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2a" value="A">
+              <label class="form-check-label" for="q2a">A) Protestants</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2b" value="B">
+              <label class="form-check-label" for="q2b">B) Catholics</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2c" value="C">
+              <label class="form-check-label" for="q2c">C) British soldiers</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question2', 'B')">Submit</button>
+            <p id="feedback2" class="mt-2"></p>
+          </div>
+          <div class="question" id="question3">
+            <h4>Question 3: What was the main goal of the Penal Laws?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3a" value="A">
+              <label class="form-check-label" for="q3a">A) To help Catholics</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3b" value="B">
+              <label class="form-check-label" for="q3b">B) To weaken Catholics and strengthen Protestants</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3c" value="C">
+              <label class="form-check-label" for="q3c">C) To promote education</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question3', 'B')">Submit</button>
+            <p id="feedback3" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section1', 'questions1')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section2', 'questions1')">Next</button>
+        </div>
+
+        <!-- Sekcija 2: Were the Penal Laws Fair or Unfair? -->
+        <div id="section2" class="hidden">
+          <h2 class="card-title">Were the Penal Laws Fair or Unfair?</h2>
+          <p class="card-text">
+            The <span class="highlight">Penal Laws</span> were a series of laws passed by the British government that took away many rights from Catholics and some Protestant groups in Ireland. These laws were designed to <span class="highlight">weaken the power of Catholics</span> and ensure that Protestants remained in control.
+          </p>
+          <p class="card-text">
+            One example of a Penal Law was that <span class="highlight">Catholics were not allowed to own land</span>. This meant that Irish Catholic families could not buy or inherit land, making it very hard for them to farm and earn a living. This law was very <span class="highlight">unfair</span> because it forced many families into poverty, while Protestants could own and pass down land freely.
+          </p>
+          <p class="card-text">
+            Another example was that <span class="highlight">Catholics could not vote or become members of Parliament</span>. This meant that they had no way to change the laws that were hurting them. This was clearly <span class="highlight">unfair</span> because it gave power only to Protestants, while the majority of the Irish population had no say in their own country’s government.
+          </p>
+          <p class="card-text">
+            A third unfair law was that <span class="highlight">Catholic children were not allowed to go to school</span> or get an education. This was done to keep Catholics from gaining knowledge and power. Education is important for a better future, and by taking it away, the Penal Laws <span class="highlight">tried to keep Catholics weak and dependent on Protestants</span>.
+          </p>
+          <p class="card-text">
+            Overall, the Penal Laws were extremely <span class="highlight">unfair</span> and were used to <span class="highlight">control and oppress</span> the Catholic majority in Ireland. These laws created <span class="highlight">poverty, inequality, and suffering</span> for many Irish families for generations.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section2', 'questions2')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 2 -->
+        <div id="questions2" class="hidden">
+          <div class="question" id="question4">
+            <h4>Question 4: What was one example of a Penal Law?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4a" value="A">
+              <label class="form-check-label" for="q4a">A) Catholics could own land</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4b" value="B">
+              <label class="form-check-label" for="q4b">B) Catholics could not own land</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4c" value="C">
+              <label class="form-check-label" for="q4c">C) Catholics could vote</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question4', 'B')">Submit</button>
+            <p id="feedback4" class="mt-2"></p>
+          </div>
+          <div class="question" id="question5">
+            <h4>Question 5: Why were the Penal Laws unfair?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question5" id="q5a" value="A">
+              <label class="form-check-label" for="q5a">A) They helped Catholics</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question5" id="q5b" value="B">
+              <label class="form-check-label" for="q5b">B) They took away rights from Catholics</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question5" id="q5c" value="C">
+              <label class="form-check-label" for="q5c">C) They promoted education</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question5', 'B')">Submit</button>
+            <p id="feedback5" class="mt-2"></p>
+          </div>
+          <div class="question" id="question6">
+            <h4>Question 6: What was the impact of the Penal Laws?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6a" value="A">
+              <label class="form-check-label" for="q6a">A) They helped Catholics</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6b" value="B">
+              <label class="form-check-label" for="q6b">B) They created poverty and inequality</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6c" value="C">
+              <label class="form-check-label" for="q6c">C) They promoted education</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question6', 'B')">Submit</button>
+            <p id="feedback6" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section2', 'questions2')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section3', 'questions2')">Next</button>
+        </div>
+
+                <!-- Sekcija 3: What Happened After the Battle of the Boyne? -->
+                <div id="section3" class="hidden">
+                    <h2 class="card-title">What Happened After the Battle of the Boyne?</h2>
+                    <p class="card-text">
+                      The <span class="highlight">Battle of the Boyne</span> took place on <span class="highlight">July 1, 1690, between King James II</span> (a Catholic) and <span class="highlight">King William of Orange</span> (a Protestant). William won the battle, forcing James to flee to France.
+                    </p>
+                    <p class="card-text">
+                      After the battle, <span class="highlight">Protestant rule in Ireland became even stronger, and Catholics faced severe punishments</span>. Many of them lost their land, and new <span class="highlight">Penal Laws</span> were introduced to stop Catholics from gaining power. This battle was a turning point because it ensured that <span class="highlight">Ireland would remain under Protestant British control for a long time</span>.
+                    </p>
+                    <p class="card-text">
+                      The victory of King William is still celebrated today by some Protestants in Northern Ireland on <span class="highlight">July 12th, known as the Twelfth of July or "Orangemen’s Day."</span> However, for many Catholics, the battle represented the beginning of a long period of oppression.
+                    </p>
+                    <button class="btn btn-primary mt-2" onclick="showQuestions('section3', 'questions3')">Next</button>
+                  </div>
+          
+                  <!-- Pitanja za sekciju 3 -->
+                  <div id="questions3" class="hidden">
+                    <div class="question" id="question7">
+                      <h4>Question 7: Who fought in the Battle of the Boyne?</h4>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question7" id="q7a" value="A">
+                        <label class="form-check-label" for="q7a">A) King James II and King William of Orange</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question7" id="q7b" value="B">
+                        <label class="form-check-label" for="q7b">B) King Henry VIII and Queen Elizabeth I</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question7" id="q7c" value="C">
+                        <label class="form-check-label" for="q7c">C) King George III and Napoleon Bonaparte</label>
+                      </div>
+                      <button class="btn btn-primary mt-2" onclick="checkAnswer('question7', 'A')">Submit</button>
+                      <p id="feedback7" class="mt-2"></p>
+                    </div>
+                    <div class="question" id="question8">
+                      <h4>Question 8: What was the result of the Battle of the Boyne?</h4>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question8" id="q8a" value="A">
+                        <label class="form-check-label" for="q8a">A) King James II won</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question8" id="q8b" value="B">
+                        <label class="form-check-label" for="q8b">B) King William of Orange won</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question8" id="q8c" value="C">
+                        <label class="form-check-label" for="q8c">C) It ended in a draw</label>
+                      </div>
+                      <button class="btn btn-primary mt-2" onclick="checkAnswer('question8', 'B')">Submit</button>
+                      <p id="feedback8" class="mt-2"></p>
+                    </div>
+                    <div class="question" id="question9">
+                      <h4>Question 9: What happened to Catholics after the Battle of the Boyne?</h4>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question9" id="q9a" value="A">
+                        <label class="form-check-label" for="q9a">A) They gained more rights</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question9" id="q9b" value="B">
+                        <label class="form-check-label" for="q9b">B) They faced severe punishments and lost land</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question9" id="q9c" value="C">
+                        <label class="form-check-label" for="q9c">C) They were allowed to vote</label>
+                      </div>
+                      <button class="btn btn-primary mt-2" onclick="checkAnswer('question9', 'B')">Submit</button>
+                      <p id="feedback9" class="mt-2"></p>
+                    </div>
+                    <button class="btn btn-secondary mt-2" onclick="showSection('section3', 'questions3')">Back</button>
+                    <button class="btn btn-primary mt-2" onclick="showSection('section4', 'questions3')">Next</button>
+                  </div>
+        <!-- Sekcija 4: What Was Agreed at the Treaty of Limerick? -->
+        <div id="section4" class="hidden">
+            <h2 class="card-title">What Was Agreed at the Treaty of Limerick?</h2>
+            <p class="card-text">
+              The <span class="highlight">Treaty of Limerick</span> was signed in <span class="highlight">1691</span> to officially end the war between the supporters of King James (Catholics) and King William (Protestants). The treaty had two main agreements:
+            </p>
+            <ol>
+              <li><span class="highlight">Catholic soldiers were allowed to leave Ireland and go to France.</span> Many of them, known as the <span class="highlight">"Wild Geese,"</span> joined the French army.</li>
+              <li><span class="highlight">Catholics in Ireland were promised fair treatment and religious freedom.</span></li>
+            </ol>
+            <p class="card-text">
+              This treaty was meant to <span class="highlight">protect Catholics from further punishment, but in reality, it was not followed.</span>
+            </p>
+            <button class="btn btn-primary mt-2" onclick="showQuestions('section4', 'questions4')">Next</button>
+          </div>
+  
+          <!-- Pitanja za sekciju 4 -->
+          <div id="questions4" class="hidden">
+            <div class="question" id="question10">
+              <h4>Question 10: What was one of the main agreements of the Treaty of Limerick?</h4>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question10" id="q10a" value="A">
+                <label class="form-check-label" for="q10a">A) Catholics were allowed to own land</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question10" id="q10b" value="B">
+                <label class="form-check-label" for="q10b">B) Catholic soldiers were allowed to leave Ireland</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question10" id="q10c" value="C">
+                <label class="form-check-label" for="q10c">C) Protestants were forced to leave Ireland</label>
+              </div>
+              <button class="btn btn-primary mt-2" onclick="checkAnswer('question10', 'B')">Submit</button>
+              <p id="feedback10" class="mt-2"></p>
+            </div>
+            <div class="question" id="question11">
+              <h4>Question 11: What was promised to Catholics in the Treaty of Limerick?</h4>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question11" id="q11a" value="A">
+                <label class="form-check-label" for="q11a">A) They would be given land</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question11" id="q11b" value="B">
+                <label class="form-check-label" for="q11b">B) They were promised fair treatment and religious freedom</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question11" id="q11c" value="C">
+                <label class="form-check-label" for="q11c">C) They were allowed to vote</label>
+              </div>
+              <button class="btn btn-primary mt-2" onclick="checkAnswer('question11', 'B')">Submit</button>
+              <p id="feedback11" class="mt-2"></p>
+            </div>
+            <div class="question" id="question12">
+              <h4>Question 12: Was the Treaty of Limerick followed?</h4>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question12" id="q12a" value="A">
+                <label class="form-check-label" for="q12a">A) Yes, it was fully followed</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question12" id="q12b" value="B">
+                <label class="form-check-label" for="q12b">B) No, it was not followed</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question12" id="q12c" value="C">
+                <label class="form-check-label" for="q12c">C) It was partially followed</label>
+              </div>
+              <button class="btn btn-primary mt-2" onclick="checkAnswer('question12', 'B')">Submit</button>
+              <p id="feedback12" class="mt-2"></p>
+            </div>
+            <button class="btn btn-secondary mt-2" onclick="showSection('section4', 'questions4')">Back</button>
+            <button class="btn btn-primary mt-2" onclick="showSection('section5', 'questions4')">Next</button>
+          </div>
+  
+          <!-- Sekcija 5: Why Is This Time Important? -->
+          <div id="section5" class="hidden">
+            <h2 class="card-title">Why Is This Time Important?</h2>
+            <p class="card-text">
+              The 1700s and 1800s were a difficult time in Irish history. The <span class="highlight">Penal Laws, the Battle of the Boyne, and the Treaty of Limerick</span> all played a role in shaping Ireland’s struggle for <span class="highlight">freedom and equality</span>. Although the laws were unfair, they eventually led to resistance and the long fight for Irish independence in the 1900s.
+            </p>
+            <button class="btn btn-primary mt-2" onclick="showQuestions('section5', 'questions5')">Next</button>
+          </div>
+  
+          <!-- Pitanja za sekciju 5 -->
+          <div id="questions5" class="hidden">
+            <div class="question" id="question13">
+              <h4>Question 13: What did the Penal Laws lead to in the long term?</h4>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question13" id="q13a" value="A">
+                <label class="form-check-label" for="q13a">A) Immediate peace in Ireland</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question13" id="q13b" value="B">
+                <label class="form-check-label" for="q13b">B) Resistance and the fight for Irish independence</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question13" id="q13c" value="C">
+                <label class="form-check-label" for="q13c">C) The end of British rule in Ireland</label>
+              </div>
+              <button class="btn btn-primary mt-2" onclick="checkAnswer('question13', 'B')">Submit</button>
+              <p id="feedback13" class="mt-2"></p>
+            </div>
+            <div class="question" id="question14">
+              <h4>Question 14: What was the main goal of the Irish resistance in the 1700s and 1800s?</h4>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question14" id="q14a" value="A">
+                <label class="form-check-label" for="q14a">A) To maintain British rule</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question14" id="q14b" value="B">
+                <label class="form-check-label" for="q14b">B) To gain freedom and equality</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question14" id="q14c" value="C">
+                <label class="form-check-label" for="q14c">C) To establish a Protestant government</label>
+              </div>
+              <button class="btn btn-primary mt-2" onclick="checkAnswer('question14', 'B')">Submit</button>
+              <p id="feedback14" class="mt-2"></p>
+            </div>
+            <div class="question" id="question15">
+              <h4>Question 15: What was the long-term impact of the events in the 1700s and 1800s on Ireland?</h4>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question15" id="q15a" value="A">
+                <label class="form-check-label" for="q15a">A) It led to immediate independence</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question15" id="q15b" value="B">
+                <label class="form-check-label" for="q15b">B) It shaped the struggle for Irish independence</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="question15" id="q15c" value="C">
+                <label class="form-check-label" for="q15c">C) It ended all religious conflicts</label>
+              </div>
+              <button class="btn btn-primary mt-2" onclick="checkAnswer('question15', 'B')">Submit</button>
+              <p id="feedback15" class="mt-2"></p>
+            </div>
+            <button class="btn btn-secondary mt-2" onclick="showSection('section5', 'questions5')">Back</button>
+            <button class="btn btn-success mt-2" onclick="endQuiz()">Finish Quiz</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Završna poruka -->
+      <div id="quizEnd" class="hidden text-center mt-5">
+        <h2 class="text-success">🎉 Bravo, Maso! 🎉</h2>
+        <p class="lead">Završila si kviz o Irskoj u 18. i 19. stoljeću!</p>
+        <p>Sada si naučila o teškom razdoblju u Irskoj, o nepravednim zakonima, bitkama i sporazumima koji su oblikovali irsku povijest.</p>
+        <p class="fw-bold">Ako nastaviš ovako, postat ćeš pravi povjesničar! 👏</p>
+        <a href="index.html" class="btn btn-lg btn-success mt-3">🏠 Return to Home</a>
+      </div>
+    </div>
+  
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function showQuestions(sectionId, questionsId) {
+        document.getElementById(sectionId).classList.add('hidden');
+        document.getElementById(questionsId).classList.remove('hidden');
+      }
+  
+      function showSection(sectionId, questionsId) {
+        document.querySelectorAll('.card-body > div').forEach(section => {
+          section.classList.add('hidden');
+        });
+        document.getElementById(sectionId).classList.remove('hidden');
+      }
+  
+      function checkAnswer(questionId, correctAnswer) {
+        const selectedAnswer = document.querySelector(`input[name=${questionId}]:checked`);
+        const feedbackElement = document.getElementById(`feedback${questionId.replace('question', '')}`);
+  
+        if (!feedbackElement) {
+          console.error(`Feedback element not found for question ${questionId}`);
+          return;
+        }
+  
+        if (selectedAnswer) {
+          if (selectedAnswer.value === correctAnswer) {
+            feedbackElement.textContent = "Correct!";
+            feedbackElement.style.color = "green";
+          } else {
+            feedbackElement.textContent = `Incorrect. The correct answer is ${correctAnswer}.`;
+            feedbackElement.style.color = "red";
+          }
+        } else {
+          feedbackElement.textContent = "Please select an answer.";
+          feedbackElement.style.color = "red";
+        }
+      }
+  
+      function endQuiz() {
+        document.querySelectorAll('.card-body > div').forEach(section => {
+          section.classList.add('hidden');
+        });
+        document.getElementById('quizEnd').classList.remove('hidden');
+      }
+    </script>
+  </body>
+  </html>
