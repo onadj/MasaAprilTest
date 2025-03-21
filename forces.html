@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forces Quiz</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card {
+      margin-bottom: 20px;
+    }
+    .question {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .navigation {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <!-- Navigacijski gumbi -->
+    <div class="navigation">
+      <a href="index.html" class="btn btn-secondary">Home</a>
+      <button onclick="window.history.back()" class="btn btn-secondary">Back</button>
+    </div>
+
+    <!-- Naslov -->
+    <h1 class="text-center mb-4">Forces – The Power Behind Movement</h1>
+
+    <!-- Sekcija 1: What is a Force? -->
+    <div id="section1">
+      <h2 class="card-title">What is a Force?</h2>
+      <p class="card-text">
+        A <span class="highlight">force</span> is a <span class="highlight">push or pull</span> that makes something move, stop, or change direction. Forces can be <span class="highlight">strong</span> or <span class="highlight">weak</span>, and they are present all around us.
+      </p>
+      <p class="card-text">
+        Some common types of forces include:
+      </p>
+      <ul>
+        <li><span class="highlight">Gravity</span> – The force that pulls objects down toward the Earth. This is why we don’t float away!</li>
+        <li><span class="highlight">Friction</span> – A force that slows things down when two objects rub against each other (like when you slide on the floor).</li>
+        <li><span class="highlight">Magnetic Force</span> – The force that makes magnets <span class="highlight">attract or repel</span> each other.</li>
+      </ul>
+      <button class="btn btn-primary mt-2" onclick="showQuestions('section1', 'questions1')">Next</button>
+    </div>
+
+    <!-- Pitanja za sekciju 1 -->
+    <div id="questions1" class="hidden">
+      <div class="question" id="question1">
+        <h4>Question 1: What is a force?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question1" id="q1a" value="A">
+          <label class="form-check-label" for="q1a">A) A type of energy</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question1" id="q1b" value="B">
+          <label class="form-check-label" for="q1b">B) A push or pull that makes something move</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question1" id="q1c" value="C">
+          <label class="form-check-label" for="q1c">C) A type of machine</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question1', 'B')">Submit</button>
+        <p id="feedback1" class="mt-2"></p>
+      </div>
+      <div class="question" id="question2">
+        <h4>Question 2: Which force pulls objects toward the Earth?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question2" id="q2a" value="A">
+          <label class="form-check-label" for="q2a">A) Friction</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question2" id="q2b" value="B">
+          <label class="form-check-label" for="q2b">B) Gravity</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question2" id="q2c" value="C">
+          <label class="form-check-label" for="q2c">C) Magnetic Force</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question2', 'B')">Submit</button>
+        <p id="feedback2" class="mt-2"></p>
+      </div>
+      <div class="question" id="question3">
+        <h4>Question 3: What are the effects of forces? (Select all that apply)</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question3" id="q3a" value="A">
+          <label class="form-check-label" for="q3a">A) Make things move</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question3" id="q3b" value="B">
+          <label class="form-check-label" for="q3b">B) Stop things from moving</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question3" id="q3c" value="C">
+          <label class="form-check-label" for="q3c">C) Create energy</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkMultipleAnswer('question3', ['A', 'B'])">Submit</button>
+        <p id="feedback3" class="mt-2"></p>
+      </div>
+      <div class="question" id="question4">
+        <h4>Question 4: What is magnetic force?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question4" id="q4a" value="A">
+          <label class="form-check-label" for="q4a">A) A force that pulls objects down</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question4" id="q4b" value="B">
+          <label class="form-check-label" for="q4b">B) A force that makes magnets attract or repel</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question4" id="q4c" value="C">
+          <label class="form-check-label" for="q4c">C) A force that slows things down</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question4', 'B')">Submit</button>
+        <p id="feedback4" class="mt-2"></p>
+      </div>
+      <button class="btn btn-secondary mt-2" onclick="showSection('section1')">Back</button>
+      <button class="btn btn-primary mt-2" onclick="showSection('section2')">Next</button>
+    </div>
+
+    <!-- Sekcija 2: What is Friction? -->
+    <div id="section2" class="hidden">
+      <h2 class="card-title">What is Friction?</h2>
+      <p class="card-text">
+        <span class="highlight">Friction</span> is a <span class="highlight">force that happens when two objects rub against each other</span>. It slows things down or stops them from moving.
+      </p>
+      <p class="card-text">
+        Examples of friction:
+      </p>
+      <ul>
+        <li>When you slide on the floor, you stop because of friction.</li>
+        <li>Car tires grip the road because of friction.</li>
+        <li>Rubbing your hands together creates heat because of friction.</li>
+      </ul>
+      <p class="card-text">
+        Friction can be <span class="highlight">helpful</span> (like helping shoes grip the ground) or <span class="highlight">unhelpful</span> (like making it harder to push something heavy).
+      </p>
+      <button class="btn btn-primary mt-2" onclick="showQuestions('section2', 'questions2')">Next</button>
+    </div>
+
+    <!-- Pitanja za sekciju 2 -->
+    <div id="questions2" class="hidden">
+      <div class="question" id="question5">
+        <h4>Question 5: What is friction?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question5" id="q5a" value="A">
+          <label class="form-check-label" for="q5a">A) A force that pulls objects down</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question5" id="q5b" value="B">
+          <label class="form-check-label" for="q5b">B) A force that slows things down when objects rub</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question5" id="q5c" value="C">
+          <label class="form-check-label" for="q5c">C) A force that makes magnets attract</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question5', 'B')">Submit</button>
+        <p id="feedback5" class="mt-2"></p>
+      </div>
+      <div class="question" id="question6">
+        <h4>Question 6: Which of the following is an example of friction?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question6" id="q6a" value="A">
+          <label class="form-check-label" for="q6a">A) A ball rolling down a hill</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question6" id="q6b" value="B">
+          <label class="form-check-label" for="q6b">B) Rubbing your hands together</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question6" id="q6c" value="C">
+          <label class="form-check-label" for="q6c">C) A magnet attracting metal</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question6', 'B')">Submit</button>
+        <p id="feedback6" class="mt-2"></p>
+      </div>
+      <div class="question" id="question7">
+        <h4>Question 7: How can friction be helpful? (Select all that apply)</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question7" id="q7a" value="A">
+          <label class="form-check-label" for="q7a">A) It helps shoes grip the ground</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question7" id="q7b" value="B">
+          <label class="form-check-label" for="q7b">B) It makes it harder to push heavy objects</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question7" id="q7c" value="C">
+          <label class="form-check-label" for="q7c">C) It creates heat when rubbing hands</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkMultipleAnswer('question7', ['A', 'C'])">Submit</button>
+        <p id="feedback7" class="mt-2"></p>
+      </div>
+      <div class="question" id="question8">
+        <h4>Question 8: What happens when you rub your hands together?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question8" id="q8a" value="A">
+          <label class="form-check-label" for="q8a">A) They become magnetic</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question8" id="q8b" value="B">
+          <label class="form-check-label" for="q8b">B) They create heat due to friction</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question8" id="q8c" value="C">
+          <label class="form-check-label" for="q8c">C) They stop moving</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question8', 'B')">Submit</button>
+        <p id="feedback8" class="mt-2"></p>
+      </div>
+      <button class="btn btn-secondary mt-2" onclick="showSection('section2')">Back</button>
+      <button class="btn btn-primary mt-2" onclick="showSection('section3')">Next</button>
+    </div>
+
+    <!-- Sekcija 3: Examples of Simple Machines -->
+    <div id="section3" class="hidden">
+      <h2 class="card-title">Examples of Simple Machines</h2>
+      <p class="card-text">
+        Simple machines make work <span class="highlight">easier</span> by using forces. There are <span class="highlight">six types</span> of simple machines:
+      </p>
+      <ul>
+        <li><span class="highlight">Lever</span> – A bar that pivots on a point (e.g., a seesaw, scissors).</li>
+        <li><span class="highlight">Pulley</span> – A wheel with a rope used to lift objects (e.g., flagpoles, cranes).</li>
+        <li><span class="highlight">Wheel and Axle</span> – A wheel attached to a rod that helps things move (e.g., cars, bicycles).</li>
+        <li><span class="highlight">Inclined Plane</span> – A slanted surface that makes lifting easier (e.g., ramps).</li>
+        <li><span class="highlight">Screw</span> – A twisted inclined plane that holds things together (e.g., a jar lid, screws in wood).</li>
+        <li><span class="highlight">Wedge</span> – A pointed tool used to cut or split objects (e.g., a knife, an axe).</li>
+      </ul>
+      <button class="btn btn-primary mt-2" onclick="showQuestions('section3', 'questions3')">Next</button>
+    </div>
+
+    <!-- Pitanja za sekciju 3 -->
+    <div id="questions3" class="hidden">
+      <div class="question" id="question9">
+        <h4>Question 9: What is a lever?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question9" id="q9a" value="A">
+          <label class="form-check-label" for="q9a">A) A wheel with a rope</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question9" id="q9b" value="B">
+          <label class="form-check-label" for="q9b">B) A bar that pivots on a point</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question9" id="q9c" value="C">
+          <label class="form-check-label" for="q9c">C) A slanted surface</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question9', 'B')">Submit</button>
+        <p id="feedback9" class="mt-2"></p>
+      </div>
+      <div class="question" id="question10">
+        <h4>Question 10: Which simple machine is used to lift objects?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question10" id="q10a" value="A">
+          <label class="form-check-label" for="q10a">A) Lever</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question10" id="q10b" value="B">
+          <label class="form-check-label" for="q10b">B) Pulley</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question10" id="q10c" value="C">
+          <label class="form-check-label" for="q10c">C) Wedge</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question10', 'B')">Submit</button>
+        <p id="feedback10" class="mt-2"></p>
+      </div>
+      <div class="question" id="question11">
+        <h4>Question 11: Which of the following are simple machines? (Select all that apply)</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question11" id="q11a" value="A">
+          <label class="form-check-label" for="q11a">A) Lever</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question11" id="q11b" value="B">
+          <label class="form-check-label" for="q11b">B) Pulley</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question11" id="q11c" value="C">
+          <label class="form-check-label" for="q11c">C) Magnet</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkMultipleAnswer('question11', ['A', 'B'])">Submit</button>
+        <p id="feedback11" class="mt-2"></p>
+      </div>
+      <div class="question" id="question12">
+        <h4>Question 12: What is the purpose of an inclined plane?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question12" id="q12a" value="A">
+          <label class="form-check-label" for="q12a">A) To cut objects</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question12" id="q12b" value="B">
+          <label class="form-check-label" for="q12b">B) To make lifting easier</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question12" id="q12c" value="C">
+          <label class="form-check-label" for="q12c">C) To hold things together</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question12', 'B')">Submit</button>
+        <p id="feedback12" class="mt-2"></p>
+      </div>
+      <button class="btn btn-secondary mt-2" onclick="showSection('section3')">Back</button>
+      <button class="btn btn-primary mt-2" onclick="showSection('section4')">Next</button>
+    </div>
+
+    <!-- Sekcija 4: What is Pneumatic Technology? -->
+    <div id="section4" class="hidden">
+      <h2 class="card-title">What is Pneumatic Technology?</h2>
+      <p class="card-text">
+        <span class="highlight">Pneumatic technology</span> uses <span class="highlight">compressed air or gas</span> to create movement or force. It is used in many machines to make work easier.
+      </p>
+      <p class="card-text">
+        Examples of pneumatic technology:
+      </p>
+      <ul>
+        <li><span class="highlight">Air brakes in buses and trucks</span> – These use compressed air to stop vehicles.</li>
+        <li><span class="highlight">Dentist drills</span> – The high-speed drill at the dentist uses air pressure to work.</li>
+        <li><span class="highlight">Jackhammers</span> – These break up concrete using powerful air pressure.</li>
+        <li><span class="highlight">Tires</span> – Car and bicycle tires are filled with air to keep them strong and bouncy.</li>
+      </ul>
+      <button class="btn btn-primary mt-2" onclick="showQuestions('section4', 'questions4')">Next</button>
+    </div>
+
+    <!-- Pitanja za sekciju 4 -->
+    <div id="questions4" class="hidden">
+      <div class="question" id="question13">
+        <h4>Question 13: What does pneumatic technology use?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question13" id="q13a" value="A">
+          <label class="form-check-label" for="q13a">A) Electricity</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question13" id="q13b" value="B">
+          <label class="form-check-label" for="q13b">B) Compressed air or gas</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question13" id="q13c" value="C">
+          <label class="form-check-label" for="q13c">C) Magnetic force</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question13', 'B')">Submit</button>
+        <p id="feedback13" class="mt-2"></p>
+      </div>
+      <div class="question" id="question14">
+        <h4>Question 14: Which of the following uses pneumatic technology?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question14" id="q14a" value="A">
+          <label class="form-check-label" for="q14a">A) A bicycle</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question14" id="q14b" value="B">
+          <label class="form-check-label" for="q14b">B) A jackhammer</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question14" id="q14c" value="C">
+          <label class="form-check-label" for="q14c">C) A magnet</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question14', 'B')">Submit</button>
+        <p id="feedback14" class="mt-2"></p>
+      </div>
+      <div class="question" id="question15">
+        <h4>Question 15: What are the advantages of pneumatic systems? (Select all that apply)</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question15" id="q15a" value="A">
+          <label class="form-check-label" for="q15a">A) They are safe</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question15" id="q15b" value="B">
+          <label class="form-check-label" for="q15b">B) They are fast and powerful</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="question15" id="q15c" value="C">
+          <label class="form-check-label" for="q15c">C) They use electricity</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkMultipleAnswer('question15', ['A', 'B'])">Submit</button>
+        <p id="feedback15" class="mt-2"></p>
+      </div>
+      <div class="question" id="question16">
+        <h4>Question 16: What is an example of pneumatic technology in everyday life?</h4>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question16" id="q16a" value="A">
+          <label class="form-check-label" for="q16a">A) A car tire</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question16" id="q16b" value="B">
+          <label class="form-check-label" for="q16b">B) A bicycle chain</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="question16" id="q16c" value="C">
+          <label class="form-check-label" for="q16c">C) A wooden ramp</label>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="checkAnswer('question16', 'A')">Submit</button>
+        <p id="feedback16" class="mt-2"></p>
+      </div>
+      <button class="btn btn-secondary mt-2" onclick="showSection('section4')">Back</button>
+      <button class="btn btn-primary mt-2" onclick="endQuiz()">Finish</button>
+    </div>
+
+    <!-- Završna poruka -->
+    <div id="quizEnd" class="hidden text-center mt-5">
+      <h2 class="text-success">🎉 Bravo Maso! 🎉</h2>
+      <p class="lead">You have completed the Forces Quiz!</p>
+      <p>You have learned a lot about forces, friction, simple machines, and pneumatic technology. Mozda bi mogla postatti neki engineer jednog dana i izmisliti stolicu koja leti!</p>
+      <p class="fw-bold">Great job! 👏</p>
+      <a href="index.html" class="btn btn-lg btn-success mt-3">🏠 Return to Home</a>
+    </div>
+
+    <!-- JavaScript za navigaciju i provjeru odgovora -->
+    <script>
+      function showQuestions(sectionId, questionsId) {
+        document.getElementById(sectionId).classList.add('hidden');
+        document.getElementById(questionsId).classList.remove('hidden');
+      }
+
+      function showSection(sectionId) {
+        document.querySelectorAll('.container > div').forEach(section => {
+          section.classList.add('hidden');
+        });
+        document.getElementById(sectionId).classList.remove('hidden');
+      }
+
+      function checkAnswer(questionId, correctAnswer) {
+        const selectedAnswer = document.querySelector(`input[name=${questionId}]:checked`);
+        const feedbackElement = document.getElementById(`feedback${questionId.replace('question', '')}`);
+
+        if (!feedbackElement) {
+          console.error(`Feedback element not found for question ${questionId}`);
+          return;
+        }
+
+        if (selectedAnswer) {
+          if (selectedAnswer.value === correctAnswer) {
+            feedbackElement.textContent = "Correct!";
+            feedbackElement.style.color = "green";
+          } else {
+            feedbackElement.textContent = `Incorrect. The correct answer is ${correctAnswer}.`;
+            feedbackElement.style.color = "red";
+          }
+        } else {
+          feedbackElement.textContent = "Please select an answer.";
+          feedbackElement.style.color = "red";
+        }
+      }
+
+      function checkMultipleAnswer(questionId, correctAnswers) {
+        const selectedAnswers = document.querySelectorAll(`input[name=${questionId}]:checked`);
+        const feedbackElement = document.getElementById(`feedback${questionId.replace('question', '')}`);
+
+        if (!feedbackElement) {
+          console.error(`Feedback element not found for question ${questionId}`);
+          return;
+        }
+
+        if (selectedAnswers.length > 0) {
+          const userAnswers = Array.from(selectedAnswers).map(input => input.value);
+          const isCorrect = correctAnswers.every(answer => userAnswers.includes(answer)) && userAnswers.length === correctAnswers.length;
+
+          if (isCorrect) {
+            feedbackElement.textContent = "Correct!";
+            feedbackElement.style.color = "green";
+          } else {
+            feedbackElement.textContent = `Incorrect. The correct answers are ${correctAnswers.join(', ')}.`;
+            feedbackElement.style.color = "red";
+          }
+        } else {
+          feedbackElement.textContent = "Please select at least one answer.";
+          feedbackElement.style.color = "red";
+        }
+      }
+
+      function endQuiz() {
+        document.querySelectorAll('.container > div').forEach(section => {
+          section.classList.add('hidden');
+        });
+        document.getElementById('quizEnd').classList.remove('hidden');
+      }
+    </script>
+  </div>
+</body>
+</html>
