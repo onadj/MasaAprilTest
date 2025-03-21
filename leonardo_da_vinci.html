@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History - Leonardo da Vinci</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card {
+      margin-bottom: 20px;
+    }
+    .question {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .navigation {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <!-- Navigacijski gumbi -->
+    <div class="navigation">
+      <a href="index.html" class="btn btn-secondary">Home</a>
+      <button onclick="window.history.back()" class="btn btn-secondary">Back</button>
+    </div>
+
+    <!-- Naslov -->
+    <h1 class="text-center mb-4">History</h1>
+
+    <!-- Kartica za Leonardo da Vinci -->
+    <div class="card">
+      <div class="card-body">
+        <!-- Sekcija 1: Leonardo da Vinci – The Genius of the Renaissance -->
+        <div id="section1">
+          <h2 class="card-title">Leonardo da Vinci – The Genius of the Renaissance</h2>
+          <p class="card-text">
+            Leonardo da Vinci was one of the most brilliant minds in history. He was born on <span class="highlight">April 15, 1452, in Vinci, Italy</span>, and died on <span class="highlight">May 2, 1519</span>. He lived during a time called the <span class="highlight">Renaissance</span>, a period when art, science, and new ideas flourished. Leonardo was not just a painter—he was also an <span class="highlight">inventor, engineer, scientist, architect, and musician</span>. He was known as a <span class="highlight">"Renaissance man"</span>, which means he was skilled in many different areas.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section1', 'questions1')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 1 -->
+        <div id="questions1" class="hidden">
+          <div class="question" id="question1">
+            <h4>Question 1: What was Leonardo da Vinci known as?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1a" value="A">
+              <label class="form-check-label" for="q1a">A) A painter</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1b" value="B">
+              <label class="form-check-label" for="q1b">B) A Renaissance man</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1c" value="C">
+              <label class="form-check-label" for="q1c">C) A musician</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question1', 'B')">Submit</button>
+            <p id="feedback1" class="mt-2"></p>
+          </div>
+          <div class="question" id="question2">
+            <h4>Question 2: When was Leonardo da Vinci born?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2a" value="A">
+              <label class="form-check-label" for="q2a">A) April 15, 1452</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2b" value="B">
+              <label class="form-check-label" for="q2b">B) May 2, 1519</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2c" value="C">
+              <label class="form-check-label" for="q2c">C) March 14, 1475</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question2', 'A')">Submit</button>
+            <p id="feedback2" class="mt-2"></p>
+          </div>
+          <div class="question" id="question3">
+            <h4>Question 3: What period did Leonardo live in?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3a" value="A">
+              <label class="form-check-label" for="q3a">A) The Middle Ages</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3b" value="B">
+              <label class="form-check-label" for="q3b">B) The Renaissance</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3c" value="C">
+              <label class="form-check-label" for="q3c">C) The Industrial Revolution</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question3', 'B')">Submit</button>
+            <p id="feedback3" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section1', 'questions1')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section2', 'questions1')">Next</button>
+        </div>
+
+        <!-- Sekcija 2: Leonardo’s Early Life and Training -->
+        <div id="section2" class="hidden">
+          <h2 class="card-title">Leonardo’s Early Life and Training</h2>
+          <p class="card-text">
+            As a young boy, Leonardo was fascinated by nature and how things worked. He spent hours <span class="highlight">observing birds, animals, and water movements</span>. When he was around 14 years old, he became an apprentice to a famous artist named <span class="highlight">Andrea del Verrocchio</span> in Florence. There, he learned how to paint, sculpt, and design. His master quickly noticed that Leonardo was extremely talented—so talented that it is said that Verrocchio <span class="highlight">never painted again after seeing Leonardo’s skill</span>!
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section2', 'questions2')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 2 -->
+        <div id="questions2" class="hidden">
+          <div class="question" id="question4">
+            <h4>Question 4: Who was Leonardo's master?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4a" value="A">
+              <label class="form-check-label" for="q4a">A) Michelangelo</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4b" value="B">
+              <label class="form-check-label" for="q4b">B) Andrea del Verrocchio</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4c" value="C">
+              <label class="form-check-label" for="q4c">C) Raphael</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question4', 'B')">Submit</button>
+            <p id="feedback4" class="mt-2"></p>
+          </div>
+          <div class="question" id="question5">
+            <h4>Question 5: What did Leonardo observe as a young boy?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question5" id="q5a" value="A">
+              <label class="form-check-label" for="q5a">A) Stars</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question5" id="q5b" value="B">
+              <label class="form-check-label" for="q5b">B) Birds, animals, and water movements</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question5" id="q5c" value="C">
+              <label class="form-check-label" for="q5c">C) Rocks</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question5', 'B')">Submit</button>
+            <p id="feedback5" class="mt-2"></p>
+          </div>
+          <div class="question" id="question6">
+            <h4>Question 6: How old was Leonardo when he became an apprentice?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6a" value="A">
+              <label class="form-check-label" for="q6a">A) 10 years old</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6b" value="B">
+              <label class="form-check-label" for="q6b">B) 14 years old</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6c" value="C">
+              <label class="form-check-label" for="q6c">C) 18 years old</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question6', 'B')">Submit</button>
+            <p id="feedback6" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section2', 'questions2')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section3', 'questions2')">Next</button>
+        </div>
+
+        <!-- Sekcija 3: Leonardo as a Master Craftsman -->
+        <div id="section3" class="hidden">
+          <h2 class="card-title">Leonardo as a Master Craftsman</h2>
+          <p class="card-text">
+            Leonardo was a <span class="highlight">master craftsman</span>, which means he had great skill in his work. Unlike other painters of his time, he paid extreme attention to <span class="highlight">details, light, and shadow</span> to make his paintings look more real. He studied human bodies, drawing detailed sketches of muscles and bones. This knowledge helped him create some of the most <span class="highlight">lifelike paintings ever made</span>.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section3', 'questions3')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 3 -->
+        <div id="questions3" class="hidden">
+          <div class="question" id="question7">
+            <h4>Question 7: What did Leonardo study to make his paintings lifelike?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question7" id="q7a" value="A">
+              <label class="form-check-label" for="q7a">A) Animals</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question7" id="q7b" value="B">
+              <label class="form-check-label" for="q7b">B) Human bodies</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question7" id="q7c" value="C">
+              <label class="form-check-label" for="q7c">C) Plants</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question7', 'B')">Submit</button>
+            <p id="feedback7" class="mt-2"></p>
+          </div>
+          <div class="question" id="question8">
+            <h4>Question 8: What did Leonardo pay attention to in his paintings?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question8" id="q8a" value="A">
+              <label class="form-check-label" for="q8a">A) Colors</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question8" id="q8b" value="B">
+              <label class="form-check-label" for="q8b">B) Details, light, and shadow</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question8" id="q8c" value="C">
+              <label class="form-check-label" for="q8c">C) Shapes</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question8', 'B')">Submit</button>
+            <p id="feedback8" class="mt-2"></p>
+          </div>
+          <div class="question" id="question9">
+            <h4>Question 9: What did Leonardo draw detailed sketches of?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question9" id="q9a" value="A">
+              <label class="form-check-label" for="q9a">A) Buildings</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question9" id="q9b" value="B">
+              <label class="form-check-label" for="q9b">B) Muscles and bones</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question9" id="q9c" value="C">
+              <label class="form-check-label" for="q9c">C) Landscapes</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question9', 'B')">Submit</button>
+            <p id="feedback9" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section3', 'questions3')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section4', 'questions3')">Next</button>
+        </div>
+
+        <!-- Sekcija 4: Leonardo’s Most Famous Paintings -->
+        <div id="section4" class="hidden">
+          <h2 class="card-title">Leonardo’s Most Famous Paintings</h2>
+          <p class="card-text">
+            1. <span class="highlight">The Mona Lisa</span> – This is <span class="highlight">the most famous painting in the world</span>. It shows a woman with a mysterious smile, and no one knows for sure who she is. The Mona Lisa is kept in the <span class="highlight">Louvre Museum in Paris</span>, where millions of people visit her every year.<br>
+            2. <span class="highlight">The Last Supper</span> – This painting shows Jesus having his final meal with his disciples. It is famous because of how Leonardo used perspective, making it look very real. It is painted on a wall in a church in Milan, Italy.<br>
+            3. <span class="highlight">Vitruvian Man</span> – This is not a painting but a drawing that shows <span class="highlight">the perfect human body proportions</span>. It proves that Leonardo was also a scientist, interested in anatomy.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section4', 'questions4')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 4 -->
+        <div id="questions4" class="hidden">
+          <div class="question" id="question10">
+            <h4>Question 10: Which of the following are Leonardo's famous paintings? (Select all that apply)</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question10" id="q10a" value="A">
+              <label class="form-check-label" for="q10a">A) The Mona Lisa</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question10" id="q10b" value="B">
+              <label class="form-check-label" for="q10b">B) The Last Supper</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question10" id="q10c" value="C">
+              <label class="form-check-label" for="q10c">C) The Starry Night</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkMultipleAnswer('question10', ['A', 'B'])">Submit</button>
+            <p id="feedback10" class="mt-2"></p>
+          </div>
+          <div class="question" id="question11">
+            <h4>Question 11: Where is the Mona Lisa kept?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question11" id="q11a" value="A">
+              <label class="form-check-label" for="q11a">A) The Vatican Museum</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question11" id="q11b" value="B">
+              <label class="form-check-label" for="q11b">B) The Louvre Museum</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question11" id="q11c" value="C">
+              <label class="form-check-label" for="q11c">C) The British Museum</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question11', 'B')">Submit</button>
+            <p id="feedback11" class="mt-2"></p>
+          </div>
+          <div class="question" id="question12">
+            <h4>Question 12: What does the Vitruvian Man show?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question12" id="q12a" value="A">
+              <label class="form-check-label" for="q12a">A) The perfect human body proportions</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question12" id="q12b" value="B">
+              <label class="form-check-label" for="q12b">B) A landscape</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question12" id="q12c" value="C">
+              <label class="form-check-label" for="q12c">C) A battle scene</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question12', 'A')">Submit</button>
+            <p id="feedback12" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section4', 'questions4')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section5', 'questions4')">Next</button>
+        </div>
+
+        <!-- Sekcija 5: Leonardo the Inventor -->
+        <div id="section5" class="hidden">
+          <h2 class="card-title">Leonardo the Inventor</h2>
+          <p class="card-text">
+            Leonardo was not just an artist—he was also a <span class="highlight">visionary</span> who designed machines that were never built in his time but later inspired modern inventions. Some of his most famous inventions include:
+          </p>
+          <ul>
+            <li><span class="highlight">Flying Machines</span> – Hundreds of years before airplanes existed, Leonardo designed a machine with wings that looked like a bat. His ideas helped inspire real airplanes later.</li>
+            <li><span class="highlight">The Armored Tank</span> – He designed a round, heavily armored vehicle that could move on the battlefield. This idea was similar to modern tanks.</li>
+            <li><span class="highlight">Scuba Diving Suit</span> – Leonardo designed a suit that would let people breathe underwater, similar to today’s scuba diving gear.</li>
+            <li><span class="highlight">A Mechanical Robot</span> – He created sketches of a robotic knight that could move its arms and head. This was an early idea of robotics!</li>
+          </ul>
+          <p class="card-text">
+            Even though most of his inventions were never built during his lifetime, his ideas were so advanced that they inspired engineers many centuries later.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section5', 'questions5')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 5 -->
+        <div id="questions5" class="hidden">
+          <div class="question" id="question13">
+            <h4>Question 13: What did Leonardo design that inspired modern tanks?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question13" id="q13a" value="A">
+              <label class="form-check-label" for="q13a">A) Flying Machines</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question13" id="q13b" value="B">
+              <label class="form-check-label" for="q13b">B) The Armored Tank</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question13" id="q13c" value="C">
+              <label class="form-check-label" for="q13c">C) Scuba Diving Suit</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question13', 'B')">Submit</button>
+            <p id="feedback13" class="mt-2"></p>
+          </div>
+          <div class="question" id="question14">
+            <h4>Question 14: Which of the following are Leonardo's inventions? (Select all that apply)</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question14" id="q14a" value="A">
+              <label class="form-check-label" for="q14a">A) Flying Machines</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question14" id="q14b" value="B">
+              <label class="form-check-label" for="q14b">B) The Armored Tank</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="question14" id="q14c" value="C">
+              <label class="form-check-label" for="q14c">C) The Telephone</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkMultipleAnswer('question14', ['A', 'B'])">Submit</button>
+            <p id="feedback14" class="mt-2"></p>
+          </div>
+          <div class="question" id="question15">
+            <h4>Question 15: What did Leonardo's robotic knight do?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question15" id="q15a" value="A">
+              <label class="form-check-label" for="q15a">A) It could move its arms and head</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question15" id="q15b" value="B">
+              <label class="form-check-label" for="q15b">B) It could fly</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question15" id="q15c" value="C">
+              <label class="form-check-label" for="q15c">C) It could swim</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question15', 'A')">Submit</button>
+            <p id="feedback15" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section5', 'questions5')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section6', 'questions5')">Next</button>
+        </div>
+
+        <!-- Sekcija 6: Leonardo’s Scientific Studies -->
+        <div id="section6" class="hidden">
+          <h2 class="card-title">Leonardo’s Scientific Studies</h2>
+          <p class="card-text">
+            Leonardo believed that to be a great artist, he had to understand <span class="highlight">science, math, and the human body</span>. He spent years dissecting bodies to learn how muscles and bones worked. He also studied <span class="highlight">astronomy, engineering, and the movement of water</span>. He wrote thousands of pages of notes and sketches, but most were never published during his life.
+          </p>
+          <p class="card-text">
+            One of his most impressive ideas was that <span class="highlight">the Earth is much older than people believed at the time</span>. He also studied how the heart worked, making discoveries that doctors only understood hundreds of years later.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section6', 'questions6')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 6 -->
+        <div id="questions6" class="hidden">
+          <div class="question" id="question16">
+            <h4>Question 16: What did Leonardo study to understand the human body?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question16" id="q16a" value="A">
+              <label class="form-check-label" for="q16a">A) Animals</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question16" id="q16b" value="B">
+              <label class="form-check-label" for="q16b">B) Human bodies</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question16" id="q16c" value="C">
+              <label class="form-check-label" for="q16c">C) Plants</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question16', 'B')">Submit</button>
+            <p id="feedback16" class="mt-2"></p>
+          </div>
+          <div class="question" id="question17">
+            <h4>Question 17: What did Leonardo believe about the Earth?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question17" id="q17a" value="A">
+              <label class="form-check-label" for="q17a">A) It was flat</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question17" id="q17b" value="B">
+              <label class="form-check-label" for="q17b">B) It was much older than people believed</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question17" id="q17c" value="C">
+              <label class="form-check-label" for="q17c">C) It was the center of the universe</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question17', 'B')">Submit</button>
+            <p id="feedback17" class="mt-2"></p>
+          </div>
+          <div class="question" id="question18">
+            <h4>Question 18: What did Leonardo study besides the human body?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question18" id="q18a" value="A">
+              <label class="form-check-label" for="q18a">A) Astronomy, engineering, and the movement of water</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question18" id="q18b" value="B">
+              <label class="form-check-label" for="q18b">B) Literature</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question18" id="q18c" value="C">
+              <label class="form-check-label" for="q18c">C) Music</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question18', 'A')">Submit</button>
+            <p id="feedback18" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section6', 'questions6')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section7', 'questions6')">Next</button>
+        </div>
+
+        <!-- Sekcija 7: Leonardo’s Mysterious Writing -->
+        <div id="section7" class="hidden">
+          <h2 class="card-title">Leonardo’s Mysterious Writing</h2>
+          <p class="card-text">
+            Leonardo wrote all his notes in <span class="highlight">mirror writing</span>, meaning the letters were reversed and could only be read in a mirror. Some people think he did this to <span class="highlight">hide his ideas</span> so that others wouldn’t steal them. Others believe he just found it easier to write that way.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section7', 'questions7')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 7 -->
+        <div id="questions7" class="hidden">
+          <div class="question" id="question19">
+            <h4>Question 19: Why did Leonardo use mirror writing?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question19" id="q19a" value="A">
+              <label class="form-check-label" for="q19a">A) To hide his ideas</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question19" id="q19b" value="B">
+              <label class="form-check-label" for="q19b">B) To make it easier to read</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question19" id="q19c" value="C">
+              <label class="form-check-label" for="q19c">C) To confuse his enemies</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question19', 'A')">Submit</button>
+            <p id="feedback19" class="mt-2"></p>
+          </div>
+          <div class="question" id="question20">
+            <h4>Question 20: What is mirror writing?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question20" id="q20a" value="A">
+              <label class="form-check-label" for="q20a">A) Writing that is reversed and can only be read in a mirror</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question20" id="q20b" value="B">
+              <label class="form-check-label" for="q20b">B) Writing that is upside down</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question20" id="q20c" value="C">
+              <label class="form-check-label" for="q20c">C) Writing that is very small</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question20', 'A')">Submit</button>
+            <p id="feedback20" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section7', 'questions7')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section8', 'questions7')">Next</button>
+        </div>
+
+        <!-- Sekcija 8: Why is Leonardo da Vinci Important? -->
+        <div id="section8" class="hidden">
+          <h2 class="card-title">Why is Leonardo da Vinci Important?</h2>
+          <p class="card-text">
+            Leonardo da Vinci was much more than an artist—he was a <span class="highlight">scientist, engineer, and thinker ahead of his time</span>. His ideas and inventions changed how people see the world, and his paintings are still admired today. He showed that <span class="highlight">art and science go hand in hand</span>, and he inspired generations of artists, inventors, and scientists.
+          </p>
+          <p class="card-text">
+            Even though he lived over <span class="highlight">500 years ago</span>, his work is still studied, and his paintings are among the most valuable in the world. Many people call him <span class="highlight">"the most intelligent person who ever lived."</span>
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section8', 'questions8')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 8 -->
+        <div id="questions8" class="hidden">
+          <div class="question" id="question21">
+            <h4>Question 21: Why is Leonardo da Vinci considered important?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question21" id="q21a" value="A">
+              <label class="form-check-label" for="q21a">A) He was only a painter</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question21" id="q21b" value="B">
+              <label class="form-check-label" for="q21b">B) He was a scientist, engineer, and thinker</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question21" id="q21c" value="C">
+              <label class="form-check-label" for="q21c">C) He invented the telephone</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question21', 'B')">Submit</button>
+            <p id="feedback21" class="mt-2"></p>
+          </div>
+          <div class="question" id="question22">
+            <h4>Question 22: What did Leonardo show about art and science?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question22" id="q22a" value="A">
+              <label class="form-check-label" for="q22a">A) They are separate</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question22" id="q22b" value="B">
+              <label class="form-check-label" for="q22b">B) They go hand in hand</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question22" id="q22c" value="C">
+              <label class="form-check-label" for="q22c">C) They are not important</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question22', 'B')">Submit</button>
+            <p id="feedback22" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section8', 'questions8')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="endQuiz()">Finish</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Završna poruka za Masu -->
+    <div id="quizEnd" class="hidden text-center mt-5">
+      <h2 class="text-success">🎉 Bravo, Maso! 🎉</h2>
+      <p class="lead">Završila si kviz o Leonardu da Vinciju!</p>
+      <p>Naučila si puno o njegovim izumima, slikama i životu.</p>
+      <p class="fw-bold">Sad znaš kada je rođen, što je sve izumio i zašto je bio tako važan!</p>
+      <p>Odličan posao! 👏</p>
+      <a href="index.html" class="btn btn-lg btn-success mt-3">🏠 Povratak na početnu</a>
+    </div>
+  
+    <!-- JavaScript za navigaciju i provjeru odgovora -->
+    <script>
+      function showQuestions(sectionId, questionsId) {
+        document.getElementById(sectionId).classList.add('hidden');
+        document.getElementById(questionsId).classList.remove('hidden');
+      }
+  
+      function showSection(sectionId, questionsId) {
+        document.getElementById(sectionId).classList.remove('hidden');
+        document.getElementById(questionsId).classList.add('hidden');
+      }
+  
+      function checkAnswer(questionId, correctAnswer) {
+  const selectedAnswer = document.querySelector(`input[name=${questionId}]:checked`);
+  const feedbackElement = document.getElementById(`feedback${questionId.replace('question', '')}`);
+
+  if (!feedbackElement) {
+    console.error(`Feedback element not found for question ${questionId}`);
+    return;
+  }
+
+  if (selectedAnswer) {
+    if (selectedAnswer.value === correctAnswer) {
+      feedbackElement.textContent = "Correct!";
+      feedbackElement.style.color = "green";
+    } else {
+      feedbackElement.textContent = `Incorrect. The correct answer is ${correctAnswer}.`;
+      feedbackElement.style.color = "red";
+    }
+  } else {
+    feedbackElement.textContent = "Please select an answer.";
+    feedbackElement.style.color = "red";
+  }
+}
+  
+      function checkMultipleAnswer(questionId, correctAnswers) {
+  const selectedAnswers = document.querySelectorAll(`input[name=${questionId}]:checked`);
+  const feedbackElement = document.getElementById(`feedback${questionId.replace('question', '')}`);
+
+  if (!feedbackElement) {
+    console.error(`Feedback element not found for question ${questionId}`);
+    return;
+  }
+
+  if (selectedAnswers.length > 0) {
+    const userAnswers = Array.from(selectedAnswers).map(input => input.value);
+    const isCorrect = correctAnswers.every(answer => userAnswers.includes(answer)) && userAnswers.length === correctAnswers.length;
+
+    if (isCorrect) {
+      feedbackElement.textContent = "Correct!";
+      feedbackElement.style.color = "green";
+    } else {
+      feedbackElement.textContent = `Incorrect. The correct answers are ${correctAnswers.join(', ')}.`;
+      feedbackElement.style.color = "red";
+    }
+  } else {
+    feedbackElement.textContent = "Please select at least one answer.";
+    feedbackElement.style.color = "red";
+  }
+}
+  
+      function endQuiz() {
+        document.querySelectorAll('.card-body > div').forEach(section => {
+          section.classList.add('hidden');
+        });
+        document.getElementById('quizEnd').classList.remove('hidden');
+      }
+    </script>
+  </body>
+  </html>

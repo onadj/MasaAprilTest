@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revolutions – A Fight for Change</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card {
+      margin-bottom: 20px;
+    }
+    .question {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .navigation {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <!-- Navigacijski gumbi -->
+    <div class="navigation">
+      <a href="index.html" class="btn btn-secondary">Home</a>
+      <button onclick="window.history.back()" class="btn btn-secondary">Back</button>
+    </div>
+
+    <!-- Naslov -->
+    <h1 class="text-center mb-4">Revolutions – A Fight for Change</h1>
+
+    <!-- Kartica za revolucije -->
+    <div class="card">
+      <div class="card-body">
+        <!-- Sekcija 1: Uvod u revolucije -->
+        <div id="section1">
+          <h2 class="card-title">Revolutions – A Fight for Change</h2>
+          <p class="card-text">
+            Throughout history, revolutions have changed the world. A <span class="highlight">revolution</span> is when people <span class="highlight">fight against a government or system</span> because they believe it is unfair. Revolutions often happen when people are unhappy with how they are treated and want <span class="highlight">freedom, rights, and better living conditions</span>. Some revolutions are peaceful, while others involve wars and battles. Two of the most famous revolutions in history are the <span class="highlight">American Revolution</span> and the <span class="highlight">French Revolution</span>.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section1', 'questions1')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 1 -->
+        <div id="questions1" class="hidden">
+          <div class="question" id="question1">
+            <h4>Question 1: What is a revolution?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1a" value="A">
+              <label class="form-check-label" for="q1a">A) A peaceful protest</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1b" value="B">
+              <label class="form-check-label" for="q1b">B) A fight against a government or system</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question1" id="q1c" value="C">
+              <label class="form-check-label" for="q1c">C) A celebration of independence</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question1', 'B')">Submit</button>
+            <p id="feedback1" class="mt-2"></p>
+          </div>
+          <div class="question" id="question2">
+            <h4>Question 2: What do people often want in a revolution?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2a" value="A">
+              <label class="form-check-label" for="q2a">A) More taxes</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2b" value="B">
+              <label class="form-check-label" for="q2b">B) Freedom, rights, and better living conditions</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question2" id="q2c" value="C">
+              <label class="form-check-label" for="q2c">C) More power for the king</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question2', 'B')">Submit</button>
+            <p id="feedback2" class="mt-2"></p>
+          </div>
+          <div class="question" id="question3">
+            <h4>Question 3: Which two revolutions are most famous?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3a" value="A">
+              <label class="form-check-label" for="q3a">A) The Industrial Revolution and the French Revolution</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3b" value="B">
+              <label class="form-check-label" for="q3b">B) The American Revolution and the French Revolution</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question3" id="q3c" value="C">
+              <label class="form-check-label" for="q3c">C) The Russian Revolution and the American Revolution</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question3', 'B')">Submit</button>
+            <p id="feedback3" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section1', 'questions1')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section2', 'questions1')">Next</button>
+        </div>
+
+        <!-- Sekcija 2: The American Revolution -->
+        <div id="section2" class="hidden">
+          <h2 class="card-title">The American Revolution (1775-1783)</h2>
+          <p class="card-text">
+            The <span class="highlight">American Revolution</span> was fought between <span class="highlight">Great Britain</span> and the <span class="highlight">13 American colonies</span>. The colonists wanted to break free from British rule and create their own independent country. Some important people in the revolution were:
+          </p>
+          <ul>
+            <li><span class="highlight">George Washington</span> – The leader of the American army who later became the first President of the United States.</li>
+            <li><span class="highlight">King George III</span> – The King of Britain who wanted to keep control of the American colonies.</li>
+            <li><span class="highlight">Thomas Jefferson</span> – He wrote the <span class="highlight">Declaration of Independence</span>, which officially stated that America wanted to be free from Britain.</li>
+            <li><span class="highlight">Benjamin Franklin</span> – He helped get support from other countries, like France, to help America win the war.</li>
+          </ul>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section2', 'questions2')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 2 -->
+        <div id="questions2" class="hidden">
+          <div class="question" id="question4">
+            <h4>Question 4: Who led the American army during the revolution?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4a" value="A">
+              <label class="form-check-label" for="q4a">A) Thomas Jefferson</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4b" value="B">
+              <label class="form-check-label" for="q4b">B) George Washington</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question4" id="q4c" value="C">
+              <label class="form-check-label" for="q4c">C) Benjamin Franklin</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question4', 'B')">Submit</button>
+            <p id="feedback4" class="mt-2"></p>
+          </div>
+          <div class="question" id="question5">
+            <h4>Question 5: What document declared America's independence?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question5" id="q5a" value="A">
+              <label class="form-check-label" for="q5a">A) The Constitution</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question5" id="q5b" value="B">
+              <label class="form-check-label" for="q5b">B) The Declaration of Independence</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question5" id="q5c" value="C">
+              <label class="form-check-label" for="q5c">C) The Bill of Rights</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question5', 'B')">Submit</button>
+            <p id="feedback5" class="mt-2"></p>
+          </div>
+          <div class="question" id="question6">
+            <h4>Question 6: Who was the King of Britain during the American Revolution?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6a" value="A">
+              <label class="form-check-label" for="q6a">A) King Louis XVI</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6b" value="B">
+              <label class="form-check-label" for="q6b">B) King George III</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question6" id="q6c" value="C">
+              <label class="form-check-label" for="q6c">C) King Henry VIII</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question6', 'B')">Submit</button>
+            <p id="feedback6" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section2', 'questions2')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="showSection('section3', 'questions2')">Next</button>
+        </div>
+
+        <!-- Sekcija 3: The French Revolution -->
+        <div id="section3" class="hidden">
+          <h2 class="card-title">The French Revolution (1789-1799)</h2>
+          <p class="card-text">
+            The <span class="highlight">French Revolution</span> began in 1789 when the French people rebelled against their king and the unfair system. The people were suffering from high taxes and food shortages, while the king and nobles lived in luxury. The revolution led to the end of the monarchy and the rise of a new government.
+          </p>
+          <p class="card-text">
+            The motto of the French Revolution was <span class="highlight">"Liberty, Equality, Fraternity"</span>, which means freedom, equality, and brotherhood for all people.
+          </p>
+          <button class="btn btn-primary mt-2" onclick="showQuestions('section3', 'questions3')">Next</button>
+        </div>
+
+        <!-- Pitanja za sekciju 3 -->
+        <div id="questions3" class="hidden">
+          <div class="question" id="question7">
+            <h4>Question 7: What was the motto of the French Revolution?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question7" id="q7a" value="A">
+              <label class="form-check-label" for="q7a">A) Freedom, Justice, Equality</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question7" id="q7b" value="B">
+              <label class="form-check-label" for="q7b">B) Liberty, Equality, Fraternity</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question7" id="q7c" value="C">
+              <label class="form-check-label" for="q7c">C) Peace, Love, Unity</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question7', 'B')">Submit</button>
+            <p id="feedback7" class="mt-2"></p>
+          </div>
+          <div class="question" id="question8">
+            <h4>Question 8: What caused the French Revolution?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question8" id="q8a" value="A">
+              <label class="form-check-label" for="q8a">A) High taxes and food shortages</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question8" id="q8b" value="B">
+              <label class="form-check-label" for="q8b">B) A desire for more luxury</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question8" id="q8c" value="C">
+              <label class="form-check-label" for="q8c">C) A war with Britain</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question8', 'A')">Submit</button>
+            <p id="feedback8" class="mt-2"></p>
+          </div>
+          <div class="question" id="question9">
+            <h4>Question 9: What was the Reign of Terror?</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question9" id="q9a" value="A">
+              <label class="form-check-label" for="q9a">A) A period of peace and prosperity</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question9" id="q9b" value="B">
+              <label class="form-check-label" for="q9b">B) A violent period during the French Revolution</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="question9" id="q9c" value="C">
+              <label class="form-check-label" for="q9c">C) A time when France was ruled by a king</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="checkAnswer('question9', 'B')">Submit</button>
+            <p id="feedback9" class="mt-2"></p>
+          </div>
+          <button class="btn btn-secondary mt-2" onclick="showSection('section3', 'questions3')">Back</button>
+          <button class="btn btn-primary mt-2" onclick="endQuiz()">Finish</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Završna poruka -->
+    <div id="quizEnd" class="hidden text-center mt-5">
+      <h2 class="text-success">🎉 Bravo, Maso! 🎉</h2>
+      <p class="lead">Završila si kviz o Revolutions!</p>
+      <p>Sada si naucila sto je Revolucija, sto je bio uzrok, zbog cega je ona bitna i kako je nastala i koje dvije su bile najvaznije u povjesti.</p>
+      <p class="fw-bold">Ako nastavis ovako postat ces pravi povjesnicar! 👏</p>
+      <a href="index.html" class="btn btn-lg btn-success mt-3">🏠 Return to Home</a>
+    </div>
+
+    <!-- JavaScript za navigaciju i provjeru odgovora -->
+<script>
+    function showQuestions(sectionId, questionsId) {
+      document.getElementById(sectionId).classList.add('hidden');
+      document.getElementById(questionsId).classList.remove('hidden');
+    }
+  
+    function showSection(sectionId) {
+      document.querySelectorAll('.card-body > div').forEach(section => {
+        section.classList.add('hidden');
+      });
+      document.getElementById(sectionId).classList.remove('hidden');
+    }
+  
+    function checkAnswer(questionId, correctAnswer) {
+      const selectedAnswer = document.querySelector(`input[name=${questionId}]:checked`);
+      const feedbackElement = document.getElementById(`feedback${questionId.replace('question', '')}`);
+  
+      if (!feedbackElement) {
+        console.error(`Feedback element not found for question ${questionId}`);
+        return;
+      }
+  
+      if (selectedAnswer) {
+        if (selectedAnswer.value === correctAnswer) {
+          feedbackElement.textContent = "Correct!";
+          feedbackElement.style.color = "green";
+        } else {
+          feedbackElement.textContent = `Incorrect. The correct answer is ${correctAnswer}.`;
+          feedbackElement.style.color = "red";
+        }
+      } else {
+        feedbackElement.textContent = "Please select an answer.";
+        feedbackElement.style.color = "red";
+      }
+    }
+  
+    function checkMultipleAnswer(questionId, correctAnswers) {
+      const selectedAnswers = document.querySelectorAll(`input[name=${questionId}]:checked`);
+      const feedbackElement = document.getElementById(`feedback${questionId.replace('question', '')}`);
+  
+      if (!feedbackElement) {
+        console.error(`Feedback element not found for question ${questionId}`);
+        return;
+      }
+  
+      if (selectedAnswers.length > 0) {
+        const userAnswers = Array.from(selectedAnswers).map(input => input.value);
+        const isCorrect = correctAnswers.every(answer => userAnswers.includes(answer)) && userAnswers.length === correctAnswers.length;
+  
+        if (isCorrect) {
+          feedbackElement.textContent = "Correct!";
+          feedbackElement.style.color = "green";
+        } else {
+          feedbackElement.textContent = `Incorrect. The correct answers are ${correctAnswers.join(', ')}.`;
+          feedbackElement.style.color = "red";
+        }
+      } else {
+        feedbackElement.textContent = "Please select at least one answer.";
+        feedbackElement.style.color = "red";
+      }
+    }
+  
+    function endQuiz() {
+      document.querySelectorAll('.card-body > div').forEach(section => {
+        section.classList.add('hidden');
+      });
+      document.getElementById('quizEnd').classList.remove('hidden');
+    }
+  </script>
+   </body>
+  </html
