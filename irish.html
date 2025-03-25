@@ -1,60 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Complete Irish Verb Conjugation Mastery</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; }
-    .card { margin-bottom: 25px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    .highlight { color: #2c3e50; font-weight: 600; }
-    .key { 
-      padding: 10px 15px; 
-      margin: 5px; 
-      background: #e9ecef; 
-      border: 1px solid #ced4da; 
-      cursor: pointer; 
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .card {
+      margin-bottom: 25px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .highlight {
+      color: #2c3e50;
+      font-weight: 600;
+    }
+
+    .key {
+      padding: 10px 15px;
+      margin: 5px;
+      background: #e9ecef;
+      border: 1px solid #ced4da;
+      cursor: pointer;
       border-radius: 5px;
       transition: all 0.3s;
     }
-    .key:hover { background: #d1d7dc; transform: translateY(-2px); }
-    #keyboard { margin: 20px 0; display: flex; flex-wrap: wrap; justify-content: center; }
-    .hidden { display: none; }
-    .correct { color: #28a745; background-color: #e6ffed; padding: 10px; border-radius: 5px; }
-    .incorrect { color: #dc3545; background-color: #ffebee; padding: 10px; border-radius: 5px; }
-    .verb-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-    .verb-table th, .verb-table td { border: 1px solid #dee2e6; padding: 12px; text-align: left; }
-    .verb-table th { background-color: #2c3e50; color: white; }
-    .verb-table tr:nth-child(even) { background-color: #f2f2f2; }
-    .time-word { display: inline-block; margin: 5px; padding: 8px 12px; background: #e3f2fd; border-radius: 20px; }
-    .section-title { border-bottom: 2px solid #2c3e50; padding-bottom: 10px; margin-top: 30px; }
-    #progress-bar { transition: width 0.5s ease; }
-    .conjugation-rule { background: #fff8e1; padding: 15px; border-left: 4px solid #ffc107; margin: 10px 0; }
+
+    .key:hover {
+      background: #d1d7dc;
+      transform: translateY(-2px);
+    }
+
+    #keyboard {
+      margin: 20px 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .correct {
+      color: #28a745;
+      background-color: #e6ffed;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .incorrect {
+      color: #dc3545;
+      background-color: #ffebee;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .verb-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+
+    .verb-table th,
+    .verb-table td {
+      border: 1px solid #dee2e6;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .verb-table th {
+      background-color: #2c3e50;
+      color: white;
+    }
+
+    .verb-table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .time-word {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 12px;
+      background: #e3f2fd;
+      border-radius: 20px;
+    }
+
+    .section-title {
+      border-bottom: 2px solid #2c3e50;
+      padding-bottom: 10px;
+      margin-top: 30px;
+    }
+
+    #progress-bar {
+      transition: width 0.5s ease;
+    }
+
+    .conjugation-rule {
+      background: #fff8e1;
+      padding: 15px;
+      border-left: 4px solid #ffc107;
+      margin: 10px 0;
+    }
+
+    #reference-section {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 30px;
+    }
   </style>
 </head>
+
 <body>
   <div class="container py-5">
     <!-- INTRO SECTION -->
     <div id="intro" class="card p-4">
       <h1 class="text-center mb-4">Complete Irish Verb Conjugation Mastery</h1>
-      
+
       <!-- Verb Types Explanation -->
       <div class="mb-4">
         <h3 class="section-title">1. Verb Types & Conjugation Rules</h3>
-        
+
         <div class="conjugation-rule">
           <h5 class="highlight">1st Conjugation (Céad réimniú)</h5>
           <p><strong>Characteristics:</strong> Usually 1 syllable verbs</p>
           <p><strong>Examples:</strong> Ól (Drink), Bris (Break), Scríobh (Write)</p>
         </div>
-        
+
         <div class="conjugation-rule">
           <h5 class="highlight">2nd Conjugation (Dara réimniú)</h5>
           <p><strong>Characteristics:</strong> Usually 2+ syllable verbs</p>
           <p><strong>Examples:</strong> Oscail (Open), Cabhraigh (Help), Críochnaigh (Finish)</p>
         </div>
-        
+
         <div class="row mt-3">
           <div class="col-md-6">
             <div class="conjugation-rule">
@@ -87,7 +172,6 @@
               <th>English</th>
               <th>1st Conjugation (Ól)</th>
               <th>2nd Conjugation (Oscail)</th>
-              <th>Time Words</th>
             </tr>
           </thead>
           <tbody>
@@ -96,109 +180,49 @@
               <td>Past</td>
               <td>D'ól mé</td>
               <td>D'oscail mé</td>
-              <td>inné, aréir, anuraidh</td>
             </tr>
             <tr>
               <td>Aimsir Láithreach</td>
               <td>Present</td>
               <td>Ólann mé</td>
               <td>Osclaíonn mé</td>
-              <td>gach lá, anois, go minic</td>
             </tr>
             <tr>
               <td>Aimsir Fháistineach</td>
               <td>Future</td>
               <td>Ólfaidh mé</td>
               <td>Osclóidh mé</td>
-              <td>amárach, anocht, go luath</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <!-- Complete Verb List -->
-      <div class="mb-4">
-        <h3 class="section-title">3. All 36 Essential Verbs</h3>
-        <div class="row">
-          <div class="col-md-4">
-            <table class="verb-table">
-              <tr><th>Irish</th><th>English</th></tr>
-              <tr><td>Ceap</td><td>Think</td></tr>
-              <tr><td>Fág</td><td>Leave</td></tr>
-              <tr><td>Féach</td><td>Look</td></tr>
-              <tr><td>Ól</td><td>Drink</td></tr>
-              <tr><td>Pioc</td><td>Pick</td></tr>
-              <tr><td>Scríobh</td><td>Write</td></tr>
-              <tr><td>Bris</td><td>Break</td></tr>
-              <tr><td>Cuir</td><td>Put</td></tr>
-              <tr><td>Doirt</td><td>Pour</td></tr>
-              <tr><td>Éist</td><td>Listen</td></tr>
-            </table>
-          </div>
-          <div class="col-md-4">
-            <table class="verb-table">
-              <tr><th>Irish</th><th>English</th></tr>
-              <tr><td>Tuig</td><td>Understand</td></tr>
-              <tr><td>Ainmnigh</td><td>Name</td></tr>
-              <tr><td>Aistrigh</td><td>Translate</td></tr>
-              <tr><td>Bailigh</td><td>Collect</td></tr>
-              <tr><td>Ceistigh</td><td>Question</td></tr>
-              <tr><td>Éirigh</td><td>Get up</td></tr>
-              <tr><td>Maisigh</td><td>Decorate</td></tr>
-              <tr><td>Sábháil</td><td>Save</td></tr>
-              <tr><td>Bagair</td><td>Threaten</td></tr>
-              <tr><td>Codail</td><td>Sleep</td></tr>
-            </table>
-          </div>
-          <div class="col-md-4">
-            <table class="verb-table">
-              <tr><th>Irish</th><th>English</th></tr>
-              <tr><td>Freagair</td><td>Answer</td></tr>
-              <tr><td>Oscail</td><td>Open</td></tr>
-              <tr><td>Labhair</td><td>Speak</td></tr>
-              <tr><td>Bain</td><td>Cut/Take</td></tr>
-              <tr><td>Buail le</td><td>Meet</td></tr>
-              <tr><td>Brostaigh</td><td>Hurry</td></tr>
-              <tr><td>Cabhraigh</td><td>Help</td></tr>
-              <tr><td>Críochnaigh</td><td>Finish</td></tr>
-              <tr><td>Éistigh</td><td>Listen</td></tr>
-              <tr><td>Imir</td><td>Play</td></tr>
-              <tr><td>Inis</td><td>Tell</td></tr>
-              <tr><td>Péinteáil</td><td>Paint</td></tr>
-              <tr><td>Gortaigh</td><td>Hurt</td></tr>
-              <tr><td>Aontaigh</td><td>Agree</td></tr>
-              <tr><td>Tosaigh</td><td>Start</td></tr>
-              <tr><td>Eagraigh</td><td>Organize</td></tr>
-            </table>
-          </div>
-        </div>
-      </div>
-
       <!-- Time Words -->
       <div class="mb-4">
-        <h3 class="section-title">4. Time-Based Words</h3>
+        <h3 class="section-title">3. Time-Based Words</h3>
         <div>
           <h5 class="highlight">Past Tense Words</h5>
           <span class="time-word">inné (yesterday)</span>
-          <span class="time-word">aréir (last night)</span>
           <span class="time-word">anuraidh (last year)</span>
           <span class="time-word">an tseachtain seo caite (last week)</span>
+          <span class="time-word">aréir (last night)</span>
+          <span class="time-word">fadó (long ago)</span>
+          <span class="time-word">arú inné (two days ago)</span>
         </div>
         <div class="mt-3">
           <h5 class="highlight">Present Tense Words</h5>
-          <span class="time-word">gach lá (every day)</span>
-          <span class="time-word">gach maidin (every morning)</span>
-          <span class="time-word">go minic (often)</span>
+          <span class="time-word">inniu (today)</span>
           <span class="time-word">anois (now)</span>
+          <span class="time-word">gach lá (every day)</span>
+          <span class="time-word">gach oíche (every night)</span>
+          <span class="time-word">gach bliain (every year)</span>
         </div>
         <div class="mt-3">
           <h5 class="highlight">Future Tense Words</h5>
           <span class="time-word">amárach (tomorrow)</span>
           <span class="time-word">anocht (tonight)</span>
-          <span class="time-word">go luath (soon)</span>
-          <span class="time-word">i mbliana seo chugainn (next year)</span>
-          <span class="time-word">Dé Sathairn (on Saturday)</span>
-          <span class="time-word">níos déanaí (later)</span>
+          <span class="time-word">an tseachtain seo chugainn (next week)</span>
+          <span class="time-word">an bhliain seo chugainn (next year)</span>
         </div>
       </div>
 
@@ -214,16 +238,17 @@
           <h3 id="quiz-phase" class="mb-0"></h3>
           <div id="quiz-progress" class="badge bg-primary">Question 1/12</div>
         </div>
-        
+
         <div class="question mb-3 p-4 bg-light rounded">
           <h4 id="question-text" class="mb-3"></h4>
           <p id="tense-hint" class="text-muted fst-italic"></p>
         </div>
-        
+
         <div class="mb-3">
-          <input type="text" id="user-answer" class="form-control form-control-lg" placeholder="Type your answer in Irish..." autocomplete="off">
+          <input type="text" id="user-answer" class="form-control form-control-lg"
+            placeholder="Type your answer in Irish..." autocomplete="off">
         </div>
-        
+
         <!-- Irish Character Keyboard -->
         <div id="keyboard">
           <button class="key" onclick="insertChar('á')">á</button>
@@ -236,9 +261,9 @@
           <button class="key" onclick="insertChar('Í')">Í</button>
           <button class="key" onclick="insertChar('Ó')">Ó</button>
           <button class="key" onclick="insertChar('Ú')">Ú</button>
-          <button class="key" onclick="insertChar('ʼ')">ʼ</button> <!-- For contractions like D'ól -->
+          <button class="key" onclick="insertChar('ʼ')">ʼ</button>
         </div>
-        
+
         <div class="d-flex justify-content-between mt-4">
           <button id="hint-btn" class="btn btn-outline-secondary">Show Hint</button>
           <div>
@@ -246,13 +271,38 @@
             <button id="next-btn" class="btn btn-success hidden">Continue</button>
           </div>
         </div>
-        
+
         <div id="feedback" class="mt-4 p-3 rounded"></div>
         <div id="hint-area" class="mt-3 p-3 bg-warning bg-opacity-10 rounded hidden"></div>
       </div>
-      
+
       <div class="progress mt-4" style="height: 10px;">
         <div id="progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+      </div>
+
+      <!-- Reference Section at Bottom -->
+      <div id="reference-section" class="mt-5">
+        <h4 class="section-title">Quick Reference Guide</h4>
+        <div class="row">
+          <div class="col-md-6">
+            <h5>Verb Conjugation Rules</h5>
+            <ul>
+              <li><strong>Past Tense:</strong> Add D'/h prefix (D'ól mé)</li>
+              <li><strong>Present (1st Conj.):</strong> -ann/-eann ending (Ólann mé)</li>
+              <li><strong>Present (2nd Conj.):</strong> -aíonn/-íonn ending (Osclaíonn mé)</li>
+              <li><strong>Future:</strong> -faidh/-fidh ending (Ólfaidh mé)</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h5>Time Expressions</h5>
+            <ul>
+              <li><strong>Past:</strong> inné, aréir, anuraidh</li>
+              <li><strong>Present:</strong> inniu, anois, gach lá</li>
+              <li><strong>Future:</strong> amárach, anocht, an tseachtain seo chugainn</li>
+            </ul>
+          </div>
+        </div>
+        <button onclick="window.location.href='index.html'" class="btn btn-outline-primary mt-3">Back to Home</button>
       </div>
     </div>
 
@@ -260,20 +310,22 @@
     <div id="results" class="hidden">
       <div class="card p-4">
         <h2 class="text-center mb-4">Quiz Results</h2>
-        
+
         <div class="text-center mb-4">
           <h3 id="score" class="display-4"></h3>
           <p id="score-message" class="lead"></p>
         </div>
-        
+
         <div id="mistakes" class="mb-4">
           <h4 class="section-title mb-3">Mistakes to Review</h4>
           <div id="mistakes-list"></div>
         </div>
-        
+
         <div class="d-flex justify-content-center gap-3">
           <button id="restart-btn" class="btn btn-primary btn-lg">Restart Full Quiz</button>
           <button id="practice-btn" class="btn btn-outline-primary btn-lg">Practice Mistakes</button>
+          <button onclick="window.location.href='index.html'" class="btn btn-outline-secondary btn-lg">Back to
+            Home</button>
         </div>
       </div>
     </div>
@@ -282,15 +334,15 @@
   <script>
     // COMPLETE VERB DATABASE (36 verbs)
     const verbs = [
-      { 
+      {
         irish: "Ól", english: "drink", conjugation: "1st", type: "leathan",
         forms: {
           past: { root: "D'ól", example: "D'ól mé uisce inné" },
-          present: { root: "Ólann", example: "Ólann mé tae gach maidin" },
+          present: { root: "Ólann", example: "Ólann mé tae gach lá" },
           future: { root: "Ólfaidh", example: "Ólfaidh mé caife amárach" }
         }
       },
-      { 
+      {
         irish: "Bris", english: "break", conjugation: "1st", type: "leathan",
         forms: {
           past: { root: "Bhris", example: "Bhris mé an fhuinneog aréir" },
@@ -298,63 +350,302 @@
           future: { root: "Brisfidh", example: "Brisfidh mé é má tá sé briste" }
         }
       },
-      // ... (All 36 verbs in same format - abbreviated here for space)
-      { 
+      {
         irish: "Scríobh", english: "write", conjugation: "1st", type: "leathan",
         forms: {
           past: { root: "Scríobh", example: "Scríobh mé litir anuraidh" },
           present: { root: "Scríobhann", example: "Scríobhann sí gach lá" },
-          future: { root: "Scríobhfaidh", example: "Scríobhfaidh mé leabhar i mbliana" }
+          future: { root: "Scríobhfaidh", example: "Scríobhfaidh mé leabhar amárach" }
         }
       },
-      { 
+      {
+        irish: "Ceap", english: "think", conjugation: "1st", type: "leathan",
+        forms: {
+          past: { root: "Cheap", example: "Cheap mé go raibh sé anseo inné" },
+          present: { root: "Ceapann", example: "Ceapann sé gach lá" },
+          future: { root: "Ceapfaidh", example: "Ceapfaidh mé faoi amárach" }
+        }
+      },
+      {
+        irish: "Fág", english: "leave", conjugation: "1st", type: "leathan",
+        forms: {
+          past: { root: "D'fhág", example: "D'fhág mé an baile aréir" },
+          present: { root: "Fágann", example: "Fágann sí gach maidin" },
+          future: { root: "Fágfaidh", example: "Fágfaidh mé amárach" }
+        }
+      },
+      {
+        irish: "Féach", english: "look", conjugation: "1st", type: "leathan",
+        forms: {
+          past: { root: "D'fhéach", example: "D'fhéach mé ar an teilifís aréir" },
+          present: { root: "Féachann", example: "Féachann sé ar an bhfuinneog gach lá" },
+          future: { root: "Féachfaidh", example: "Féachfaidh mé air amárach" }
+        }
+      },
+      {
+        irish: "Pioc", english: "pick", conjugation: "1st", type: "leathan",
+        forms: {
+          past: { root: "Phioc", example: "Phioc mé úlla inné" },
+          present: { root: "Piceann", example: "Piceann sí bláthanna gach lá" },
+          future: { root: "Picfidh", example: "Picfidh mé torthaí amárach" }
+        }
+      },
+      {
+        irish: "Cuir", english: "put", conjugation: "1st", type: "leathan",
+        forms: {
+          past: { root: "Chuir", example: "Chuir mé an leabhar ar an tábla inné" },
+          present: { root: "Cuireann", example: "Cuireann sí bia ar an mbord gach lá" },
+          future: { root: "Cuirfidh", example: "Cuirfidh mé é sa bhosca amárach" }
+        }
+      },
+      {
+        irish: "Doirt", english: "pour", conjugation: "1st", type: "leathan",
+        forms: {
+          past: { root: "Dhoirt", example: "Dhoirt mé bainne aréir" },
+          present: { root: "Doirteann", example: "Doirteann sé uisce gach lá" },
+          future: { root: "Doirtfidh", example: "Doirtfidh mé tae amárach" }
+        }
+      },
+      {
+        irish: "Éist", english: "listen", conjugation: "1st", type: "caol",
+        forms: {
+          past: { root: "D'éist", example: "D'éist mé leis an gceol aréir" },
+          present: { root: "Éisteann", example: "Éisteann sí le raidió gach lá" },
+          future: { root: "Éistfidh", example: "Éistfidh mé le ceol amárach" }
+        }
+      },
+      {
+        irish: "Tuig", english: "understand", conjugation: "1st", type: "caol",
+        forms: {
+          past: { root: "Thuig", example: "Thuig mé an scéal inné" },
+          present: { root: "Tuigeann", example: "Tuigeann sé Gaeilge gach lá" },
+          future: { root: "Tuigfidh", example: "Tuigfidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Ainmnigh", english: "name", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "D'ainmnigh", example: "D'ainmnigh mé mo mhadra inné" },
+          present: { root: "Ainmníonn", example: "Ainmníonn sí a leanbh gach lá" },
+          future: { root: "Ainmneoidh", example: "Ainmneoidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Aistrigh", english: "translate", conjugation: "2nd", type: "caol",
+        forms: {
+          past: { root: "D'aistrigh", example: "D'aistrigh mé an téacs aréir" },
+          present: { root: "Aistríonn", example: "Aistríonn sé leabhair gach lá" },
+          future: { root: "Aistreoidh", example: "Aistreoidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Bailigh", english: "collect", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Bhailligh", example: "Bhailligh mé airgead inné" },
+          present: { root: "Bailíonn", example: "Bailíonn sí clocha gach lá" },
+          future: { root: "Bailóidh", example: "Bailóidh mé amárach" }
+        }
+      },
+      {
+        irish: "Ceistigh", english: "question", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Cheistigh", example: "Cheistigh mé an múinteoir inné" },
+          present: { root: "Ceistíonn", example: "Ceistíonn sé gach lá" },
+          future: { root: "Ceisteoidh", example: "Ceisteoidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Éirigh", english: "get up", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "D'éirigh", example: "D'éirigh mé go moch aréir" },
+          present: { root: "Éiríonn", example: "Éiríonn sé gach maidin" },
+          future: { root: "Éireoidh", example: "Éireoidh mé amárach" }
+        }
+      },
+      {
+        irish: "Maisigh", english: "decorate", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Mhaisigh", example: "Mhaisigh mé an seomra inné" },
+          present: { root: "Maisíonn", example: "Maisíonn sí an teach gach bliain" },
+          future: { root: "Maisfidh", example: "Maisfidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Sábháil", english: "save", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Shábháil", example: "Shábháil mé an doiciméad inné" },
+          present: { root: "Sábhálann", example: "Sábhálann sé airgead gach mí" },
+          future: { root: "Sábhálfaidh", example: "Sábhálfaidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Bagair", english: "threaten", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Bhagair", example: "Bhagair sé orm inné" },
+          present: { root: "Bagraíonn", example: "Bagraíonn sé gach lá" },
+          future: { root: "Bagróidh", example: "Bagróidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Codail", english: "sleep", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Chodail", example: "Chodail mé go maith aréir" },
+          present: { root: "Codlaíonn", example: "Codlaíonn sé gach oíche" },
+          future: { root: "Codlóidh", example: "Codlóidh mé amárach" }
+        }
+      },
+      {
+        irish: "Freagair", english: "answer", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "D'fhreagair", example: "D'fhreagair mé an cheist inné" },
+          present: { root: "Freagraíonn", example: "Freagraíonn sé gach lá" },
+          future: { root: "Freagróidh", example: "Freagróidh mé amárach" }
+        }
+      },
+      {
         irish: "Oscail", english: "open", conjugation: "2nd", type: "leathan",
         forms: {
           past: { root: "D'oscail", example: "D'oscail mé an doras inné" },
-          present: { root: "Osclaíonn", example: "Osclaíonn an siopa anois" },
-          future: { root: "Osclóidh", example: "Osclóidh mé an bosca amárach" }
+          present: { root: "Osclaíonn", example: "Osclaíonn an siopa gach lá" },
+          future: { root: "Osclóidh", example: "Osclóidh mé é amárach" }
         }
       },
-      { 
+      {
+        irish: "Labhair", english: "speak", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Labhair", example: "Labhair mé leis inné" },
+          present: { root: "Labhraíonn", example: "Labhraíonn sí Gaeilge gach lá" },
+          future: { root: "Labhróidh", example: "Labhróidh mé leis amárach" }
+        }
+      },
+      {
+        irish: "Bain", english: "cut/take", conjugation: "1st", type: "leathan",
+        forms: {
+          past: { root: "Bhain", example: "Bhain mé an t-arán inné" },
+          present: { root: "Baineann", example: "Baineann sí úsáid as gach lá" },
+          future: { root: "Bainfidh", example: "Bainfidh mé taitneamh as amárach" }
+        }
+      },
+      {
+        irish: "Buail le", english: "meet", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Bhuail mé le", example: "Bhuail mé léi inné" },
+          present: { root: "Buaileann mé le", example: "Buaileann mé leis gach lá" },
+          future: { root: "Buailfidh mé le", example: "Buailfidh mé leis amárach" }
+        }
+      },
+      {
+        irish: "Brostaigh", english: "hurry", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Bhrostaigh", example: "Bhrostaigh mé abhaile inné" },
+          present: { root: "Brostaíonn", example: "Brostaíonn sé gach maidin" },
+          future: { root: "Brostóidh", example: "Brostóidh mé amárach" }
+        }
+      },
+      {
         irish: "Cabhraigh", english: "help", conjugation: "2nd", type: "leathan",
         forms: {
-          past: { root: "Chabhraigh", example: "Chabhraigh mé léi an tseachtain seo caite" },
+          past: { root: "Chabhraigh", example: "Chabhraigh mé léi inné" },
           present: { root: "Cabhraíonn", example: "Cabhraíonn sé linn gach lá" },
           future: { root: "Cabhróidh", example: "Cabhróidh mé leat amárach" }
         }
       },
-      { 
-        irish: "Éist", english: "listen", conjugation: "1st", type: "caol",
+      {
+        irish: "Críochnaigh", english: "finish", conjugation: "2nd", type: "leathan",
         forms: {
-          past: { root: "D'éist", example: "D'éist mé leis an gceol aréir" },
-          present: { root: "Éisteann", example: "Éisteann sí go minic" },
-          future: { root: "Éistfidh", example: "Éistfidh mé níos déanaí" }
+          past: { root: "Chríochnaigh", example: "Chríochnaigh mé an obair inné" },
+          present: { root: "Críochnaíonn", example: "Críochnaíonn sé gach lá" },
+          future: { root: "Críochnóidh", example: "Críochnóidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Éistigh", english: "listen", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "D'éistigh", example: "D'éistigh mé leis an raidió inné" },
+          present: { root: "Éistíonn", example: "Éistíonn sé gach lá" },
+          future: { root: "Éisteoidh", example: "Éisteoidh mé amárach" }
+        }
+      },
+      {
+        irish: "Imir", english: "play", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "D'imir", example: "D'imir mé peil inné" },
+          present: { root: "Imríonn", example: "Imríonn sé gach lá" },
+          future: { root: "Imreoidh", example: "Imreoidh mé amárach" }
+        }
+      },
+      {
+        irish: "Inis", english: "tell", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "D'inis", example: "D'inis mé scéal inné" },
+          present: { root: "Insíonn", example: "Insíonn sí scéalta gach oíche" },
+          future: { root: "Inseoidh", example: "Inseoidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Péinteáil", english: "paint", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Phéinteáil", example: "Phéinteáil mé an balla inné" },
+          present: { root: "Péinteálann", example: "Péinteálann sé pictiúir gach lá" },
+          future: { root: "Péinteálfaidh", example: "Péinteálfaidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Gortaigh", english: "hurt", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Ghortaigh", example: "Ghortaigh mé mo chos inné" },
+          present: { root: "Gortaíonn", example: "Gortaíonn sé gach lá" },
+          future: { root: "Gortóidh", example: "Gortóidh mé é amárach" }
+        }
+      },
+      {
+        irish: "Aontaigh", english: "agree", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "D'aontaigh", example: "D'aontaigh mé leis inné" },
+          present: { root: "Aontaíonn", example: "Aontaíonn sí gach lá" },
+          future: { root: "Aontóidh", example: "Aontóidh mé amárach" }
+        }
+      },
+      {
+        irish: "Tosaigh", english: "start", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "Thosaigh", example: "Thosaigh mé an cúrsa inné" },
+          present: { root: "Tosaíonn", example: "Tosaíonn sé gach maidin" },
+          future: { root: "Tosóidh", example: "Tosóidh mé amárach" }
+        }
+      },
+      {
+        irish: "Eagraigh", english: "organize", conjugation: "2nd", type: "leathan",
+        forms: {
+          past: { root: "D'eagraigh", example: "D'eagraigh mé an ócáid inné" },
+          present: { root: "Eagraíonn", example: "Eagraíonn sé imeachtaí gach mí" },
+          future: { root: "Eagróidh", example: "Eagróidh mé é amárach" }
         }
       }
-      // ... (Continue with all remaining verbs)
     ];
 
-    // TIME WORDS ORGANIZED BY TENSE
+    // TIME WORDS ORGANIZED BY TENSE (15 expressions as requested)
     const timeWords = {
       past: [
         { irish: "inné", english: "yesterday" },
-        { irish: "aréir", english: "last night" },
         { irish: "anuraidh", english: "last year" },
-        { irish: "an tseachtain seo caite", english: "last week" }
+        { irish: "an tseachtain seo caite", english: "last week" },
+        { irish: "aréir", english: "last night" },
+        { irish: "fadó", english: "long ago" },
+        { irish: "arú inné", english: "two days ago" }
       ],
       present: [
+        { irish: "inniu", english: "today" },
+        { irish: "anois", english: "now" },
         { irish: "gach lá", english: "every day" },
-        { irish: "gach maidin", english: "every morning" },
-        { irish: "go minic", english: "often" },
-        { irish: "anois", english: "now" }
+        { irish: "gach oíche", english: "every night" },
+        { irish: "gach bliain", english: "every year" }
       ],
       future: [
         { irish: "amárach", english: "tomorrow" },
         { irish: "anocht", english: "tonight" },
-        { irish: "go luath", english: "soon" },
-        { irish: "i mbliana seo chugainn", english: "next year" },
-        { irish: "Dé Sathairn", english: "on Saturday" },
-        { irish: "níos déanaí", english: "later" }
+        { irish: "an tseachtain seo chugainn", english: "next week" },
+        { irish: "an bhliain seo chugainn", english: "next year" }
       ]
     };
 
@@ -402,7 +693,7 @@
     submitBtn.addEventListener('click', checkAnswer);
     nextBtn.addEventListener('click', nextQuestion);
     hintBtn.addEventListener('click', showHint);
-    userAnswerEl.addEventListener('keypress', function(e) {
+    userAnswerEl.addEventListener('keypress', function (e) {
       if (e.key === 'Enter') {
         checkAnswer();
       }
@@ -420,12 +711,12 @@
         currentTense: null,
         currentTimeWord: null
       };
-      
+
       // Show quiz section
       introSection.classList.add('hidden');
       resultsSection.classList.add('hidden');
       quizSection.classList.remove('hidden');
-      
+
       // Start first phase
       startPhase();
     }
@@ -433,42 +724,52 @@
     function startPhase() {
       const currentPhase = quizStructure[currentQuiz.phaseIndex];
       quizPhaseEl.textContent = currentPhase.phase;
-      
+
       // Update progress display
       updateProgress();
-      
+
       // Generate first question of phase
       generateQuestion();
     }
 
     function generateQuestion() {
-      // Clear previous feedback
+      // Clear previous feedback and hints
       feedbackEl.textContent = '';
       feedbackEl.className = '';
       hintAreaEl.classList.add('hidden');
-      
+
       // Get current phase info
       const currentPhase = quizStructure[currentQuiz.phaseIndex];
-      const tense = currentPhase.phase.split(' ')[1].toLowerCase(); // "chaite" -> "past"
-      
-      // Select random verb
-      currentQuiz.currentVerb = verbs[Math.floor(Math.random() * verbs.length)];
-      
+      const tenseKey = currentPhase.phase.includes("Chaite") ? "past" :
+        currentPhase.phase.includes("Láithreach") ? "present" : "future";
+
+      // Select random verb that has all conjugations
+      let availableVerbs = verbs.filter(v => v.forms[tenseKey]);
+      currentQuiz.currentVerb = availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
+
       // Select random time word for this tense
-      const timeWordsForTense = timeWords[tense];
-      currentQuiz.currentTimeWord = timeWordsForTense[Math.floor(Math.random() * timeWordsForTense.length)];
-      
-      // Generate question text
+      currentQuiz.currentTimeWord = timeWords[tenseKey][Math.floor(Math.random() * timeWords[tenseKey].length)];
+
+      // Generate and display question
       const englishSentence = `I ${currentQuiz.currentVerb.english} ${currentQuiz.currentTimeWord.english}.`;
-      questionTextEl.textContent = englishSentence;
-      
-      // Set tense hint
-      tenseHintEl.textContent = `${currentPhase.phase} | Verb: ${currentQuiz.currentVerb.irish} (${currentQuiz.currentVerb.conjugation} Conjugation, ${currentQuiz.currentVerb.type})`;
-      
-      // Store correct answer pattern
-      const verbForm = currentQuiz.currentVerb.forms[tense];
-      currentQuiz.correctAnswer = `${verbForm.root} mé ${currentQuiz.currentTimeWord.irish}`;
-      
+      questionTextEl.textContent = `Translate to Irish (${currentPhase.phase}): "${englishSentence}"`;
+
+      // Set tense hint with more details
+      tenseHintEl.innerHTML = `
+        <strong>${currentPhase.phase}</strong> | 
+        Verb: <strong>${currentQuiz.currentVerb.irish}</strong> |
+        Type: ${currentQuiz.currentVerb.conjugation} Conjugation, ${currentQuiz.currentVerb.type}
+      `;
+
+      // Store correct answer (handle special cases like "D'")
+      let conjugatedVerb = currentQuiz.currentVerb.forms[tenseKey].root;
+      if (conjugatedVerb.startsWith("D'")) {
+        conjugatedVerb = conjugatedVerb.replace("D'", "D'"); // Ensure apostrophe is kept
+      }
+
+      currentQuiz.correctAnswer = `${conjugatedVerb} mé ${currentQuiz.currentTimeWord.irish}.`;
+      currentQuiz.correctAnswer = currentQuiz.correctAnswer.replace(" .", "."); // Fix double space
+
       // Reset UI
       userAnswerEl.value = '';
       userAnswerEl.focus();
@@ -479,7 +780,7 @@
     function checkAnswer() {
       const userResponse = userAnswerEl.value.trim();
       const isCorrect = userResponse.toLowerCase() === currentQuiz.correctAnswer.toLowerCase();
-      
+
       if (isCorrect) {
         feedbackEl.textContent = "✅ Correct! Excellent work!";
         feedbackEl.className = "correct";
@@ -491,7 +792,7 @@
           <em>${getVerbConjugationRule()}</em>
         `;
         feedbackEl.className = "incorrect";
-        
+
         // Record mistake
         currentQuiz.mistakes.push({
           question: questionTextEl.textContent,
@@ -502,7 +803,7 @@
           rule: getVerbConjugationRule()
         });
       }
-      
+
       submitBtn.classList.add('hidden');
       nextBtn.classList.remove('hidden');
       updateProgress();
@@ -511,7 +812,7 @@
     function getVerbConjugationRule() {
       const verb = currentQuiz.currentVerb;
       const tense = quizStructure[currentQuiz.phaseIndex].phase.split(' ')[1].toLowerCase();
-      
+
       let rule = "";
       if (tense === "past") {
         rule = `Past (AC): Add ${verb.type === "leathan" ? "D'/h prefix" : "D'/h prefix (caol)"}`;
@@ -520,38 +821,41 @@
       } else {
         rule = `Future (AF): Add ${verb.type === "leathan" ? "-faidh" : "-fidh"} ending`;
       }
-      
+
       return `${verb.irish} (${verb.conjugation} Conj., ${verb.type}): ${rule}`;
     }
 
     function showHint() {
       const verb = currentQuiz.currentVerb;
-      const tense = quizStructure[currentQuiz.phaseIndex].phase.split(' ')[1].toLowerCase();
-      const form = verb.forms[tense];
-      
+      const tenseKey = quizStructure[currentQuiz.phaseIndex].phase.includes("Chaite") ? "past" :
+        quizStructure[currentQuiz.phaseIndex].phase.includes("Láithreach") ? "present" : "future";
+
+      const form = verb.forms[tenseKey];
+
       hintAreaEl.innerHTML = `
-        <h5>Hint:</h5>
-        <p><strong>Verb root:</strong> ${form.root}</p>
-        <p><strong>Example:</strong> ${form.example}</p>
-        <p><strong>Time word:</strong> ${currentQuiz.currentTimeWord.irish} (${currentQuiz.currentTimeWord.english})</p>
+        <h5 class="mb-2">Hint for ${verb.irish} (${tenseKey} tense):</h5>
+        <p><strong>Conjugated form:</strong> ${form.root} mé</p>
+        <p><strong>Example:</strong> "${form.example}"</p>
+        <p><strong>Time expression:</strong> ${currentQuiz.currentTimeWord.irish} (${currentQuiz.currentTimeWord.english})</p>
+        <p class="mt-2"><em>Rule: ${getVerbConjugationRule()}</em></p>
       `;
       hintAreaEl.classList.remove('hidden');
     }
 
     function nextQuestion() {
       currentQuiz.questionIndex++;
-      
+
       // Check if phase completed
       if (currentQuiz.questionIndex >= quizStructure[currentQuiz.phaseIndex].count) {
         currentQuiz.phaseIndex++;
         currentQuiz.questionIndex = 0;
-        
+
         // Check if all phases completed
         if (currentQuiz.phaseIndex >= quizStructure.length) {
           showResults();
           return;
         }
-        
+
         // Start next phase
         startPhase();
       } else {
@@ -564,22 +868,22 @@
       const totalQuestions = quizStructure.reduce((sum, phase) => sum + phase.count, 0);
       const answeredQuestions = quizStructure.slice(0, currentQuiz.phaseIndex)
         .reduce((sum, phase) => sum + phase.count, currentQuiz.questionIndex);
-      
+
       const percent = (answeredQuestions / totalQuestions) * 100;
       progressBar.style.width = `${percent}%`;
-      
+
       quizProgressEl.textContent = `Question ${answeredQuestions + 1}/${totalQuestions}`;
     }
 
     function showResults() {
       quizSection.classList.add('hidden');
       resultsSection.classList.remove('hidden');
-      
+
       const totalQuestions = quizStructure.reduce((sum, phase) => sum + phase.count, 0);
       const percentage = Math.round((currentQuiz.score / totalQuestions) * 100);
-      
+
       scoreEl.textContent = `${currentQuiz.score}/${totalQuestions} (${percentage}%)`;
-      
+
       // Score message
       if (percentage >= 90) {
         scoreMessageEl.textContent = "Excellent! You've mastered these conjugations!";
@@ -591,7 +895,7 @@
         scoreMessageEl.textContent = "Keep practicing! Focus on the rules below.";
         scoreMessageEl.className = "text-warning";
       }
-      
+
       // Display mistakes if any
       if (currentQuiz.mistakes.length > 0) {
         mistakesListEl.innerHTML = currentQuiz.mistakes.map((mistake, index) => `
@@ -615,16 +919,16 @@
         startQuiz();
         return;
       }
-      
+
       // Convert mistakes into quiz questions
       quizStructure = [
-        { 
-          phase: "Practice Mistakes", 
+        {
+          phase: "Practice Mistakes",
           count: currentQuiz.mistakes.length,
           instructions: "Review your incorrect answers"
         }
       ];
-      
+
       // Reset state for practice session
       currentQuiz = {
         phaseIndex: 0,
@@ -635,7 +939,7 @@
         currentTense: null,
         currentTimeWord: null
       };
-      
+
       // Start practice session
       resultsSection.classList.add('hidden');
       quizSection.classList.remove('hidden');
@@ -648,4 +952,5 @@
     }
   </script>
 </body>
+
 </html>
