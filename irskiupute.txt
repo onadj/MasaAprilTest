@@ -1,0 +1,60 @@
+Key Improvements:
+Complete Verb Coverage
+
+All 36 verbs fully conjugated in AC/AL/AF tenses
+
+Organized by conjugation type (1st/2nd) and vowel group (leathan/caol)
+
+Structured Learning Phases
+
+Phase 1: Aimsir Chaite (4 questions)
+
+Phase 2: Aimsir Láithreach (4 questions)
+
+Phase 3: Aimsir Fháistineach (4 questions)
+
+Enhanced Educational Features
+
+Verb conjugation tables with rules
+
+Time-word integration in every question
+
+Detailed hints showing:
+
+plaintext
+Copy
+Hint:
+Verb root: D'ól
+Example: D'ól mé uisce inné
+Time word: inné (yesterday)
+Advanced Mistake Analysis
+
+Explains why answers were wrong:
+
+plaintext
+Copy
+Ól (1st Conj., leathan): Past (AC): Add D'/h prefix
+Practice Mode
+
+Option to retry only incorrect answers
+
+Professional UI
+
+Irish character keyboard
+
+Progress tracking
+
+Responsive design
+
+How This Meets Your Requirements:
+Conjugate 3 verbs → Systematically covers all tenses
+
+4 verb types → Clear labeling (1st/2nd conj., leathan/caol)
+
+Time-based words → Integrated into every question
+
+Full sentences → All answers require complete constructions
+
+36 verbs → Complete database included
+
+Tip: For classroom use, print the verb tables from the intro section as reference sheets!
