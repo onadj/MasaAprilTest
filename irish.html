@@ -339,7 +339,7 @@
 
   <script>
     // COMPLETE VERB DATABASE (36 verbs)
-    const verbs = [
+    const verbsDatabase = [
       {
         irish: "Ól", english: "drink", conjugation: "1st", type: "leathan",
         forms: {
@@ -656,7 +656,7 @@
     };
 
     // QUIZ STRUCTURE
-    const quizStructure = [
+    const defaultQuizStructure = [
       { phase: "Aimsir Chaite", count: 4, instructions: "Conjugate in Past Tense (AC)" },
       { phase: "Aimsir Láithreach", count: 4, instructions: "Conjugate in Present Tense (AL)" },
       { phase: "Aimsir Fháistineach", count: 4, instructions: "Conjugate in Future Tense (AF)" }
@@ -670,8 +670,11 @@
       mistakes: [],
       currentVerb: null,
       currentTense: null,
-      currentTimeWord: null
+      currentTimeWord: null,
+      usedVerbs: new Set() // Track used verbs to avoid repetition
     };
+
+    let quizStructure = [...defaultQuizStructure]; // Create a copy we can modify
 
     // DOM ELEMENTS
     const introSection = document.getElementById('intro');
@@ -715,8 +718,12 @@
         mistakes: [],
         currentVerb: null,
         currentTense: null,
-        currentTimeWord: null
+        currentTimeWord: null,
+        usedVerbs: new Set()
       };
+
+      // Reset quiz structure to default
+      quizStructure = [...defaultQuizStructure];
 
       // Show quiz section
       introSection.classList.add('hidden');
@@ -749,9 +756,17 @@
       const tenseKey = currentPhase.phase.includes("Chaite") ? "past" :
         currentPhase.phase.includes("Láithreach") ? "present" : "future";
 
-      // Select random verb that has all conjugations
-      let availableVerbs = verbs.filter(v => v.forms[tenseKey]);
+      // Select random verb that has all conjugations and hasn't been used yet
+      let availableVerbs = verbsDatabase.filter(v => v.forms[tenseKey] && !currentQuiz.usedVerbs.has(v.irish));
+      
+      // If we've used all verbs, reset the used verbs set
+      if (availableVerbs.length === 0) {
+        currentQuiz.usedVerbs = new Set();
+        availableVerbs = verbsDatabase.filter(v => v.forms[tenseKey]);
+      }
+      
       currentQuiz.currentVerb = availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
+      currentQuiz.usedVerbs.add(currentQuiz.currentVerb.irish);
 
       // Select random time word for this tense
       currentQuiz.currentTimeWord = timeWords[tenseKey][Math.floor(Math.random() * timeWords[tenseKey].length)];
@@ -943,7 +958,8 @@
         mistakes: [],
         currentVerb: null,
         currentTense: null,
-        currentTimeWord: null
+        currentTimeWord: null,
+        usedVerbs: new Set()
       };
 
       // Start practice session
@@ -953,7 +969,15 @@
     }
 
     function insertChar(char) {
-      userAnswerEl.value += char;
+      const startPos = userAnswerEl.selectionStart;
+      const endPos = userAnswerEl.selectionEnd;
+      const currentValue = userAnswerEl.value;
+      
+      // Insert the character at the cursor position
+      userAnswerEl.value = currentValue.substring(0, startPos) + char + currentValue.substring(endPos);
+      
+      // Move cursor to position after inserted character
+      userAnswerEl.selectionStart = userAnswerEl.selectionEnd = startPos + char.length;
       userAnswerEl.focus();
     }
   </script>
