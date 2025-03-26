@@ -124,10 +124,8 @@
     <div id="intro" class="card p-4">
       <h1 class="text-center mb-4">Complete Irish Verb Conjugation Mastery</h1>
       <div class="text-center mb-4">
-        <img src="images/masairish.jpg"
-             alt="Irish Verbs Illustration"
-             class="img-fluid rounded"
-             style="max-width: 100%; height: auto;">
+        <img src="images/masairish.jpg" alt="Irish Verbs Illustration" class="img-fluid rounded"
+          style="max-width: 100%; height: auto;">
       </div>
 
       <!-- Verb Types Explanation -->
@@ -630,7 +628,7 @@
       }
     ];
 
-    // TIME WORDS ORGANIZED BY TENSE (15 expressions as requested)
+    // TIME WORDS ORGANIZED BY TENSE
     const timeWords = {
       past: [
         { irish: "inné", english: "yesterday" },
@@ -671,10 +669,10 @@
       currentVerb: null,
       currentTense: null,
       currentTimeWord: null,
-      usedVerbs: new Set() // Track used verbs to avoid repetition
+      usedVerbs: new Set()
     };
 
-    let quizStructure = [...defaultQuizStructure]; // Create a copy we can modify
+    let quizStructure = [...defaultQuizStructure];
 
     // DOM ELEMENTS
     const introSection = document.getElementById('intro');
@@ -703,14 +701,11 @@
     nextBtn.addEventListener('click', nextQuestion);
     hintBtn.addEventListener('click', showHint);
     userAnswerEl.addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') {
-        checkAnswer();
-      }
+      if (e.key === 'Enter') checkAnswer();
     });
 
     // QUIZ FUNCTIONS
     function startQuiz() {
-      // Reset quiz state
       currentQuiz = {
         phaseIndex: 0,
         questionIndex: 0,
@@ -722,85 +717,69 @@
         usedVerbs: new Set()
       };
 
-      // Reset quiz structure to default
       quizStructure = [...defaultQuizStructure];
-
-      // Show quiz section
       introSection.classList.add('hidden');
       resultsSection.classList.add('hidden');
       quizSection.classList.remove('hidden');
-
-      // Start first phase
       startPhase();
     }
 
     function startPhase() {
       const currentPhase = quizStructure[currentQuiz.phaseIndex];
       quizPhaseEl.textContent = currentPhase.phase;
-
-      // Update progress display
       updateProgress();
-
-      // Generate first question of phase
       generateQuestion();
     }
 
     function generateQuestion() {
-      // Clear previous feedback and hints
       feedbackEl.textContent = '';
       feedbackEl.className = '';
       hintAreaEl.classList.add('hidden');
 
-      // Get current phase info
       const currentPhase = quizStructure[currentQuiz.phaseIndex];
       const tenseKey = currentPhase.phase.includes("Chaite") ? "past" :
         currentPhase.phase.includes("Láithreach") ? "present" : "future";
 
-      // Select random verb that has all conjugations and hasn't been used yet
       let availableVerbs = verbsDatabase.filter(v => v.forms[tenseKey] && !currentQuiz.usedVerbs.has(v.irish));
-      
-      // If we've used all verbs, reset the used verbs set
+
       if (availableVerbs.length === 0) {
         currentQuiz.usedVerbs = new Set();
         availableVerbs = verbsDatabase.filter(v => v.forms[tenseKey]);
       }
-      
+
       currentQuiz.currentVerb = availableVerbs[Math.floor(Math.random() * availableVerbs.length)];
       currentQuiz.usedVerbs.add(currentQuiz.currentVerb.irish);
-
-      // Select random time word for this tense
       currentQuiz.currentTimeWord = timeWords[tenseKey][Math.floor(Math.random() * timeWords[tenseKey].length)];
 
-      // Generate and display question
       const englishSentence = `I ${currentQuiz.currentVerb.english} ${currentQuiz.currentTimeWord.english}.`;
       questionTextEl.textContent = `Translate to Irish (${currentPhase.phase}): "${englishSentence}"`;
 
-      // Set tense hint with more details
       tenseHintEl.innerHTML = `
-        <strong>${currentPhase.phase}</strong> | 
-        Verb: <strong>${currentQuiz.currentVerb.irish}</strong> |
-        Type: ${currentQuiz.currentVerb.conjugation} Conjugation, ${currentQuiz.currentVerb.type}
-      `;
+    <strong>${currentPhase.phase}</strong> | 
+    Verb: <strong>${currentQuiz.currentVerb.irish}</strong> |
+    Type: ${currentQuiz.currentVerb.conjugation} Conjugation, ${currentQuiz.currentVerb.type}
+  `;
 
-      // Store correct answer (handle special cases like "D'")
       let conjugatedVerb = currentQuiz.currentVerb.forms[tenseKey].root;
-      if (conjugatedVerb.startsWith("D'")) {
-        conjugatedVerb = conjugatedVerb.replace("D'", "D'"); // Ensure apostrophe is kept
-      }
+      currentQuiz.correctAnswer = `${conjugatedVerb} mé ${currentQuiz.currentTimeWord.irish}.`.replace(" .", ".");
 
-      currentQuiz.correctAnswer = `${conjugatedVerb} mé ${currentQuiz.currentTimeWord.irish}.`;
-      currentQuiz.correctAnswer = currentQuiz.correctAnswer.replace(" .", "."); // Fix double space
-
-      // Reset UI
       userAnswerEl.value = '';
       userAnswerEl.focus();
       submitBtn.classList.remove('hidden');
       nextBtn.classList.add('hidden');
     }
 
+    function cleanString(str) {
+      return str.trim()
+        .toLowerCase()
+        .replace(/[.,]/g, '')
+        .replace(/\s+/g, ' ');
+    }
+
     function checkAnswer() {
-      const userResponse = userAnswerEl.value.trim();
-      const isCorrect = userResponse.toLowerCase() === currentQuiz.correctAnswer.toLowerCase();
+      const userResponse = cleanString(userAnswerEl.value);
+      const correctAnswer = cleanString(currentQuiz.correctAnswer);
+      const isCorrect = userResponse === correctAnswer;
 
       if (isCorrect) {
         feedbackEl.textContent = "✅ Correct! Excellent work!";
@@ -808,16 +787,15 @@
         currentQuiz.score++;
       } else {
         feedbackEl.innerHTML = `
-          ❌ Incorrect. The correct answer is:<br>
-          <strong>${currentQuiz.correctAnswer}</strong><br>
-          <em>${getVerbConjugationRule()}</em>
-        `;
+      ❌ Incorrect. The correct answer is:<br>
+      <strong>${currentQuiz.correctAnswer}</strong><br>
+      <em>${getVerbConjugationRule()}</em>
+    `;
         feedbackEl.className = "incorrect";
 
-        // Record mistake
         currentQuiz.mistakes.push({
           question: questionTextEl.textContent,
-          userAnswer: userResponse,
+          userAnswer: userAnswerEl.value.trim(),
           correctAnswer: currentQuiz.correctAnswer,
           verb: currentQuiz.currentVerb.irish,
           tense: quizStructure[currentQuiz.phaseIndex].phase,
@@ -832,13 +810,19 @@
 
     function getVerbConjugationRule() {
       const verb = currentQuiz.currentVerb;
-      const tense = quizStructure[currentQuiz.phaseIndex].phase.split(' ')[1].toLowerCase();
+      const tense = quizStructure[currentQuiz.phaseIndex].phase;
+      const tenseKey = tense.includes("Chaite") ? "past" :
+        tense.includes("Láithreach") ? "present" : "future";
 
       let rule = "";
-      if (tense === "past") {
+      if (tenseKey === "past") {
         rule = `Past (AC): Add ${verb.type === "leathan" ? "D'/h prefix" : "D'/h prefix (caol)"}`;
-      } else if (tense === "present") {
-        rule = `Present (AL): Add ${verb.type === "leathan" ? "-ann" : "-eann"} ending`;
+      } else if (tenseKey === "present") {
+        if (verb.conjugation === "1st") {
+          rule = `Present (AL): Add ${verb.type === "leathan" ? "-ann" : "-eann"} ending`;
+        } else {
+          rule = `Present (AL): Add ${verb.type === "leathan" ? "-aíonn" : "-íonn"} ending`;
+        }
       } else {
         rule = `Future (AF): Add ${verb.type === "leathan" ? "-faidh" : "-fidh"} ending`;
       }
@@ -854,33 +838,29 @@
       const form = verb.forms[tenseKey];
 
       hintAreaEl.innerHTML = `
-        <h5 class="mb-2">Hint for ${verb.irish} (${tenseKey} tense):</h5>
-        <p><strong>Conjugated form:</strong> ${form.root} mé</p>
-        <p><strong>Example:</strong> "${form.example}"</p>
-        <p><strong>Time expression:</strong> ${currentQuiz.currentTimeWord.irish} (${currentQuiz.currentTimeWord.english})</p>
-        <p class="mt-2"><em>Rule: ${getVerbConjugationRule()}</em></p>
-      `;
+    <h5 class="mb-2">Hint for ${verb.irish} (${tenseKey} tense):</h5>
+    <p><strong>Conjugated form:</strong> ${form.root} mé</p>
+    <p><strong>Example:</strong> "${form.example}"</p>
+    <p><strong>Time expression:</strong> ${currentQuiz.currentTimeWord.irish} (${currentQuiz.currentTimeWord.english})</p>
+    <p class="mt-2"><em>Rule: ${getVerbConjugationRule()}</em></p>
+  `;
       hintAreaEl.classList.remove('hidden');
     }
 
     function nextQuestion() {
       currentQuiz.questionIndex++;
 
-      // Check if phase completed
       if (currentQuiz.questionIndex >= quizStructure[currentQuiz.phaseIndex].count) {
         currentQuiz.phaseIndex++;
         currentQuiz.questionIndex = 0;
 
-        // Check if all phases completed
         if (currentQuiz.phaseIndex >= quizStructure.length) {
           showResults();
           return;
         }
 
-        // Start next phase
         startPhase();
       } else {
-        // Next question in current phase
         generateQuestion();
       }
     }
@@ -892,7 +872,6 @@
 
       const percent = (answeredQuestions / totalQuestions) * 100;
       progressBar.style.width = `${percent}%`;
-
       quizProgressEl.textContent = `Question ${answeredQuestions + 1}/${totalQuestions}`;
     }
 
@@ -905,7 +884,6 @@
 
       scoreEl.textContent = `${currentQuiz.score}/${totalQuestions} (${percentage}%)`;
 
-      // Score message
       if (percentage >= 90) {
         scoreMessageEl.textContent = "Excellent! You've mastered these conjugations!";
         scoreMessageEl.className = "text-success";
@@ -917,19 +895,18 @@
         scoreMessageEl.className = "text-warning";
       }
 
-      // Display mistakes if any
       if (currentQuiz.mistakes.length > 0) {
         mistakesListEl.innerHTML = currentQuiz.mistakes.map((mistake, index) => `
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5>Question ${index + 1}</h5>
-              <p><strong>Task:</strong> ${mistake.tense} - ${mistake.question}</p>
-              <p class="text-danger"><strong>Your answer:</strong> ${mistake.userAnswer || "(blank)"}</p>
-              <p class="text-success"><strong>Correct answer:</strong> ${mistake.correctAnswer}</p>
-              <p><em>${mistake.rule}</em></p>
-            </div>
-          </div>
-        `).join('');
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5>Question ${index + 1}</h5>
+          <p><strong>Task:</strong> ${mistake.tense} - ${mistake.question}</p>
+          <p class="text-danger"><strong>Your answer:</strong> ${mistake.userAnswer || "(blank)"}</p>
+          <p class="text-success"><strong>Correct answer:</strong> ${mistake.correctAnswer}</p>
+          <p><em>${mistake.rule}</em></p>
+        </div>
+      </div>
+    `).join('');
       } else {
         mistakesListEl.innerHTML = "<p class='text-center'>Perfect! No mistakes to review.</p>";
       }
@@ -941,16 +918,12 @@
         return;
       }
 
-      // Convert mistakes into quiz questions
-      quizStructure = [
-        {
-          phase: "Practice Mistakes",
-          count: currentQuiz.mistakes.length,
-          instructions: "Review your incorrect answers"
-        }
-      ];
+      quizStructure = [{
+        phase: "Practice Mistakes",
+        count: currentQuiz.mistakes.length,
+        instructions: "Review your incorrect answers"
+      }];
 
-      // Reset state for practice session
       currentQuiz = {
         phaseIndex: 0,
         questionIndex: 0,
@@ -962,7 +935,6 @@
         usedVerbs: new Set()
       };
 
-      // Start practice session
       resultsSection.classList.add('hidden');
       quizSection.classList.remove('hidden');
       startPhase();
@@ -972,14 +944,12 @@
       const startPos = userAnswerEl.selectionStart;
       const endPos = userAnswerEl.selectionEnd;
       const currentValue = userAnswerEl.value;
-      
-      // Insert the character at the cursor position
+
       userAnswerEl.value = currentValue.substring(0, startPos) + char + currentValue.substring(endPos);
-      
-      // Move cursor to position after inserted character
       userAnswerEl.selectionStart = userAnswerEl.selectionEnd = startPos + char.length;
       userAnswerEl.focus();
     }
+
   </script>
 </body>
 
