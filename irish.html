@@ -124,7 +124,7 @@
     <div id="intro" class="card p-4">
       <h1 class="text-center mb-4">Complete Irish Verb Conjugation Mastery</h1>
       <div class="text-center mb-4">
-        <img src="images/masairish.jpg" alt="Irish Verbs Illustration" class="img-fluid rounded"
+        <img src="https://via.placeholder.com/600x300?text=Irish+Verbs" alt="Irish Verbs Illustration" class="img-fluid rounded"
           style="max-width: 100%; height: auto;">
       </div>
 
@@ -306,7 +306,7 @@
             </ul>
           </div>
         </div>
-        <button onclick="window.location.href='index.html'" class="btn btn-outline-primary mt-3">Back to Home</button>
+        <button onclick="window.location.reload()" class="btn btn-outline-primary mt-3">Back to Home</button>
       </div>
     </div>
 
@@ -328,8 +328,7 @@
         <div class="d-flex justify-content-center gap-3">
           <button id="restart-btn" class="btn btn-primary btn-lg">Restart Full Quiz</button>
           <button id="practice-btn" class="btn btn-outline-primary btn-lg">Practice Mistakes</button>
-          <button onclick="window.location.href='index.html'" class="btn btn-outline-secondary btn-lg">Back to
-            Home</button>
+          <button onclick="window.location.reload()" class="btn btn-outline-secondary btn-lg">Back to Home</button>
         </div>
       </div>
     </div>
@@ -435,7 +434,7 @@
         }
       },
       {
-        irish: "Aistrigh", english: "translate", conjugation: "2nd", type: "caol",
+        irish: "Aistrigh", english: "translate", conjugation: "2nd", type: "leathan",
         forms: {
           past: { root: "D'aistrigh", example: "D'aistrigh mé an téacs aréir" },
           present: { root: "Aistríonn", example: "Aistríonn sé leabhair gach lá" },
@@ -560,14 +559,6 @@
           past: { root: "Chríochnaigh", example: "Chríochnaigh mé an obair inné" },
           present: { root: "Críochnaíonn", example: "Críochnaíonn sé gach lá" },
           future: { root: "Críochnóidh", example: "Críochnóidh mé é amárach" }
-        }
-      },
-      {
-        irish: "Éistigh", english: "listen", conjugation: "2nd", type: "leathan",
-        forms: {
-          past: { root: "D'éistigh", example: "D'éistigh mé leis an raidió inné" },
-          present: { root: "Éistíonn", example: "Éistíonn sé gach lá" },
-          future: { root: "Éisteoidh", example: "Éisteoidh mé amárach" }
         }
       },
       {
@@ -755,10 +746,10 @@
       questionTextEl.textContent = `Translate to Irish (${currentPhase.phase}): "${englishSentence}"`;
 
       tenseHintEl.innerHTML = `
-    <strong>${currentPhase.phase}</strong> | 
-    Verb: <strong>${currentQuiz.currentVerb.irish}</strong> |
-    Type: ${currentQuiz.currentVerb.conjugation} Conjugation, ${currentQuiz.currentVerb.type}
-  `;
+        <strong>${currentPhase.phase}</strong> | 
+        Verb: <strong>${currentQuiz.currentVerb.irish}</strong> |
+        Type: ${currentQuiz.currentVerb.conjugation} Conjugation, ${currentQuiz.currentVerb.type}
+      `;
 
       let conjugatedVerb = currentQuiz.currentVerb.forms[tenseKey].root;
       currentQuiz.correctAnswer = `${conjugatedVerb} mé ${currentQuiz.currentTimeWord.irish}.`.replace(" .", ".");
@@ -772,8 +763,9 @@
     function cleanString(str) {
       return str.trim()
         .toLowerCase()
-        .replace(/[.,]/g, '')
-        .replace(/\s+/g, ' ');
+        .replace(/[.,;]/g, '')
+        .replace(/\s+/g, ' ')
+        .replace(/[ʼ']/g, "'");
     }
 
     function checkAnswer() {
@@ -787,10 +779,10 @@
         currentQuiz.score++;
       } else {
         feedbackEl.innerHTML = `
-      ❌ Incorrect. The correct answer is:<br>
-      <strong>${currentQuiz.correctAnswer}</strong><br>
-      <em>${getVerbConjugationRule()}</em>
-    `;
+          ❌ Incorrect. The correct answer is:<br>
+          <strong>${currentQuiz.correctAnswer}</strong><br>
+          <em>${getVerbConjugationRule()}</em>
+        `;
         feedbackEl.className = "incorrect";
 
         currentQuiz.mistakes.push({
@@ -838,12 +830,12 @@
       const form = verb.forms[tenseKey];
 
       hintAreaEl.innerHTML = `
-    <h5 class="mb-2">Hint for ${verb.irish} (${tenseKey} tense):</h5>
-    <p><strong>Conjugated form:</strong> ${form.root} mé</p>
-    <p><strong>Example:</strong> "${form.example}"</p>
-    <p><strong>Time expression:</strong> ${currentQuiz.currentTimeWord.irish} (${currentQuiz.currentTimeWord.english})</p>
-    <p class="mt-2"><em>Rule: ${getVerbConjugationRule()}</em></p>
-  `;
+        <h5 class="mb-2">Hint for ${verb.irish} (${tenseKey} tense):</h5>
+        <p><strong>Conjugated form:</strong> ${form.root} mé</p>
+        <p><strong>Example:</strong> "${form.example}"</p>
+        <p><strong>Time expression:</strong> ${currentQuiz.currentTimeWord.irish} (${currentQuiz.currentTimeWord.english})</p>
+        <p class="mt-2"><em>Rule: ${getVerbConjugationRule()}</em></p>
+      `;
       hintAreaEl.classList.remove('hidden');
     }
 
@@ -897,16 +889,16 @@
 
       if (currentQuiz.mistakes.length > 0) {
         mistakesListEl.innerHTML = currentQuiz.mistakes.map((mistake, index) => `
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5>Question ${index + 1}</h5>
-          <p><strong>Task:</strong> ${mistake.tense} - ${mistake.question}</p>
-          <p class="text-danger"><strong>Your answer:</strong> ${mistake.userAnswer || "(blank)"}</p>
-          <p class="text-success"><strong>Correct answer:</strong> ${mistake.correctAnswer}</p>
-          <p><em>${mistake.rule}</em></p>
-        </div>
-      </div>
-    `).join('');
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5>Question ${index + 1}</h5>
+              <p><strong>Task:</strong> ${mistake.tense} - ${mistake.question}</p>
+              <p class="text-danger"><strong>Your answer:</strong> ${mistake.userAnswer || "(blank)"}</p>
+              <p class="text-success"><strong>Correct answer:</strong> ${mistake.correctAnswer}</p>
+              <p><em>${mistake.rule}</em></p>
+            </div>
+          </div>
+        `).join('');
       } else {
         mistakesListEl.innerHTML = "<p class='text-center'>Perfect! No mistakes to review.</p>";
       }
@@ -949,8 +941,6 @@
       userAnswerEl.selectionStart = userAnswerEl.selectionEnd = startPos + char.length;
       userAnswerEl.focus();
     }
-
   </script>
 </body>
-
 </html>
