@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Practice</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card {
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .step-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid #007bff;
+      padding: 15px;
+      margin: 10px 0;
+    }
+    .input-step {
+      width: 60px;
+      display: inline-block;
+      margin: 0 5px;
+    }
+    .correct {
+      background-color: #d4edda;
+    }
+    .incorrect {
+      background-color: #f8d7da;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">📚 Maths Topics</h1>
+    <div class="row">
+      <!-- Multiplication & Division -->
+      <div class="col-md-6">
+        <div class="card" onclick="window.location.href='math_decimals.html'">
+          <div class="card-body">
+            <h5 class="card-title">🔢 Multiplication & Division</h5>
+            <ul>
+              <li>Multiply/divide with decimals</li>
+              <li>Long division</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Data -->
+      <div class="col-md-6">
+        <div class="card" onclick="window.location.href='math_data.html'">
+          <div class="card-body">
+            <h5 class="card-title">📊 Data</h5>
+            <ul>
+              <li>Averages</li>
+              <li>Graphs (bar, pie, trend)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Length -->
+      <div class="col-md-6">
+        <div class="card" onclick="window.location.href='math_length.html'">
+          <div class="card-body">
+            <h5 class="card-title">📏 Length</h5>
+            <ul>
+              <li>Unit conversions</li>
+              <li>Measuring</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Area -->
+      <div class="col-md-6">
+        <div class="card" onclick="window.location.href='math_area.html'">
+          <div class="card-body">
+            <h5 class="card-title">🟦 Area</h5>
+            <ul>
+              <li>Area & perimeter</li>
+              <li>Irregular shapes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
