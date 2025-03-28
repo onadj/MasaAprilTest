@@ -9,7 +9,7 @@
   <style>
     body {
       background-color: #f0f9ff;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     .card {
       border-radius: 15px;
@@ -41,7 +41,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .input-step {
-      width: 80px;
+      width: 100px;
       border: 2px solid #4cc9f0;
       border-radius: 5px;
       padding: 5px;
@@ -170,12 +170,33 @@
       color: #555;
     }
     .breakdown-input {
-      width: 40px;
+      width: 60px;
       margin: 0 5px;
     }
     .math-equation {
-      font-family: "Times New Roman", serif;
-      font-style: italic;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: bold;
+    }
+    .place-value-explanation {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 5px;
+    }
+    .problem-display {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #6c5ce7;
+      text-align: center;
+      margin: 15px 0;
+      padding: 10px;
+      background-color: #f0f7ff;
+      border-radius: 8px;
+    }
+    .section-title {
+      color: #6c5ce7;
+      border-bottom: 2px solid #6c5ce7;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
     }
   </style>
 </head>
@@ -199,18 +220,19 @@
       <div class="text-center mb-4">
         <h4>Choose difficulty:</h4>
         <button class="btn btn-success m-1" id="easy-btn">Easy (e.g., 3 × 2.4)</button>
-        <button class="btn btn-warning m-1" id="medium-btn">Medium (e.g., 4.2 × 1.5)</button>
+        <button class="btn btn-warning m-1" id="medium-btn">Medium (e.g., 20.7 × 1.5)</button>
         <button class="btn btn-danger m-1" id="hard-btn">Hard (e.g., 12.3 × 4.5)</button>
       </div>
 
       <!-- Problem Area -->
       <div id="game-area" class="hidden">
         <!-- Current Problem -->
-        <h3 class="text-center mb-3" style="color: #6c5ce7;" id="problem-text"></h3>
+        <div class="problem-display" id="problem-text"></div>
         
         <!-- Teacher's Example -->
         <div class="step-box">
-          <h5>📝 Teacher's Example</h5>
+          <h4 class="section-title">📝 Teacher's Example</h4>
+          <div class="problem-display" id="teacher-problem"></div>
           <div id="teacher-example" class="text-center">
             <p id="example-steps" class="mt-2"></p>
           </div>
@@ -220,7 +242,8 @@
 
         <!-- Student's Practice -->
         <div class="step-box">
-          <h5>✏️ Your Practice Steps</h5>
+          <h4 class="section-title">✏️ Your Practice Steps</h4>
+          <div class="problem-display" id="student-problem"></div>
           <div id="student-steps">
             <!-- Steps will be added dynamically -->
           </div>
@@ -267,7 +290,7 @@
     // Problem Banks
     const problems = {
       easy: generateProblems(1, 5, 1, 0.5),
-      medium: generateProblems(1, 10, 2, 0.3),
+      medium: generateProblems(5, 30, 1, 0.2),
       hard: generateProblems(5, 50, 2, 0.1)
     };
 
@@ -287,13 +310,22 @@
       const problemBank = [];
       for (let i = 0; i < 30; i++) {
         const useSingleDigit = Math.random() < singleDigitChance;
-        const num1 = useSingleDigit ? 
-          (1 + Math.floor(Math.random() * 9)) : 
-          (min + Math.floor(Math.random() * (max - min)));
+        let num1, num2;
         
-        const num2 = (min + Math.random() * (max - min)).toFixed(decimals);
+        if (currentDifficulty === 'medium') {
+          // For medium difficulty, ensure we have problems like 20.7 × 1.5
+          num1 = (min + Math.random() * (max - min)).toFixed(1);
+          num2 = (1 + Math.random() * 9).toFixed(1);
+        } else {
+          num1 = useSingleDigit ? 
+            (1 + Math.floor(Math.random() * 9)) : 
+            (min + Math.floor(Math.random() * (max - min)));
+          
+          num2 = (min + Math.random() * (max - min)).toFixed(decimals);
+        }
+        
         const question = `${num1} × ${num2}`;
-        const answer = (num1 * parseFloat(num2)).toFixed(decimals);
+        const answer = (parseFloat(num1) * parseFloat(num2)).toFixed(decimals);
         
         problemBank.push({
           question: question,
@@ -307,7 +339,7 @@
     function generateSteps(problem, answer) {
       const [num1, num2] = problem.split('×').map(num => num.trim());
       const decimalPlaces = num2.split('.')[1] ? num2.split('.')[1].length : 0;
-      const wholeNumberCalculation = num1 * parseInt(num2.replace('.', ''));
+      const wholeNumberCalculation = parseFloat(num1) * parseInt(num2.replace('.', ''));
       
       // Create visual representation of decimal places
       let decimalVisual = num2;
@@ -373,8 +405,9 @@
           <div class="multiplication-cell">= ${product}${'0'.repeat(index)}</div>
         </div>`;
         
+        const placeValueText = index > 0 ? ` (add ${index} zero${index !== 1 ? 's' : ''} for place value)` : '';
         steps.push({
-          instruction: `Multiply ${num1} by ${digit} (${index === 0 ? 'units' : 'tens'} digit):`,
+          instruction: `Multiply ${num1} by ${digit}${placeValueText}:`,
           calculation: `${num1} × ${digit} = ${product}`,
           placeValue: index > 0 ? `Add ${index} zero(s) → ${product}${'0'.repeat(index)}` : null
         });
@@ -434,15 +467,28 @@
       currentStudentAnswers = {};
 
       document.getElementById('problem-text').textContent = `Calculate: ${currentProblem.question}`;
+      document.getElementById('student-problem').textContent = `Your Problem: ${currentProblem.question}`;
       finalAnswerBox.style.display = 'none';
       document.getElementById('final-feedback').innerHTML = '';
 
       // Generate teacher's example (similar but different problem)
       const [currentNum1, currentNum2] = currentProblem.question.split('×').map(n => n.trim());
-      const exampleNum1 = currentNum1.includes('.') ? currentNum1 : (parseInt(currentNum1) + 1);
-      const exampleNum2 = (parseFloat(currentNum2) + 0.2).toFixed(currentNum2.split('.')[1]?.length || 0);
-      const exampleAnswer = (exampleNum1 * exampleNum2).toFixed(currentNum2.split('.')[1]?.length || 0);
+      let exampleNum1, exampleNum2;
+      
+      if (currentDifficulty === 'medium') {
+        // For medium difficulty, create examples like 20.7 × 1.5
+        exampleNum1 = (parseFloat(currentNum1) + 0.3).toFixed(1);
+        exampleNum2 = (parseFloat(currentNum2) + 0.2).toFixed(1);
+      } else {
+        exampleNum1 = currentNum1.includes('.') ? currentNum1 : (parseInt(currentNum1) + 1);
+        exampleNum2 = (parseFloat(currentNum2) + 0.2).toFixed(currentNum2.split('.')[1]?.length || 0);
+      }
+      
+      const exampleAnswer = (parseFloat(exampleNum1) * parseFloat(exampleNum2)).toFixed(currentNum2.split('.')[1]?.length || 0);
       const exampleSteps = generateSteps(`${exampleNum1} × ${exampleNum2}`, exampleAnswer);
+      
+      // Display teacher's problem
+      document.getElementById('teacher-problem').textContent = `Teacher's Example: ${exampleNum1} × ${exampleNum2}`;
       
       // Build teacher's example with detailed multiplication steps
       let exampleHTML = `
@@ -467,8 +513,8 @@
         exampleHTML += `
           <div class="breakdown-step">
             <div>${step.instruction}</div>
-            <div class="math-equation">${step.calculation}</div>
-            ${step.placeValue ? `<div>${step.placeValue}</div>` : ''}
+            <div class="math-equation">${step.calculation.split('=')[0]} = ${step.calculation.split('=')[1].trim()}</div>
+            ${step.placeValue ? `<div class="place-value-explanation">${step.placeValue}</div>` : ''}
           </div>
         `;
       });
@@ -476,7 +522,7 @@
       exampleHTML += `
             </div>
             <div class="step-input-area">
-              ${exampleNum1} × ${exampleNum2.replace('.', '')} = <input type="text" class="input-step" value="${exampleNum1 * parseInt(exampleNum2.replace('.', ''))}" readonly>
+              ${exampleNum1} × ${exampleNum2.replace('.', '')} = <input type="text" class="input-step" value="${parseInt(exampleNum1) * parseInt(exampleNum2.replace('.', ''))}" readonly>
             </div>
           </div>
         </div>
@@ -575,15 +621,13 @@
           <div class="multiplication-step">
             <div><strong>Step ${index + 1}:</strong> ${step.instruction}</div>
             <div class="breakdown-step">
-              <div class="math-equation">${step.calculation.split('=')[0]} = 
+              <div>${step.calculation.split('=')[0]} = 
                 <input type="number" class="breakdown-input" id="step1b-${index}-input">
                 <button class="btn btn-sm btn-outline-primary check-breakdown-btn" data-step="step1b-${index}" data-answer="${step.calculation.split('=')[1].trim()}">✓</button>
                 <span id="step1b-${index}-feedback"></span>
               </div>
               ${step.placeValue ? `
-              <div>Place value: 
-                <input type="text" class="breakdown-input" id="step1b-${index}-placevalue-input" value="${step.placeValue.split('→')[1].trim()}" readonly>
-              </div>` : ''}
+              <div class="place-value-explanation">${step.placeValue}</div>` : ''}
             </div>
           </div>
         `;
@@ -677,16 +721,15 @@
       const inputElement = document.getElementById(`${stepId}-input`);
       const feedbackElement = document.getElementById(`${stepId}-feedback`);
       const containerElement = document.getElementById(`step-${stepId}-container`);
-      
       let userAnswer = inputElement ? inputElement.value : '';
       let isCorrect = false;
-      
+
       if (stepId === 'step3') {
         isCorrect = Math.abs(parseFloat(userAnswer) - parseFloat(correctAnswer)) < 0.01;
       } else {
         isCorrect = userAnswer == correctAnswer;
       }
-      
+
       if (isCorrect) {
         if (feedbackElement) feedbackElement.innerHTML = '✓ Correct!';
         if (feedbackElement) feedbackElement.style.color = 'green';
@@ -698,12 +741,29 @@
         if (containerElement) containerElement.style.borderLeftColor = '#f44336';
         currentStudentAnswers[stepId] = false;
       }
-      
-      // Show final answer box if all steps are complete
-      if (currentStudentAnswers['step1a'] && currentStudentAnswers['step1b'] && 
-          currentStudentAnswers['step2'] && currentStudentAnswers['step3']) {
+
+      if (currentStudentAnswers['step1a'] && currentStudentAnswers['step1b'] && currentStudentAnswers['step2'] && currentStudentAnswers['step3']) {
         finalAnswerBox.style.display = 'block';
+        document.getElementById('user-answer').focus();
       }
+    }
+
+    function checkFinalAnswer() {
+      const userAnswer = document.getElementById('user-answer').value;
+      const feedback = document.getElementById('final-feedback');
+      const isCorrect = Math.abs(parseFloat(userAnswer) - parseFloat(currentProblem.answer)) < 0.01;
+
+      if (isCorrect) {
+        feedback.innerHTML = '<div class="correct p-2">✅ Perfect! All steps correct! <span class="emoji-feedback">🎉</span></div>';
+        correctAnswers++;
+        confetti({ particleCount: 150, spread: 80 });
+        setTimeout(() => nextProblem(), 2000);
+      } else {
+        feedback.innerHTML = '<div class="incorrect p-2">❌ Final answer incorrect. Try again.</div>';
+      }
+
+      problemsSolved++;
+      updateProgress();
     }
 
     function checkFinalAnswer() {
