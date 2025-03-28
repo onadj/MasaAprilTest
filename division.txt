@@ -304,19 +304,6 @@
             background-color: rgba(255, 255, 255, 0.2);
             border-radius: 3px;
         }
-
-        .remainder-explanation {
-            background-color: rgba(108, 92, 231, 0.1);
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            border-left: 3px solid var(--primary-color);
-        }
-        
-        .calculation-breakdown {
-            font-family: 'Courier New', monospace;
-            margin: 5px 0;
-        }
     </style>
 </head>
 
@@ -650,18 +637,9 @@
                 }
             });
 
-            // Step 5d: Bring down zero again - NOW WITH IMPROVED EXPLANATION
+            // Step 5d: Bring down zero again
             addStep(studentSteps, 'step5d',
-                `Bring down another 0:<br>
-                <div class="remainder-explanation">
-                    <strong>Previous remainder:</strong> <span id="step5d-rem2">?</span><br>
-                    <strong>Bring down 0:</strong> <span id="step5d-rem2-display">?</span>0 = <span id="step5d-part3">?</span><br>
-                    <div class="calculation-breakdown">
-                        <span id="step5d-rem2-calc">?</span> × 10 = <span id="step5d-times10">?</span><br>
-                        + 0 = <span id="step5d-final">?</span>
-                    </div>
-                </div>
-                Now <span id="step5d-part3a">?</span> ÷ ${newDivB} = ?
+                `Bring down another 0: <span id="step5d-rem2">?</span>0 = <span id="step5d-part3">?</span>. Now <span id="step5d-part3a">?</span> ÷ ${newDivB} = ?<br>
                 <input id="step5d" class="input-step" placeholder="?"/>
                 <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step5d">Check</button>
                 <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step5d">Try Again</button>
@@ -675,12 +653,8 @@
                     const input = document.getElementById('step5c');
                     if (input.value === digit2.toString()) {
                         document.getElementById('step5d-rem2').textContent = rem2;
-                        document.getElementById('step5d-rem2-display').textContent = rem2;
                         document.getElementById('step5d-part3').textContent = part3;
                         document.getElementById('step5d-part3a').textContent = part3;
-                        document.getElementById('step5d-rem2-calc').textContent = rem2;
-                        document.getElementById('step5d-times10').textContent = rem2 * 10;
-                        document.getElementById('step5d-final').textContent = part3;
                     }
                 }
             });
