@@ -8,9 +8,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #4cc9f0;
+            --correct-color: #c1fba4;
+            --incorrect-color: #ff9aa2;
+            --background-color: #f0f9ff;
+            --card-color: #ffffff;
+            --text-color: #333333;
+        }
+
+        .dark-mode {
+            --primary-color: #a991f0;
+            --secondary-color: #2d87a8;
+            --correct-color: #4c8a2e;
+            --incorrect-color: #b33a4a;
+            --background-color: #1a1a2e;
+            --card-color: #16213e;
+            --text-color: #e6e6e6;
+        }
+
         body {
-            background-color: #f0f9ff;
+            background-color: var(--background-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            transition: all 0.3s;
         }
 
         .card {
@@ -18,6 +40,7 @@
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
             border: none;
             transition: transform 0.3s;
+            background-color: var(--card-color);
         }
 
         .card:hover {
@@ -35,28 +58,30 @@
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         .problem-display {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #6c5ce7;
+            color: var(--primary-color);
             text-align: center;
             margin: 15px 0;
         }
 
         .input-step {
             width: 100px;
-            border: 2px solid #4cc9f0;
+            border: 2px solid var(--secondary-color);
             border-radius: 5px;
             padding: 5px;
             text-align: center;
+            background-color: var(--card-color);
+            color: var(--text-color);
         }
 
         .step-box {
             padding: 20px;
-            background: #fff;
+            background: var(--card-color);
             border-radius: 10px;
             margin: 15px 0;
         }
@@ -68,24 +93,24 @@
         }
 
         .correct {
-            background-color: #c1fba4 !important;
+            background-color: var(--correct-color) !important;
         }
 
         .incorrect {
-            background-color: #ff9aa2 !important;
+            background-color: var(--incorrect-color) !important;
         }
 
         .practice-step {
-            background-color: #f8f9fa;
+            background-color: var(--card-color);
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 10px;
-            border-left: 4px solid #6c5ce7;
+            border-left: 4px solid var(--primary-color);
         }
 
         .step-number {
             display: inline-block;
-            background-color: #6c5ce7;
+            background-color: var(--primary-color);
             color: white;
             width: 30px;
             height: 30px;
@@ -104,8 +129,9 @@
 
         .tooltip-explanation {
             font-size: 0.9rem;
-            color: #555;
+            color: var(--text-color);
             margin-top: 5px;
+            opacity: 0.8;
         }
 
         .score-box {
@@ -118,202 +144,660 @@
             text-align: center;
             font-size: 1.2rem;
             font-weight: bold;
-            color: #333;
+            color: var(--text-color);
             margin-top: 20px;
+        }
+
+        .progress {
+            height: 10px;
+            margin-bottom: 20px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .celebration {
+            animation: celebrate 2s;
+            transform: scale(1.1);
+            background-color: rgba(108, 92, 231, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed var(--primary-color);
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1.1); }
+        }
+
+        .reward-message {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .reward-emoji {
+            font-size: 2.5rem;
+            animation: bounce 1s infinite alternate;
+            display: inline-block;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-15px); }
+        }
+
+        .hint-box {
+            background-color: rgba(76, 201, 240, 0.1);
+            border-left: 4px solid var(--secondary-color);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .try-again-btn {
+            margin-left: 10px;
+            display: none;
+        }
+        .try-again-btn.visible {
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .problem-display {
+                font-size: 1.2rem;
+            }
+            
+            .input-step {
+                width: 80px;
+            }
+            
+            .step-content {
+                width: calc(100% - 40px);
+            }
+            
+            .reward-message {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <audio id="success-sound"
-        src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_44ba749e2a.mp3?filename=success-1-6297.mp3"></audio>
+    <audio id="success-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_44ba749e2a.mp3?filename=success-1-6297.mp3"></audio>
+    <audio id="celebration-sound" src="https://cdn.pixabay.com/download/audio/2021/08/09/audio_3d35597d4e.mp3?filename=success-fanfare-trumpets-6185.mp3"></audio>
+    
     <div class="container mt-4">
-
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="score-box">
+                Score: <span id="score">0</span> | Question: <span id="question-count">1</span>/<span id="max-questions">10</span>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary" id="toggle-theme">🌙 Dark Mode</button>
+        </div>
+        
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+        </div>
 
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
             <div class="d-flex gap-2 flex-wrap">
                 <a href="index.html" class="btn btn-home">🏠 Home</a>
-                <a href="math_multiplication_division.html" class="btn btn-outline-primary">✴️ Decimal
-                    Multiplication</a>
+                <a href="math_multiplication_division.html" class="btn btn-outline-primary">✴️ Decimal Multiplication</a>
                 <a href="division.html" class="btn btn-outline-info">➗ Divide with Decimals</a>
                 <a href="longdivision.html" class="btn btn-outline-success">🧮 Long Division</a>
             </div>
+        </div>
 
-
-
-            <div class="card p-4">
-                <h1 class="text-center" style="color: #6c5ce7;">➗ Decimal Division ➗</h1>
-                <p class="text-center">In decimal division, we divide just like whole numbers, but adjust for decimal
-                    places. <br><strong>Dividend</strong> ÷ <strong>Divisor</strong> = <strong>Quotient</strong>.
-                    <br>Count decimal places, convert to whole numbers, divide, then adjust decimal in the final answer.
-                </p>
-                <div class="text-center mb-4">
-                    <h4>Choose difficulty:</h4>
-                    <button class="btn btn-success m-1" id="easy-btn">Easy</button>
-                    <button class="btn btn-warning m-1" id="medium-btn">Medium</button>
-                    <button class="btn btn-danger m-1" id="hard-btn">Hard</button>
+        <div class="card p-4">
+            <h1 class="text-center" style="color: var(--primary-color);">➗ Decimal Division ➗</h1>
+            <p class="text-center">In decimal division, we divide just like whole numbers, but adjust for decimal
+                places. <br><strong>Dividend</strong> ÷ <strong>Divisor</strong> = <strong>Quotient</strong>.
+                <br>Count decimal places, convert to whole numbers, divide, then adjust decimal in the final answer.
+            </p>
+            <div class="text-center mb-4">
+                <h4>Choose difficulty:</h4>
+                <button class="btn btn-success m-1" id="easy-btn">Easy (1 decimal)</button>
+                <button class="btn btn-warning m-1" id="medium-btn">Medium (1-2 decimals)</button>
+                <button class="btn btn-danger m-1" id="hard-btn">Hard (2-3 decimals)</button>
+            </div>
+            <div id="game-area" class="hidden">
+                <div class="problem-display" id="problem-text"></div>
+                <div class="step-box">
+                    <h4>🧠 Teacher's Example</h4>
+                    <div class="problem-display" id="teacher-problem"></div>
+                    <div id="teacher-steps"></div>
                 </div>
-                <div id="game-area" class="hidden">
-                    <div class="problem-display" id="problem-text"></div>
-                    <div class="step-box">
-                        <h4>🧠 Teacher's Example</h4>
-                        <div id="teacher-steps"></div>
+                <div class="step-box">
+                    <h4>📝 Your Turn</h4>
+                    <div class="problem-display" id="student-problem"></div>
+                    <div id="student-steps"></div>
+                    <div id="final-celebration" class="hidden"></div>
+                    <div class="final-answer-box" id="final-answer-box">
+                        <h5>Final Answer:</h5>
+                        <input type="number" step="0.01" id="user-answer" class="input-step" />
+                        <button class="btn btn-success" id="submit-final-btn">Submit</button>
+                        <div id="final-feedback" class="mt-2"></div>
                     </div>
-                    <div class="step-box">
-                        <h4>📝 Your Turn</h4>
-                        <div class="problem-display" id="student-problem"></div>
-                        <div id="student-steps"></div>
-                        <div class="final-answer-box" id="final-answer-box">
-                            <h5>Final Answer:</h5>
-                            <input type="number" step="0.01" id="user-answer" class="input-step" />
-                            <button class="btn btn-success" onclick="submitFinal()">Submit</button>
-                            <div id="final-feedback" class="mt-2"></div>
-                        </div>
-                    </div>
-                    <div id="summary"></div>
-                    <div class="text-center mt-3">
-                        <button class="btn btn-primary hidden" id="try-again-btn" onclick="restartQuiz()">Try
-                            Again</button>
-                    </div>
+                </div>
+                <div id="summary"></div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-primary hidden" id="try-again-btn">Try Again</button>
+                    <button class="btn btn-secondary hidden" id="new-game-btn">New Game</button>
+                    <button class="btn btn-success hidden" id="next-question-btn">Next Question ➡️</button>
                 </div>
             </div>
         </div>
-        <script>
-            let correctAnswer = 0;
-            let score = 0;
-            let questionCount = 0;
-            let currentDifficulty = 'easy';
-            const maxQuestions = 10;
+    </div>
 
-            function randomDecimal(difficulty) {
-                const base = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 50 : 100;
-                return (Math.random() * base).toFixed(1);
+    <script>
+        let correctAnswer = 0;
+        let score = 0;
+        let questionCount = 0;
+        let currentDifficulty = 'easy';
+        const maxQuestions = 10;
+        let darkMode = false;
+
+        function randomDecimal(difficulty) {
+            const decimals = difficulty === 'easy' ? 1 : difficulty === 'medium' ? Math.random() > 0.5 ? 1 : 2 : Math.random() > 0.5 ? 2 : 3;
+            const base = difficulty === 'easy' ? 10 : difficulty === 'medium' ? 50 : 100;
+            const number = (Math.random() * base).toFixed(decimals);
+            return number;
+        }
+
+        function setupProblem(difficulty) {
+            if (questionCount >= maxQuestions) {
+                showSummary();
+                return;
+            }
+            
+            // Clear previous celebration
+            document.getElementById('final-celebration').classList.add('hidden');
+            document.getElementById('final-celebration').innerHTML = '';
+            
+            currentDifficulty = difficulty;
+            updateProgress();
+
+            const teacherDividend = randomDecimal(difficulty);
+            const teacherDivisor = randomDecimal(difficulty);
+            const studentDividend = randomDecimal(difficulty);
+            const studentDivisor = randomDecimal(difficulty);
+
+            correctAnswer = (parseFloat(studentDividend) / parseFloat(studentDivisor)).toFixed(2);
+
+            const teacherStepsDiv = document.getElementById('teacher-steps');
+            teacherStepsDiv.innerHTML = '';
+            
+            // Show teacher's problem
+            document.getElementById('teacher-problem').textContent = `Example: ${teacherDividend} ÷ ${teacherDivisor}`;
+
+            function createStep(num, html, explanation = '') {
+                return `<div class='practice-step'><div class='step-number'>${num}</div><div class='step-content'>${html}${explanation ? `<div class='tooltip-explanation'>${explanation}</div>` : ''}</div></div>`;
             }
 
-            function setupProblem(difficulty) {
-                if (questionCount >= maxQuestions) return;
-                currentDifficulty = difficulty;
+            const decDiv1 = (teacherDividend.split('.')[1] || '').length;
+            const decDiv2 = (teacherDivisor.split('.')[1] || '').length;
+            const move = Math.max(decDiv1, decDiv2);
+            const newDiv1 = parseInt(teacherDividend.replace('.', '')) * Math.pow(10, move - decDiv1);
+            const newDiv2 = parseInt(teacherDivisor.replace('.', '')) * Math.pow(10, move - decDiv2);
+            const teacherResult = (parseFloat(teacherDividend) / parseFloat(teacherDivisor)).toFixed(2);
 
-                const teacherDividend = randomDecimal(difficulty);
-                const teacherDivisor = randomDecimal(difficulty);
-                const studentDividend = randomDecimal(difficulty);
-                const studentDivisor = randomDecimal(difficulty);
+            teacherStepsDiv.innerHTML += createStep(1, 
+                `Count decimal places: <strong>Dividend (${teacherDividend})</strong> has ${decDiv1} decimal place${decDiv1 !== 1 ? 's' : ''} and <strong>Divisor (${teacherDivisor})</strong> has ${decDiv2} decimal place${decDiv2 !== 1 ? 's' : ''}.`,
+                `We count decimal places to know how much to adjust later. Both numbers have the same number of decimals (${decDiv1}), so we don't need extra adjustment.`);
+            
+            teacherStepsDiv.innerHTML += createStep(2, 
+                `Convert to whole numbers: <strong>${teacherDividend} ÷ ${teacherDivisor}</strong> becomes <strong>${newDiv1} ÷ ${newDiv2}</strong>.`,
+                `We multiply both by 10 to remove decimals: ${teacherDividend} × 10 = ${newDiv1}, ${teacherDivisor} × 10 = ${newDiv2}. The division value stays the same.`);
+            
+            teacherStepsDiv.innerHTML += createStep(3, 
+                `<strong>${newDiv2}</strong> into <strong>${newDiv1}</strong>? Goes <strong>${Math.floor(newDiv1 / newDiv2)}</strong> times. Remainder: ${newDiv1 % newDiv2}.`,
+                `We divide ${newDiv1} ÷ ${newDiv2}. Since ${newDiv2} > ${newDiv1}, result is < 1. We'll calculate exact value in next step.`);
+            
+            teacherStepsDiv.innerHTML += createStep(4, 
+                `Final answer is approximately <strong>${teacherResult}</strong>.`,
+                `We calculated ${newDiv1} ÷ ${newDiv2} = ${(newDiv1/newDiv2).toFixed(4)}. Since we multiplied both by 10 earlier, we don't need to adjust decimals - the result is already correct.`);
 
-                correctAnswer = (parseFloat(studentDividend) / parseFloat(studentDivisor)).toFixed(2);
+            document.getElementById('problem-text').textContent = `Problem: ${studentDividend} ÷ ${studentDivisor}`;
+            document.getElementById('student-problem').textContent = `${studentDividend} ÷ ${studentDivisor}`;
+            document.getElementById('final-answer-box').style.display = 'none';
+            document.getElementById('final-feedback').innerHTML = '';
+            document.getElementById('summary').innerHTML = '';
+            document.getElementById('try-again-btn').classList.add('hidden');
+            document.getElementById('new-game-btn').classList.add('hidden');
+            document.getElementById('next-question-btn').classList.add('hidden');
+            document.getElementById('game-area').classList.remove('hidden');
+            document.getElementById('question-count').textContent = questionCount + 1;
 
-                const teacherStepsDiv = document.getElementById('teacher-steps');
-                teacherStepsDiv.innerHTML = '';
+            const dec1 = (studentDividend.split('.')[1] || '').length;
+            const dec2 = (studentDivisor.split('.')[1] || '').length;
+            const totalMove = Math.max(dec1, dec2);
+            const newDivA = parseInt(studentDividend.replace('.', '')) * Math.pow(10, totalMove - dec1);
+            const newDivB = parseInt(studentDivisor.replace('.', '')) * Math.pow(10, totalMove - dec2);
+            const approx = Math.floor(newDivA / newDivB).toString();
 
-                function createStep(num, html) {
-                    return `<div class='practice-step'><div class='step-number'>${num}</div><div class='step-content'>${html}</div></div>`;
-                }
+            const studentSteps = document.getElementById('student-steps');
+            studentSteps.innerHTML = '';
+            
+            addStep(studentSteps, 'step1', 
+                `Count decimal places:<br>
+                Dividend (${studentDividend}): <input id="step1-dividend" class="input-step" placeholder="?" size="1"/> | 
+                Divisor (${studentDivisor}): <input id="step1-divisor" class="input-step" placeholder="?" size="1"/>
+                <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step1">Check</button>
+                <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step1">Try Again</button>
+                <span id="step1-feedback"></span>`, 
+                {dividend: dec1.toString(), divisor: dec2.toString()},
+                `Count digits after decimal point. ${studentDividend} has ${dec1}, ${studentDivisor} has ${dec2}.`);
+            
+            addStep(studentSteps, 'step2', 
+                `Make whole numbers:<br>
+                <input id="step2-dividend" class="input-step" placeholder="?"/> ÷ <input id="step2-divisor" class="input-step" placeholder="?"/>
+                <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step2">Check</button>
+                <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step2">Try Again</button>
+                <span id="step2-feedback"></span>`, 
+                {dividend: newDivA.toString(), divisor: newDivB.toString()},
+                `Multiply both by 10: ${studentDividend} → ${newDivA}, ${studentDivisor} → ${newDivB}`);
+            
+            addStep(studentSteps, 'step3', 
+                `Estimate result:<br>
+                ${newDivB} into ${newDivA} ≈ <input id="step3" class="input-step" placeholder="?"/>
+                <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step3">Check</button>
+                <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step3">Try Again</button>
+                <span id="step3-feedback"></span>`, 
+                approx,
+                `${newDivB} × ${approx} = ${newDivB * approx}. Close to ${newDivA}?`);
+            
+            addStep(studentSteps, 'step4', 
+                `Decimal adjustment:<br>
+                Final answer will have <input id="step4" class="input-step" placeholder="?"/> decimal place${totalMove !== 1 ? 's' : ''}
+                <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step4">Check</button>
+                <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step4">Try Again</button>
+                <span id="step4-feedback"></span>`, 
+                totalMove.toString(),
+                `Original numbers had max ${totalMove} decimal place${totalMove !== 1 ? 's' : ''}. No need to adjust further.`);
+        }
 
-                const decDiv1 = (teacherDividend.split('.')[1] || '').length;
-                const decDiv2 = (teacherDivisor.split('.')[1] || '').length;
-                const move = Math.max(decDiv1, decDiv2);
-                const newDiv1 = parseInt(teacherDividend.replace('.', '') + '0'.repeat(move - decDiv1));
-                const newDiv2 = parseInt(teacherDivisor.replace('.', '') + '0'.repeat(move - decDiv2));
+        function addStep(container, id, question, correctValues, explanation = '') {
+    const div = document.createElement('div');
+    div.className = 'practice-step';
 
-                teacherStepsDiv.innerHTML += createStep(1, `Count decimal places: <strong>Dividend (${teacherDividend})</strong> has ${decDiv1} and <strong>Divisor (${teacherDivisor})</strong> has ${decDiv2}.`);
-                teacherStepsDiv.innerHTML += createStep(2, `Convert to whole numbers: <strong>${teacherDividend} ÷ ${teacherDivisor}</strong> becomes <strong>${newDiv1} ÷ ${newDiv2}</strong>. Because we shift both by ${move} place(s).`);
-                teacherStepsDiv.innerHTML += createStep(3, `<strong>${newDiv2}</strong> into <strong>${newDiv1}</strong>? Goes <strong>${Math.floor(newDiv1 / newDiv2)}</strong> times. Remainder: ${newDiv1 % newDiv2}.`);
-                teacherStepsDiv.innerHTML += createStep(4, `Final answer is approximately <strong>${(parseFloat(teacherDividend) / parseFloat(teacherDivisor)).toFixed(2)}</strong>. We move decimal point ${move} place(s) back.`);
+    // Parse inputs and apply correct data attributes
+    let inputsHtml = question;
 
-                document.getElementById('problem-text').textContent = `Problem: ${studentDividend} ÷ ${studentDivisor}`;
-                document.getElementById('student-problem').textContent = `${studentDividend} ÷ ${studentDivisor}`;
-                document.getElementById('final-answer-box').style.display = 'none';
-                document.getElementById('final-feedback').innerHTML = '';
-                document.getElementById('summary').innerHTML = '';
-                document.getElementById('try-again-btn').classList.add('hidden');
-                document.getElementById('game-area').classList.remove('hidden');
+    if (typeof correctValues === 'object') {
+        for (const key in correctValues) {
+            const value = correctValues[key];
+            const regex = new RegExp(`id="(${id}-${key})"`, 'g');
+            inputsHtml = inputsHtml.replace(regex, `id="$1" data-correct="${value}" data-numeric="${parseFloat(value)}"`);
+        }
+    } else {
+        inputsHtml = inputsHtml.replace(/id="([^"]+)"/g, (match, p1) => {
+            return `id="${p1}" data-correct="${correctValues}" data-numeric="${parseFloat(correctValues)}"`;
+        });
+    }
 
-                const dec1 = (studentDividend.split('.')[1] || '').length;
-                const dec2 = (studentDivisor.split('.')[1] || '').length;
-                const totalMove = Math.max(dec1, dec2);
-                const newDivA = parseInt(studentDividend.replace('.', '') + '0'.repeat(totalMove - dec1));
-                const newDivB = parseInt(studentDivisor.replace('.', '') + '0'.repeat(totalMove - dec2));
-                const approx = Math.floor(newDivA / newDivB).toString();
-
-                const studentSteps = document.getElementById('student-steps');
-                studentSteps.innerHTML = '';
-                addStep(studentSteps, 'step1', `How many decimal places in divisor?`, dec2.toString());
-                addStep(studentSteps, 'step2', `What is the new problem after shift?`, `${newDivA} ÷ ${newDivB}`);
-                addStep(studentSteps, 'step3', `Rough result:`, approx);
-                addStep(studentSteps, 'step4', `How many decimal places in final answer?`, totalMove.toString());
-            }
-
-            function addStep(container, id, question, correctVal) {
-                const div = document.createElement('div');
-                div.className = 'practice-step';
-                div.innerHTML = `
-        <div class="step-number">${id.replace('step', '')}</div>
+    div.innerHTML = 
+        `<div class="step-number">${id.replace('step', '')}</div>
         <div class="step-content">
-          ${question}
-          <input id="${id}" class="input-step" />
-          <button class="btn btn-outline-primary btn-sm" onclick="checkStep('${id}', '${correctVal}')">Check</button>
-          <span id="${id}-feedback"></span>
-        </div>
-      `;
-                container.appendChild(div);
-            }
+            ${inputsHtml}
+            ${explanation ? `<div class="tooltip-explanation">${explanation}</div>` : ''}
+        </div>`;
 
-            function checkStep(id, correctValue) {
-                const input = document.getElementById(id);
-                const feedback = document.getElementById(`${id}-feedback`);
-                const sound = document.getElementById('success-sound');
-                if (input.value.trim() === correctValue) {
-                    feedback.innerHTML = '🎉 <span class="correct">Correct!</span>';
-                    input.classList.add('correct');
-                    confetti({ particleCount: 60, spread: 45 });
-                    sound.play();
-                    score++;
-                    document.getElementById('score').textContent = score;
-                    if (id === 'step4') {
-                        document.getElementById('final-answer-box').style.display = 'block';
-                    }
+    container.appendChild(div);
+}
+
+    function checkStep(id) {
+    let allCorrect = true;
+    const inputs = document.querySelectorAll(`input[id^="${id}-"]`);
+
+    inputs.forEach(input => {
+        const correctValue = input.getAttribute('data-correct');
+        const correctNumeric = input.getAttribute('data-numeric');
+        const inputValue = input.value ? input.value.trim() : '';
+
+        let isCorrect = false;
+        if (!inputValue) {
+            allCorrect = false;
+            return;
+        }
+
+        if (correctNumeric && !isNaN(parseFloat(inputValue))) {
+            isCorrect = Math.abs(parseFloat(inputValue) - parseFloat(correctNumeric)) < 0.0001;
+        } else {
+            isCorrect = inputValue === correctValue;
+        }
+
+        if (isCorrect) {
+            input.classList.add('correct');
+            input.classList.remove('incorrect');
+        } else {
+            input.classList.add('incorrect');
+            input.classList.remove('correct');
+            allCorrect = false;
+        }
+    });
+
+    const feedback = document.getElementById(`${id}-feedback`);
+    const tryAgainBtn = document.querySelector(`.try-again-btn[data-step-id="${id}"]`);
+    const sound = document.getElementById('success-sound');
+
+    if (allCorrect) {
+        feedback.innerHTML = '<span class="text-success fw-bold">🎉 Correct!</span>';
+        inputs.forEach(input => {
+            input.classList.add('correct');
+            input.classList.remove('incorrect');
+            input.setAttribute('data-solved', 'true');
+        });
+        if (tryAgainBtn) {
+            tryAgainBtn.classList.add('hidden');
+            tryAgainBtn.classList.remove('visible');
+        }
+        confetti({ particleCount: 60, spread: 45 });
+        sound.play();
+        score++;
+        document.getElementById('score').textContent = score;
+        checkAllStepsComplete();
+    } else {
+        feedback.innerHTML = '<span class="text-danger">❌ Try again</span>';
+        if (tryAgainBtn) {
+            tryAgainBtn.classList.remove('hidden');
+            tryAgainBtn.classList.add('visible');
+        }
+    }
+}
+
+
+function checkAllStepsComplete() {
+    const steps = ['step1', 'step2', 'step3', 'step4'];
+    let allComplete = true;
+
+    for (const step of steps) {
+        const inputs = document.querySelectorAll(`input[id^="${step}-"]`);
+
+        for (const input of inputs) {
+            if (input.getAttribute('data-solved') !== 'true') {
+                allComplete = false;
+                break;
+            }
+        }
+        if (!allComplete) break;
+    }
+
+    const finalBox = document.getElementById('final-answer-box');
+    if (allComplete) {
+        finalBox.style.display = 'block';
+        finalBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } else {
+        finalBox.style.display = 'none';
+    }
+}
+
+function resetStep(id) {
+    const inputs = document.querySelectorAll(`[id^="${id}"]:not(.step-check-btn):not(.try-again-btn)`);
+    inputs.forEach(input => {
+        input.value = '';
+        input.classList.remove('correct', 'incorrect');
+        input.removeAttribute('data-solved');
+    });
+    document.getElementById(`${id}-feedback`).innerHTML = '';
+
+    const tryAgainBtn = document.querySelector(`.try-again-btn[data-step-id="${id}"]`);
+    if (tryAgainBtn) {
+        tryAgainBtn.classList.remove('visible');
+        tryAgainBtn.classList.add('hidden');
+    }
+
+    document.getElementById('final-answer-box').style.display = 'none';
+}
+
+
+        function submitFinal() {
+            const input = document.getElementById('user-answer');
+            const feedback = document.getElementById('final-feedback');
+            const celebrationDiv = document.getElementById('final-celebration');
+            const celebrationSound = document.getElementById('celebration-sound');
+            
+            if (!input.value) {
+                feedback.innerHTML = '<div class="alert alert-warning">Please enter an answer first!</div>';
+                return;
+            }
+            
+            const userAnswer = parseFloat(input.value);
+            const correctNum = parseFloat(correctAnswer);
+            
+            if (Math.abs(userAnswer - correctNum) < 0.01) {
+                // Create celebration
+                celebrationDiv.innerHTML = 
+                    `<div class="celebration">
+                        <div class="reward-message">
+                            <span class="reward-emoji">🏆</span> Fantastic! <span class="reward-emoji">🌟</span>
+                        </div>
+                        <h3>${document.getElementById('student-problem').textContent} = ${correctAnswer}</h3>
+                        <p>You got it exactly right!</p>
+                        <div class="hint-box">
+                            <strong>Remember:</strong> When both numbers have same decimal places, the answer's decimals come from the division result.
+                        </div>
+                    </div>`;
+                celebrationDiv.classList.remove('hidden');
+                
+                // Big celebration
+                confetti({
+                    particleCount: 200,
+                    spread: 100,
+                    origin: { y: 0.6 },
+                    ticks: 200
+                });
+                
+                celebrationSound.play();
+                score += 2;
+                document.getElementById('score').textContent = score;
+                
+                // Disable inputs and show next button
+                document.querySelectorAll('.input-step').forEach(el => el.disabled = true);
+                document.getElementById('next-question-btn').classList.remove('hidden');
+                
+                saveProgress();
+            } else {
+                let hint = '';
+                
+                if (isNaN(userAnswer)) {
+                    hint = 'Please enter a valid number';
+                } else if (userAnswer < correctNum - 0.5) {
+                    hint = 'Your answer is too low. Try doubling your estimate!';
+                } else if (userAnswer > correctNum + 0.5) {
+                    hint = 'Your answer is too high. Try halving your estimate!';
                 } else {
-                    feedback.innerHTML = '❌ Try again';
-                    input.classList.add('incorrect');
+                    hint = `Very close! The answer is between ${(correctNum-0.1).toFixed(2)} and ${(correctNum+0.1).toFixed(2)}`;
                 }
+                
+                feedback.innerHTML = 
+                    `<div class="alert alert-warning">
+                        <strong>Almost there!</strong> ${hint}<br>
+                        Check your steps again. Did you count the decimal places correctly?
+                    </div>`;
+                input.classList.add('incorrect');
+                setTimeout(() => input.classList.remove('incorrect'), 1000);
             }
+        }
 
-            function submitFinal() {
-                const input = document.getElementById('user-answer');
-                const feedback = document.getElementById('final-feedback');
-                if (Math.abs(parseFloat(input.value) - parseFloat(correctAnswer)) < 0.01) {
-                    feedback.innerHTML = '<span class="correct">🎉 Great Job!</span>';
-                    confetti();
-                    score++;
-                    document.getElementById('score').textContent = score;
-                } else {
-                    feedback.innerHTML = '<span class="incorrect">Not quite. Try again!</span>';
-                }
-                questionCount++;
-                if (questionCount >= maxQuestions) {
-                    showSummary();
-                } else {
-                    setTimeout(() => setupProblem(currentDifficulty), 1000);
-                }
+        function showSummary() {
+            const percent = Math.round((score / (maxQuestions * 5)) * 100);
+            let message = '';
+            let emoji = '';
+            let reward = '';
+            
+            if (percent >= 90) {
+                message = '🌟 Excellent work! You\'re a decimal division master! 🌟';
+                emoji = '🏆';
+                reward = 'Gold Medal';
+            } else if (percent >= 70) {
+                message = '👍 Great job! You understand decimal division well! 👍';
+                emoji = '✨';
+                reward = 'Silver Star';
+            } else if (percent >= 50) {
+                message = '💪 Good effort! Keep practicing to improve! 💪';
+                emoji = '🔁';
+                reward = 'Bronze Badge';
+            } else {
+                message = '🤔 Keep practicing! You\'ll get better with more practice! 🤔';
+                emoji = '📚';
+                reward = 'Participant Ribbon';
             }
+            
+            document.getElementById('summary').innerHTML = 
+                `<div class="celebration">
+                    <h3>${emoji} Quiz Complete! ${emoji}</h3>
+                    <p>You scored ${score} points out of ${maxQuestions * 5} possible</p>
+                    <p>${message}</p>
+                    <div class="reward-message">
+                        Your Reward: ${reward} ${emoji}
+                    </div>
+                </div>`;
+            
+            document.getElementById('try-again-btn').classList.remove('hidden');
+            document.getElementById('new-game-btn').classList.remove('hidden');
+            saveProgress();
+            
+            // Final celebration
+            confetti({
+                particleCount: 300,
+                spread: 150,
+                origin: { y: 0.6 },
+                ticks: 300
+            });
+            document.getElementById('celebration-sound').play();
+        }
 
-            function showSummary() {
-                const percent = Math.round((score / (maxQuestions * 2)) * 100);
-                const message = percent >= 90 ? '🌟 Excellent work!' : 'Keep practicing!';
-                document.getElementById('summary').innerHTML = `You got ${percent}% correct. ${message}`;
-                document.getElementById('try-again-btn').classList.remove('hidden');
-            }
+        function restartQuiz() {
+            score = 0;
+            questionCount = 0;
+            document.getElementById('score').textContent = 0;
+            document.getElementById('summary').innerHTML = '';
+            setupProblem(currentDifficulty);
+        }
 
-            function restartQuiz() {
-                score = 0;
-                questionCount = 0;
-                document.getElementById('score').textContent = 0;
+        function newGame() {
+            score = 0;
+            questionCount = 0;
+            document.getElementById('score').textContent = 0;
+            document.getElementById('summary').innerHTML = '';
+            document.getElementById('game-area').classList.add('hidden');
+        }
+
+        function nextQuestion() {
+            questionCount++;
+            if (questionCount >= maxQuestions) {
+                showSummary();
+            } else {
                 setupProblem(currentDifficulty);
             }
+        }
 
-            document.getElementById('easy-btn').addEventListener('click', () => { restartQuiz(); setupProblem('easy'); });
-            document.getElementById('medium-btn').addEventListener('click', () => { restartQuiz(); setupProblem('medium'); });
-            document.getElementById('hard-btn').addEventListener('click', () => { restartQuiz(); setupProblem('hard'); });
-        </script>
+        function updateProgress() {
+            const progress = (questionCount / maxQuestions) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        function saveProgress() {
+            localStorage.setItem('divisionScore', score);
+            localStorage.setItem('divisionQuestions', questionCount);
+            localStorage.setItem('divisionDifficulty', currentDifficulty);
+        }
+
+        function loadProgress() {
+            const savedScore = localStorage.getItem('divisionScore');
+            const savedQuestions = localStorage.getItem('divisionQuestions');
+            const savedDifficulty = localStorage.getItem('divisionDifficulty');
+            
+            if (savedScore) {
+                score = parseInt(savedScore);
+                document.getElementById('score').textContent = score;
+            }
+            
+            if (savedQuestions) {
+                questionCount = parseInt(savedQuestions);
+                document.getElementById('question-count').textContent = questionCount + 1;
+            }
+            
+            if (savedDifficulty) {
+                currentDifficulty = savedDifficulty;
+            }
+        }
+
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode');
+            document.getElementById('toggle-theme').textContent = darkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+            localStorage.setItem('darkMode', darkMode);
+        }
+
+        // Initialize the game
+        function initGame() {
+            loadProgress();
+            
+            if (localStorage.getItem('darkMode') === 'true') {
+                toggleDarkMode();
+            }
+            
+            // Set up difficulty button event listeners
+            document.getElementById('easy-btn').addEventListener('click', function() {
+                currentDifficulty = 'easy';
+                questionCount = 0;
+                score = 0;
+                document.getElementById('score').textContent = score;
+                document.getElementById('game-area').classList.remove('hidden');
+                setupProblem(currentDifficulty);
+            });
+            
+            document.getElementById('medium-btn').addEventListener('click', function() {
+                currentDifficulty = 'medium';
+                questionCount = 0;
+                score = 0;
+                document.getElementById('score').textContent = score;
+                document.getElementById('game-area').classList.remove('hidden');
+                setupProblem(currentDifficulty);
+            });
+            
+            document.getElementById('hard-btn').addEventListener('click', function() {
+                currentDifficulty = 'hard';
+                questionCount = 0;
+                score = 0;
+                document.getElementById('score').textContent = score;
+                document.getElementById('game-area').classList.remove('hidden');
+                setupProblem(currentDifficulty);
+            });
+
+            // Other event listeners
+            document.getElementById('submit-final-btn').addEventListener('click', submitFinal);
+            document.getElementById('try-again-btn').addEventListener('click', restartQuiz);
+            document.getElementById('new-game-btn').addEventListener('click', newGame);
+            document.getElementById('next-question-btn').addEventListener('click', nextQuestion);
+            document.getElementById('toggle-theme').addEventListener('click', toggleDarkMode);
+
+            // Event delegation for step check buttons
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('step-check-btn')) {
+                    const stepId = e.target.getAttribute('data-step-id');
+                    checkStep(stepId);
+                }
+                if (e.target && e.target.classList.contains('try-again-btn')) {
+                    const stepId = e.target.getAttribute('data-step-id');
+                    resetStep(stepId);
+                }
+            });
+            
+            document.getElementById('max-questions').textContent = maxQuestions;
+        }
+
+        // Start the game when the page loads
+        document.addEventListener('DOMContentLoaded', initGame);
+    </script>
 </body>
-
 </html>
