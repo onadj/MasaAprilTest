@@ -227,6 +227,17 @@
             .reward-message {
                 font-size: 1.4rem;
             }
+            
+            .teacher-example .long-division-example {
+                font-size: 0.8rem;
+                overflow-x: auto;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+            
+            .teacher-example .step-content {
+                font-size: 0.9rem;
+            }
         }
 
         .long-division-example {
@@ -304,6 +315,24 @@
             background-color: rgba(255, 255, 255, 0.2);
             border-radius: 3px;
         }
+
+        .remainder-explanation {
+            background-color: rgba(108, 92, 231, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .calculation-breakdown {
+            font-family: 'Courier New', monospace;
+            margin: 5px 0;
+        }
+        
+        .teacher-example {
+            background-color: rgba(108, 92, 231, 0.05);
+            border-left: 4px solid var(--primary-color);
+        }
     </style>
 </head>
 
@@ -346,7 +375,7 @@
             </div>
             <div id="game-area" class="hidden">
                 <div class="problem-display" id="problem-text"></div>
-                <div class="step-box">
+                <div class="step-box teacher-example">
                     <h4>🧠 Teacher's Example</h4>
                     <div class="problem-display" id="teacher-problem"></div>
                     <div id="teacher-steps"></div>
@@ -400,8 +429,19 @@
             currentDifficulty = difficulty;
             updateProgress();
 
-            const teacherDividend = randomDecimal(difficulty);
-            const teacherDivisor = randomDecimal(difficulty);
+            // Generate teacher example with simpler numbers for better demonstration
+            let teacherDividend, teacherDivisor;
+            if (difficulty === 'easy') {
+                teacherDividend = (Math.floor(Math.random() * 9) + 1) + '.' + (Math.floor(Math.random() * 9) + 1);
+                teacherDivisor = (Math.floor(Math.random() * 4) + 1) + '.' + (Math.floor(Math.random() * 9) + 1);
+            } else if (difficulty === 'medium') {
+                teacherDividend = (Math.floor(Math.random() * 9) + 1) + '.' + (Math.floor(Math.random() * 9) + 1) + (Math.random() > 0.5 ? Math.floor(Math.random() * 9) + 1 : '');
+                teacherDivisor = (Math.floor(Math.random() * 4) + 1) + '.' + (Math.floor(Math.random() * 9) + 1) + (Math.random() > 0.5 ? Math.floor(Math.random() * 9) + 1 : '');
+            } else {
+                teacherDividend = (Math.floor(Math.random() * 9) + 1) + '.' + (Math.floor(Math.random() * 9) + 1) + (Math.floor(Math.random() * 9) + 1);
+                teacherDivisor = (Math.floor(Math.random() * 4) + 1) + '.' + (Math.floor(Math.random() * 9) + 1) + (Math.floor(Math.random() * 9) + 1);
+            }
+
             const studentDividend = randomDecimal(difficulty);
             const studentDivisor = randomDecimal(difficulty);
 
@@ -420,24 +460,18 @@
             const move = Math.max(decDiv1, decDiv2);
             const newDiv1 = parseInt(teacherDividend.replace('.', '')) * Math.pow(10, move - decDiv1);
             const newDiv2 = parseInt(teacherDivisor.replace('.', '')) * Math.pow(10, move - decDiv2);
-            const teacherResult = (parseFloat(teacherDividend) / parseFloat(teacherDivisor)).toFixed(2);
+            const teacherResult = (parseFloat(teacherDividend) / parseFloat(teacherDivisor)).toFixed(4);
 
             teacherStepsDiv.innerHTML += createStep(1,
                 `Count decimal places: <strong>Dividend (${teacherDividend})</strong> has ${decDiv1}, <strong>Divisor (${teacherDivisor})</strong> has ${decDiv2}.`,
-                `We count decimal places to know how much to adjust. Both numbers have ${decDiv1} decimals, so we don't need extra adjustment.`);
+                `We count decimal places to know how much to adjust.`);
 
             teacherStepsDiv.innerHTML += createStep(2,
-                `Convert to whole numbers: <strong>${teacherDividend} ÷ ${teacherDivisor}</strong> becomes <strong>${newDiv1} ÷ ${newDiv2}</strong>.`,
-                `${teacherDividend} × 10 = ${newDiv1}, ${teacherDivisor} × 10 = ${newDiv2}`);
+                `Convert to whole numbers by moving decimal ${move} places right:<br>
+                <strong>${teacherDividend} ÷ ${teacherDivisor}</strong> becomes <strong>${newDiv1} ÷ ${newDiv2}</strong>.`,
+                `${teacherDividend} × 10<sup>${move}</sup> = ${newDiv1}<br>${teacherDivisor} × 10<sup>${move}</sup> = ${newDiv2}`);
 
-            teacherStepsDiv.innerHTML += createStep(3,
-                `${newDiv2} into ${newDiv1}? Goes <strong>${Math.floor(newDiv1 / newDiv2)}</strong> times. Remainder: ${newDiv1 % newDiv2}.`,
-                `Estimate: ${newDiv2} × ${Math.floor(newDiv1 / newDiv2)} = ${newDiv2 * Math.floor(newDiv1 / newDiv2)}. Close to ${newDiv1}?`);
-
-            teacherStepsDiv.innerHTML += createStep(4,
-                `Final answer is approximately <strong>${teacherResult}</strong>.`,
-                `We calculated ${newDiv1} ÷ ${newDiv2} = ${(newDiv1 / newDiv2).toFixed(4)}. No decimal adjustment needed.`);
-
+            // Calculate long division steps
             const t_whole = Math.floor(newDiv1 / newDiv2);
             const t_rem1 = newDiv1 % newDiv2;
             const t_part2 = t_rem1 * 10;
@@ -445,17 +479,32 @@
             const t_rem2 = t_part2 % newDiv2;
             const t_part3 = t_rem2 * 10;
             const t_digit3 = Math.floor(t_part3 / newDiv2);
-            const t_finalAnswer = `${t_whole}.${t_digit2}${t_digit3}`;
+            const t_rem3 = t_part3 % newDiv2;
+            const t_part4 = t_rem3 * 10;
+            const t_digit4 = Math.floor(t_part4 / newDiv2);
+            
+            const t_finalAnswer = `${t_whole}.${t_digit2}${t_digit3}${t_digit4}`;
 
-            teacherStepsDiv.innerHTML += createStep(5,
-                `Let's divide step by step to get 2 decimal places:<br>
+            teacherStepsDiv.innerHTML += createStep(3,
+                `Perform long division:<br>
                 <div class="long-division-example">
-                    Step 1: ${newDiv1} ÷ ${newDiv2} = ${t_whole} remainder ${t_rem1}  
-                    Step 2: ${t_rem1}0 ÷ ${newDiv2} = ${t_digit2} remainder ${t_rem2}  
-                    Step 3: ${t_rem2}0 ÷ ${newDiv2} = ${t_digit3}  
-                </div>
-                Final answer: <strong>${t_finalAnswer}</strong>`,
-                `We divided to get 2 decimal places. Rounded result = ${t_finalAnswer}`);
+                    ${newDiv1} ÷ ${newDiv2} = ${t_whole} (since ${newDiv2} × ${t_whole} = ${newDiv2 * t_whole})
+                    Remainder: ${newDiv1} - ${newDiv2 * t_whole} = ${t_rem1}
+                    
+                    Bring down 0: ${t_rem1}0 ÷ ${newDiv2} = ${t_digit2} (since ${newDiv2} × ${t_digit2} = ${newDiv2 * t_digit2})
+                    Remainder: ${t_part2} - ${newDiv2 * t_digit2} = ${t_rem2}
+                    
+                    Bring down 0: ${t_rem2}0 ÷ ${newDiv2} = ${t_digit3} (since ${newDiv2} × ${t_digit3} = ${newDiv2 * t_digit3})
+                    Remainder: ${t_part3} - ${newDiv2 * t_digit3} = ${t_rem3}
+                    
+                    Bring down 0: ${t_rem3}0 ÷ ${newDiv2} = ${t_digit4}
+                </div>`,
+                `We perform standard long division, bringing down zeros to get decimal places.`);
+
+            teacherStepsDiv.innerHTML += createStep(4,
+                `Final answer is <strong>${t_finalAnswer}</strong> (rounded to 4 decimal places).<br>
+                The exact value is approximately ${teacherResult}`,
+                `We calculated ${newDiv1} ÷ ${newDiv2} = ${(newDiv1 / newDiv2).toFixed(6)}`);
 
             // Student Problem Section
             document.getElementById('problem-text').textContent = `Problem: ${studentDividend} ÷ ${studentDivisor}`;
@@ -637,9 +686,18 @@
                 }
             });
 
-            // Step 5d: Bring down zero again
+            // Step 5d: Bring down zero again - NOW WITH IMPROVED EXPLANATION
             addStep(studentSteps, 'step5d',
-                `Bring down another 0: <span id="step5d-rem2">?</span>0 = <span id="step5d-part3">?</span>. Now <span id="step5d-part3a">?</span> ÷ ${newDivB} = ?<br>
+                `Bring down another 0:<br>
+                <div class="remainder-explanation">
+                    <strong>Previous remainder:</strong> <span id="step5d-rem2">?</span><br>
+                    <strong>Bring down 0:</strong> <span id="step5d-rem2-display">?</span>0 = <span id="step5d-part3">?</span><br>
+                    <div class="calculation-breakdown">
+                        <span id="step5d-rem2-calc">?</span> × 10 = <span id="step5d-times10">?</span><br>
+                        + 0 = <span id="step5d-final">?</span>
+                    </div>
+                </div>
+                Now <span id="step5d-part3a">?</span> ÷ ${newDivB} = ?
                 <input id="step5d" class="input-step" placeholder="?"/>
                 <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step5d">Check</button>
                 <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step5d">Try Again</button>
@@ -653,8 +711,12 @@
                     const input = document.getElementById('step5c');
                     if (input.value === digit2.toString()) {
                         document.getElementById('step5d-rem2').textContent = rem2;
+                        document.getElementById('step5d-rem2-display').textContent = rem2;
                         document.getElementById('step5d-part3').textContent = part3;
                         document.getElementById('step5d-part3a').textContent = part3;
+                        document.getElementById('step5d-rem2-calc').textContent = rem2;
+                        document.getElementById('step5d-times10').textContent = rem2 * 10;
+                        document.getElementById('step5d-final').textContent = part3;
                     }
                 }
             });
