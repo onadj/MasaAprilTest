@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Adventure - Long Division</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #4cc9f0;
+            --correct-color: #c1fba4;
+            --incorrect-color: #ff9aa2;
+            --background-color: #f0f9ff;
+            --card-color: #ffffff;
+            --text-color: #333333;
+        }
+
+        .dark-mode {
+            --primary-color: #a991f0;
+            --secondary-color: #2d87a8;
+            --correct-color: #4c8a2e;
+            --incorrect-color: #b33a4a;
+            --background-color: #1a1a2e;
+            --card-color: #16213e;
+            --text-color: #e6e6e6;
+        }
+
+        body {
+            background-color: var(--background-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            transition: transform 0.3s;
+            background-color: var(--card-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-home {
+            background-color: #ff6b6b;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .btn-home:hover {
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .problem-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .input-step {
+            width: 100px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 5px;
+            padding: 5px;
+            text-align: center;
+            background-color: var(--card-color);
+            color: var(--text-color);
+        }
+
+        .step-box {
+            padding: 20px;
+            background: var(--card-color);
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .final-answer-box {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .correct {
+            background-color: var(--correct-color) !important;
+        }
+
+        .incorrect {
+            background-color: var(--incorrect-color) !important;
+        }
+
+        .practice-step {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .step-number {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .step-content {
+            display: inline-block;
+            vertical-align: middle;
+            width: calc(100% - 50px);
+        }
+
+        .tooltip-explanation {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .score-box {
+            text-align: right;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        #summary {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-top: 20px;
+        }
+
+        .progress {
+            height: 10px;
+            margin-bottom: 20px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .celebration {
+            animation: celebrate 2s;
+            transform: scale(1.1);
+            background-color: rgba(108, 92, 231, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed var(--primary-color);
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1.1); }
+        }
+
+        .reward-message {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .reward-emoji {
+            font-size: 2.5rem;
+            animation: bounce 1s infinite alternate;
+            display: inline-block;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-15px); }
+        }
+
+        .hint-box {
+            background-color: rgba(76, 201, 240, 0.1);
+            border-left: 4px solid var(--secondary-color);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .try-again-btn {
+            margin-left: 10px;
+            display: none;
+        }
+        .try-again-btn.visible {
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .problem-display {
+                font-size: 1.2rem;
+            }
+            
+            .input-step {
+                width: 80px;
+            }
+            
+            .step-content {
+                width: calc(100% - 40px);
+            }
+            
+            .reward-message {
+                font-size: 1.4rem;
+            }
+            
+            .teacher-example .long-division-example {
+                font-size: 0.8rem;
+                overflow-x: auto;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+            
+            .teacher-example .step-content {
+                font-size: 0.9rem;
+            }
+        }
+
+        .long-division-example {
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            background-color: rgba(0,0,0,0.03);
+            padding: 10px;
+            margin-top: 5px;
+            border-left: 3px solid var(--secondary-color);
+            border-radius: 5px;
+        }
+
+        .digit-box {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--secondary-color);
+            text-align: center;
+            line-height: 30px;
+            margin: 2px;
+            border-radius: 3px;
+            background-color: rgba(76, 201, 240, 0.1);
+        }
+
+        .digit-box.active {
+            background-color: var(--secondary-color);
+            color: white;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .division-visualization {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: rgba(76, 201, 240, 0.05);
+            border-radius: 5px;
+        }
+
+        .division-row {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .division-symbol {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .remainder-box {
+            background-color: rgba(108, 92, 231, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .teacher-example {
+            background-color: rgba(108, 92, 231, 0.05);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .division-steps {
+            font-family: 'Courier New', monospace;
+            margin: 5px 0;
+            padding: 5px;
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 3px;
+        }
+        
+        .step-instruction {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .input-hint {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            margin-top: 3px;
+        }
+        
+        .problem-review {
+            background-color: rgba(108, 92, 231, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .highlight {
+            background-color: rgba(255, 255, 0, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .current-step {
+            border-left: 4px solid var(--secondary-color);
+            background-color: rgba(76, 201, 240, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="success-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_44ba749e2a.mp3?filename=success-1-6297.mp3"></audio>
+    <audio id="celebration-sound" src="https://cdn.pixabay.com/download/audio/2021/08/09/audio_3d35597d4e.mp3?filename=success-fanfare-trumpets-6185.mp3"></audio>
+    
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="score-box">
+                Score: <span id="score">0</span> | Question: <span id="question-count">1</span>/<span id="max-questions">10</span>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary" id="toggle-theme">🌙 Dark Mode</button>
+        </div>
+        
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="index.html" class="btn btn-home">🏠 Home</a>
+                <a href="math_multiplication_division.html" class="btn btn-outline-primary">✴️ Decimal Multiplication</a>
+                <a href="division.html" class="btn btn-outline-info">➗ Divide with Decimals</a>
+                <a href="longdivision.html" class="btn btn-outline-success">🧮 Long Division</a>
+            </div>
+        </div>
+
+        <div class="card p-4">
+            <h1 class="text-center" style="color: var(--primary-color);">🧮 Long Division 🧮</h1>
+            <p class="text-center">Long division helps us divide large numbers step by step. <br>Remember: <strong>Divide</strong>, <strong>Multiply</strong>, <strong>Subtract</strong>, <strong>Bring Down</strong>.
+                <br>Take it one digit at a time, and don't forget to check your multiplication!
+            </p>
+            <div class="text-center mb-4">
+                <h4>Choose difficulty:</h4>
+                <button class="btn btn-success m-1" id="easy-btn">Easy (2-digit ÷ 1-digit)</button>
+                <button class="btn btn-warning m-1" id="medium-btn">Medium (3-digit ÷ 1-digit)</button>
+                <button class="btn btn-danger m-1" id="hard-btn">Hard (3-digit ÷ 2-digit)</button>
+            </div>
+            <div id="game-area" class="hidden">
+                <div class="problem-display" id="problem-text"></div>
+                <div class="step-box teacher-example">
+                    <h4>🧠 Teacher's Example</h4>
+                    <div class="problem-display" id="teacher-problem"></div>
+                    <div id="teacher-steps"></div>
+                </div>
+                <div class="step-box">
+                    <h4>📝 Your Turn</h4>
+                    <div class="problem-display" id="student-problem"></div>
+                    <div id="student-steps"></div>
+                    <div id="final-celebration" class="hidden"></div>
+                    <div class="final-answer-box" id="final-answer-box">
+                        <h5>Final Answer:</h5>
+                        <input type="number" id="user-answer" class="input-step" placeholder="Quotient" />
+                        <div id="remainder-container" class="mt-2 hidden">
+                            Remainder: <input type="number" id="user-remainder" class="input-step" placeholder="Remainder" />
+                        </div>
+                        <button class="btn btn-success mt-2" id="submit-final-btn">Submit</button>
+                        <div id="final-feedback" class="mt-2"></div>
+                    </div>
+                </div>
+                <div id="summary"></div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-primary hidden" id="try-again-btn">Try Again</button>
+                    <button class="btn btn-secondary hidden" id="new-game-btn">New Game</button>
+                    <button class="btn btn-success hidden" id="next-question-btn">Next Question ➡️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let correctAnswer = 0;
+        let score = 0;
+        let questionCount = 0;
+        let currentDifficulty = 'easy';
+        const maxQuestions = 10;
+        let darkMode = false;
+        let currentRemainder = 0;
+        let currentDividend = 0;
+        let currentDivisor = 0;
+
+        function randomNumber(digits) {
+            const min = Math.pow(10, digits - 1);
+            const max = Math.pow(10, digits) - 1;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function setupProblem(difficulty) {
+            if (questionCount >= maxQuestions) {
+                showSummary();
+                return;
+            }
+
+            document.getElementById('final-celebration').classList.add('hidden');
+            document.getElementById('final-celebration').innerHTML = '';
+
+            currentDifficulty = difficulty;
+            updateProgress();
+
+            // Generate teacher example with simpler numbers for better demonstration
+            let teacherDividend, teacherDivisor;
+            if (difficulty === 'easy') {
+                teacherDividend = randomNumber(2);
+                teacherDivisor = randomNumber(1);
+                // Ensure divisor isn't 1 and dividend is larger
+                while (teacherDivisor === 1 || teacherDividend < teacherDivisor) {
+                    teacherDividend = randomNumber(2);
+                    teacherDivisor = randomNumber(1);
+                }
+            } else if (difficulty === 'medium') {
+                teacherDividend = randomNumber(3);
+                teacherDivisor = randomNumber(1);
+                // Ensure divisor isn't 1 and dividend is larger
+                while (teacherDivisor === 1 || teacherDividend < teacherDivisor) {
+                    teacherDividend = randomNumber(3);
+                    teacherDivisor = randomNumber(1);
+                }
+            } else {
+                teacherDividend = randomNumber(3);
+                teacherDivisor = randomNumber(2);
+                // Ensure dividend is larger
+                while (teacherDividend < teacherDivisor) {
+                    teacherDividend = randomNumber(3);
+                    teacherDivisor = randomNumber(2);
+                }
+            }
+
+            // Generate student problem
+            let studentDividend, studentDivisor;
+            if (difficulty === 'easy') {
+                studentDividend = randomNumber(2);
+                studentDivisor = randomNumber(1);
+                // Ensure divisor isn't 1 and dividend is larger
+                while (studentDivisor === 1 || studentDividend < studentDivisor) {
+                    studentDividend = randomNumber(2);
+                    studentDivisor = randomNumber(1);
+                }
+            } else if (difficulty === 'medium') {
+                studentDividend = randomNumber(3);
+                studentDivisor = randomNumber(1);
+                // Ensure divisor isn't 1 and dividend is larger
+                while (studentDivisor === 1 || studentDividend < studentDivisor) {
+                    studentDividend = randomNumber(3);
+                    studentDivisor = randomNumber(1);
+                }
+            } else {
+                studentDividend = randomNumber(3);
+                studentDivisor = randomNumber(2);
+                // Ensure dividend is larger
+                while (studentDividend < studentDivisor) {
+                    studentDividend = randomNumber(3);
+                    studentDivisor = randomNumber(2);
+                }
+            }
+
+            currentDividend = studentDividend;
+            currentDivisor = studentDivisor;
+            correctAnswer = Math.floor(studentDividend / studentDivisor);
+            currentRemainder = studentDividend % studentDivisor;
+            const fullAnswer = currentRemainder === 0 ? correctAnswer.toString() : `${correctAnswer} R${currentRemainder}`;
+
+            const teacherStepsDiv = document.getElementById('teacher-steps');
+            teacherStepsDiv.innerHTML = '';
+            document.getElementById('teacher-problem').textContent = `Example: ${teacherDividend} ÷ ${teacherDivisor}`;
+
+            function createStep(num, html, explanation = '') {
+                return `<div class='practice-step'><div class='step-number'>${num}</div><div class='step-content'>${html}${explanation ? `<div class='tooltip-explanation'>${explanation}</div>` : ''}</div></div>`;
+            }
+
+            // Calculate teacher example steps
+            const t_quotient = Math.floor(teacherDividend / teacherDivisor);
+            const t_remainder = teacherDividend % teacherDivisor;
+            const t_product1 = teacherDivisor * Math.floor(teacherDividend / (teacherDivisor * 10));
+            const t_partial1 = teacherDividend.toString().substring(0, teacherDivisor.toString().length);
+            const t_firstDigit = Math.floor(parseInt(t_partial1) / teacherDivisor);
+            
+            teacherStepsDiv.innerHTML += createStep(1,
+                `Set up the problem:<br>
+                <div class="division-visualization">
+                    <div class="division-row">
+                        <div class="digit-box">${teacherDivisor}</div>
+                        <div class="division-symbol">)</div>
+                        <div class="digit-box">${teacherDividend.toString().split('').map(d => `<span>${d}</span>`).join('')}</div>
+                    </div>
+                </div>`,
+                `We write the divisor outside and dividend inside the division bracket.`);
+
+            teacherStepsDiv.innerHTML += createStep(2,
+                `Divide the first part:<br>
+                <div class="division-steps">
+                    Can ${teacherDivisor} go into ${t_partial1}? ${parseInt(t_partial1) >= teacherDivisor ? 'Yes' : 'No'}<br>
+                    ${parseInt(t_partial1) >= teacherDivisor ? 
+                        `${teacherDivisor} × ${t_firstDigit} = ${teacherDivisor * t_firstDigit} ≤ ${t_partial1}` : 
+                        `We need to include the next digit`}
+                </div>`,
+                `We see how many times the divisor fits into the first part of the dividend.`);
+
+            let divisionProcess = '';
+            let tempDividend = teacherDividend;
+            let currentQuotient = '';
+            let steps = [];
+            
+            // Simulate the division process
+            const dividendStr = teacherDividend.toString();
+            let position = 0;
+            let workingValue = 0;
+            
+            while (position < dividendStr.length) {
+                workingValue = workingValue * 10 + parseInt(dividendStr[position]);
+                if (workingValue >= teacherDivisor) {
+                    const digit = Math.floor(workingValue / teacherDivisor);
+                    const product = teacherDivisor * digit;
+                    const newRemainder = workingValue - product;
+                    
+                    steps.push({
+                        digit,
+                        product,
+                        remainder: newRemainder,
+                        workingValue,
+                        position
+                    });
+                    
+                    currentQuotient += digit.toString();
+                    workingValue = newRemainder;
+                } else if (currentQuotient.length > 0) {
+                    currentQuotient += '0';
+                }
+                
+                position++;
+            }
+            
+            let divisionDisplay = '';
+            let currentDisplayDividend = teacherDividend;
+            let indent = 0;
+            
+            steps.forEach((step, index) => {
+                const product = teacherDivisor * step.digit;
+                const remainder = step.workingValue - product;
+                
+                divisionDisplay += `${' '.repeat(indent)}${product}\n`;
+                divisionDisplay += `${' '.repeat(indent)}----\n`;
+                if (index === 0) {
+                    divisionDisplay += `${' '.repeat(indent)}${step.workingValue}\n`;
+                }
+                divisionDisplay += `${' '.repeat(indent + 2)}${remainder}\n`;
+                
+                indent += 2;
+            });
+
+            teacherStepsDiv.innerHTML += createStep(3,
+                `Perform the division steps:<br>
+                <div class="long-division-example">
+                    ${teacherDivisor} ) ${teacherDividend}
+${divisionDisplay}
+                    Final answer: ${t_quotient}${t_remainder > 0 ? ` R${t_remainder}` : ''}
+                </div>`,
+                `We subtract, bring down digits, and repeat until we've processed all digits.`);
+
+            teacherStepsDiv.innerHTML += createStep(4,
+                `Check your work:<br>
+                <div class="division-steps">
+                    ${teacherDivisor} × ${t_quotient} = ${teacherDivisor * t_quotient}<br>
+                    ${t_remainder > 0 ? `Plus remainder ${t_remainder} = ${teacherDivisor * t_quotient + t_remainder}` : ''}<br>
+                    Should equal original dividend: ${teacherDividend}
+                </div>`,
+                `Always verify by multiplying the quotient by the divisor and adding any remainder.`);
+
+            // Student Problem Section
+            document.getElementById('problem-text').textContent = `Problem: ${studentDividend} ÷ ${studentDivisor}`;
+            document.getElementById('student-problem').textContent = `${studentDividend} ÷ ${studentDivisor}`;
+            document.getElementById('final-answer-box').style.display = 'none';
+            document.getElementById('user-answer').value = '';
+            document.getElementById('user-remainder').value = '';
+            document.getElementById('user-answer').disabled = false;
+            document.getElementById('user-answer').classList.remove('correct', 'incorrect');
+            document.getElementById('user-remainder').classList.remove('correct', 'incorrect');
+            document.getElementById('final-feedback').innerHTML = '';
+            document.getElementById('summary').innerHTML = '';
+            document.getElementById('try-again-btn').classList.add('hidden');
+            document.getElementById('new-game-btn').classList.add('hidden');
+            document.getElementById('next-question-btn').classList.add('hidden');
+            document.getElementById('game-area').classList.remove('hidden');
+            document.getElementById('question-count').textContent = questionCount + 1;
+
+            // Show/hide remainder input based on problem
+            if (currentRemainder > 0) {
+                document.getElementById('remainder-container').classList.remove('hidden');
+            } else {
+                document.getElementById('remainder-container').classList.add('hidden');
+            }
+
+            const studentSteps = document.getElementById('student-steps');
+            studentSteps.innerHTML = '';
+
+            // Step 1: Set up the problem
+            addStep(studentSteps, 'step1',
+                `<div class="step-instruction">Set up the problem:</div>
+                <div class="division-visualization">
+                    <div class="division-row">
+                        <div class="digit-box">${studentDivisor}</div>
+                        <div class="division-symbol">)</div>
+                        <div class="digit-box">${studentDividend.toString().split('').map((d, i) => `<span id="digit-${i}">${d}</span>`).join('')}</div>
+                    </div>
+                </div>
+                <div class="input-hint">Count the digits in the divisor (${studentDivisor})</div>
+                How many digits in the divisor? <input id="step1" class="input-step" placeholder="?" size="1"/>
+                <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step1">Check</button>
+                <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step1">Try Again</button>
+                <span id="step1-feedback"></span>`,
+                studentDivisor.toString().length.toString(),
+                `Count how many digits are in the divisor (${studentDivisor}).`);
+
+            // Step 2: First division
+            const firstDigits = studentDividend.toString().substring(0, studentDivisor.toString().length);
+            const firstDigitAnswer = Math.floor(parseInt(firstDigits) / studentDivisor);
+            
+            addStep(studentSteps, 'step2',
+                `<div class="step-instruction">Divide the first part:</div>
+                <div class="problem-review">
+                    <strong>Current problem:</strong> ${studentDividend} ÷ ${studentDivisor}<br>
+                    <strong>Looking at first ${studentDivisor.toString().length} digits:</strong> <span class="highlight">${firstDigits}</span>
+                </div>
+                <div class="input-hint">Does ${studentDivisor} fit into ${firstDigits}?</div>
+                Does ${studentDivisor} go into ${firstDigits}? 
+                <select id="step2-yn" class="input-step">
+                    <option value="">?</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select><br>
+                <div id="step2-input-container" class="mt-2">
+                    <div class="input-hint">How many times does ${studentDivisor} fit into ${firstDigits}?</div>
+                    If yes, how many times? <input id="step2" class="input-step" placeholder="?" size="1"/>
+                </div>
+                <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step2">Check</button>
+                <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step2">Try Again</button>
+                <span id="step2-feedback"></span>`,
+                { 
+                   'yn': parseInt(firstDigits) >= studentDivisor ? 'yes' : 'no',
+                   'step2': parseInt(firstDigits) >= studentDivisor ? firstDigitAnswer.toString() : '0',
+                   'value': parseInt(firstDigits) >= studentDivisor ? firstDigitAnswer.toString() : '0'
+                },
+                `${studentDivisor} × ${firstDigitAnswer} = ${studentDivisor * firstDigitAnswer}`);
+
+            // Step 3: Multiply and subtract
+            const firstProduct = studentDivisor * firstDigitAnswer;
+            const firstRemainder = parseInt(firstDigits) - firstProduct;
+            
+            addStep(studentSteps, 'step3',
+                `<div class="step-instruction">Multiply and subtract:</div>
+                <div class="problem-review">
+                    <strong>From step 2:</strong> ${studentDivisor} × ${firstDigitAnswer} = ${firstProduct}
+                </div>
+                <div class="remainder-box">
+                    <div class="input-hint">Multiply the divisor by your answer from step 2</div>
+                    ${studentDivisor} × <span id="step3-multiplier">?</span> = <input id="step3-product" class="input-step" placeholder="?"/><br>
+                    <div class="input-hint">Subtract this from ${firstDigits}</div>
+                    ${firstDigits} - <span id="step3-subtract">?</span> = <input id="step3" class="input-step" placeholder="?"/>
+                </div>
+                <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step3">Check</button>
+                <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step3">Try Again</button>
+                <span id="step3-feedback"></span>`,
+                { 
+                    'product': firstProduct.toString(),
+                    'step3': firstRemainder.toString() 
+                },
+                `Subtract to find the remainder after the first division.`);
+
+            // Step 4: Bring down next digit
+            const nextDigit = studentDividend.toString()[studentDivisor.toString().length];
+            const newDividend = firstRemainder * 10 + parseInt(nextDigit || '0');
+            const nextDigitAnswer = Math.floor(newDividend / studentDivisor);
+            
+            addStep(studentSteps, 'step4',
+                `<div class="step-instruction">Bring down the next digit:</div>
+                <div class="problem-review">
+                    <strong>Current remainder:</strong> ${firstRemainder}<br>
+                    <strong>Next digit in dividend:</strong> ${nextDigit || '0'}
+                </div>
+                <div class="input-hint">Bring down the next digit from the dividend</div>
+                Bring down <input id="step4-digit" class="input-step" placeholder="?" size="1"/> from the dividend.<br>
+                <div class="input-hint">Combine with the remainder to make a new number</div>
+                New number to divide: <input id="step4-number" class="input-step" placeholder="?"/>
+                <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step4">Check</button>
+                <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step4">Try Again</button>
+                <span id="step4-feedback"></span>`,
+                { 
+                    'digit': nextDigit || '0',
+                    'number': newDividend.toString()
+                },
+                `Combine the remainder with the next digit to form a new number.`);
+
+            // Step 5: Divide again
+            const nextProduct = studentDivisor * nextDigitAnswer;
+            const nextRemainder = newDividend - nextProduct;
+            
+            addStep(studentSteps, 'step5',
+                `<div class="step-instruction">Divide again:</div>
+                <div class="problem-review">
+                    <strong>New number to divide:</strong> ${newDividend}<br>
+                    <strong>Current divisor:</strong> ${studentDivisor}
+                </div>
+                <div class="input-hint">How many times does ${studentDivisor} fit into ${newDividend}?</div>
+                ${studentDivisor} goes into ${newDividend} how many times? <input id="step5" class="input-step" placeholder="?" size="1"/><br>
+                <div class="input-hint">Then multiply and subtract</div>
+                Then multiply and subtract:
+                <div class="remainder-box">
+                    ${studentDivisor} × <span id="step5-multiplier">?</span> = <input id="step5-product" class="input-step" placeholder="?"/><br>
+                    ${newDividend} - <span id="step5-subtract">?</span> = <input id="step5-remainder" class="input-step" placeholder="?"/>
+                </div>
+                <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step5">Check</button>
+                <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step5">Try Again</button>
+                <span id="step5-feedback"></span>`,
+                { 
+                    'step5': nextDigitAnswer.toString(),
+                    'product': nextProduct.toString(),
+                    'remainder': nextRemainder.toString()
+                },
+                `Repeat the division process with the new number.`);
+
+            // Step 6: Final answer
+            const finalRemainder = studentDividend % studentDivisor;
+            
+            addStep(studentSteps, 'step6',
+                `<div class="step-instruction">Final answer:</div>
+                <div class="problem-review">
+                    <strong>Problem:</strong> ${studentDividend} ÷ ${studentDivisor}<br>
+                    <strong>Final remainder:</strong> ${finalRemainder}
+                </div>
+                <div class="input-hint">Combine all the digits you got from division</div>
+                Quotient: <input id="step6-quotient" class="input-step" placeholder="?"/><br>
+                ${finalRemainder > 0 ? `<div class="input-hint">What's left after the last subtraction?</div>Remainder: <input id="step6-remainder" class="input-step" placeholder="?"/>` : ''}
+                <button class="btn btn-outline-primary btn-sm step-check-btn" data-step-id="step6">Check</button>
+                <button class="btn btn-outline-secondary btn-sm try-again-btn hidden" data-step-id="step6">Try Again</button>
+                <span id="step6-feedback"></span>`,
+                { 
+                    'quotient': correctAnswer.toString(),
+                    'remainder': finalRemainder > 0 ? finalRemainder.toString() : '0'
+                },
+                `Combine all the digits you got from division to form the quotient.`);
+
+            // Auto-fill the multiplier and subtract values when step2 is completed
+            document.getElementById('step2').addEventListener('input', function() {
+                if (this.value && this.value === this.getAttribute('data-correct')) {
+                    document.getElementById('step3-multiplier').textContent = this.value;
+                    document.getElementById('step3-subtract').textContent = (studentDivisor * parseInt(this.value)).toString();
+                }
+            });
+
+            // Auto-fill the multiplier and subtract values when step5 is completed
+            document.getElementById('step5').addEventListener('input', function() {
+                if (this.value && this.value === this.getAttribute('data-correct')) {
+                    document.getElementById('step5-multiplier').textContent = this.value;
+                    document.getElementById('step5-subtract').textContent = (studentDivisor * parseInt(this.value)).toString();
+                }
+            });
+        }
+
+        function addStep(container, id, question, correctValues, explanation = '') {
+            const div = document.createElement('div');
+            div.className = 'practice-step';
+
+            // Parse inputs and apply correct data attributes
+            let inputsHtml = question;
+
+            if (typeof correctValues === 'object') {
+                for (const key in correctValues) {
+                    const value = correctValues[key];
+                    const regex = new RegExp(`id="(${id}-${key})"`, 'g');
+                    inputsHtml = inputsHtml.replace(regex, `id="$1" data-correct="${value}"`);
+                    
+                    // Also handle inputs without the step prefix
+                    const simpleRegex = new RegExp(`id="(${key})"`, 'g');
+                    inputsHtml = inputsHtml.replace(simpleRegex, `id="$1" data-correct="${value}"`);
+                }
+            } else if (correctValues !== null) {
+                inputsHtml = inputsHtml.replace(/id="([^"]+)"/g, (match, p1) => {
+                    return `id="${p1}" data-correct="${correctValues}"`;
+                });
+            }
+
+            div.innerHTML = 
+                `<div class="step-number">${id.replace('step', '')}</div>
+                <div class="step-content">
+                    ${inputsHtml}
+                    ${explanation ? `<div class="tooltip-explanation">${explanation}</div>` : ''}
+                </div>`;
+
+            container.appendChild(div);
+        }
+
+        function checkStep(id) {
+            let allCorrect = true;
+            const inputs = document.querySelectorAll(`input[id^="${id}-"], input#${id}, select[id^="${id}-"]`);
+
+            inputs.forEach(input => {
+                const correctValue = input.getAttribute('data-correct');
+                const inputValue = input.value ? input.value.trim() : (input.tagName === 'SELECT' ? input.value : '');
+
+                // Special case for step2: skip second input if answer is "no"
+                if (id === 'step2' && input.id === 'step2' && document.getElementById('step2-yn')?.value === 'no') {
+                    return;  // skip this input entirely
+                }
+
+                if (!inputValue) {
+                    allCorrect = false;
+                    return;
+                }
+
+                if (inputValue === correctValue) {
+                    input.classList.add('correct');
+                    input.classList.remove('incorrect');
+                    input.setAttribute('data-solved', 'true');
+                    
+                    // Auto-fill related fields when correct
+                    if (id === 'step2' && input.id === 'step2') {
+                        const divisor = currentDivisor;
+                        const product = divisor * parseInt(inputValue);
+                        document.getElementById('step3-multiplier').textContent = inputValue;
+                        document.getElementById('step3-subtract').textContent = product.toString();
+                    }
+                    
+                    if (id === 'step5' && input.id === 'step5') {
+                        const divisor = currentDivisor;
+                        const product = divisor * parseInt(inputValue);
+                        document.getElementById('step5-multiplier').textContent = inputValue;
+                        document.getElementById('step5-subtract').textContent = product.toString();
+                    }
+                } else {
+                    input.classList.add('incorrect');
+                    input.classList.remove('correct');
+                    allCorrect = false;
+                }
+            });
+
+            const feedback = document.getElementById(`${id}-feedback`);
+            const tryAgainBtn = document.querySelector(`.try-again-btn[data-step-id="${id}"]`);
+            const sound = document.getElementById('success-sound');
+
+            if (allCorrect) {
+                feedback.innerHTML = '<span class="text-success fw-bold">🎉 Correct!</span>';
+                if (tryAgainBtn) {
+                    tryAgainBtn.classList.add('hidden');
+                    tryAgainBtn.classList.remove('visible');
+                }
+                confetti({ particleCount: 60, spread: 45 });
+                sound.play();
+                score++;
+                document.getElementById('score').textContent = score;
+                checkAllStepsComplete();
+            } else {
+                feedback.innerHTML = '<span class="text-danger">❌ Try again</span>';
+                if (tryAgainBtn) {
+                    tryAgainBtn.classList.remove('hidden');
+                    tryAgainBtn.classList.add('visible');
+                }
+            }
+        }
+
+        function checkAllStepsComplete() {
+            const steps = ['step1', 'step2', 'step3', 'step4', 'step5', 'step6'];
+            let allComplete = true;
+
+            for (const step of steps) {
+                const inputs = document.querySelectorAll(`input[id^="${step}-"], input#${step}, select[id^="${step}-"]`);
+                
+                // Skip if no inputs found for this step
+                if (inputs.length === 0) continue;
+                
+                // Special handling for step2
+                if (step === 'step2') {
+                    const ynInput = document.getElementById('step2-yn');
+                    const step2Input = document.getElementById('step2');
+                    
+                    if (!ynInput || ynInput.value === '') {
+                        allComplete = false;
+                        break;
+                    }
+                    
+                    if (ynInput.value === 'yes' && (!step2Input || step2Input.value === '')) {
+                        allComplete = false;
+                        break;
+                    }
+                    
+                    continue;
+                }
+
+                // Check all other inputs
+                for (const input of inputs) {
+                    if (input.getAttribute('data-solved') !== 'true') {
+                        allComplete = false;
+                        break;
+                    }
+                }
+                
+                if (!allComplete) break;
+            }
+
+            const finalBox = document.getElementById('final-answer-box');
+            if (allComplete) {
+                finalBox.style.display = 'block';
+                finalBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                finalBox.style.display = 'none';
+            }
+        }
+
+        function resetStep(id) {
+            const inputs = document.querySelectorAll(`[id^="${id}"]:not(.step-check-btn):not(.try-again-btn)`);
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+                input.removeAttribute('data-solved');
+            });
+            document.getElementById(`${id}-feedback`).innerHTML = '';
+
+            const tryAgainBtn = document.querySelector(`.try-again-btn[data-step-id="${id}"]`);
+            if (tryAgainBtn) {
+                tryAgainBtn.classList.remove('visible');
+                tryAgainBtn.classList.add('hidden');
+            }
+
+            document.getElementById('final-answer-box').style.display = 'none';
+        }
+
+        function submitFinal() {
+            const input = document.getElementById('user-answer');
+            const remainderInput = document.getElementById('user-remainder');
+            const feedback = document.getElementById('final-feedback');
+            const celebrationDiv = document.getElementById('final-celebration');
+            const celebrationSound = document.getElementById('celebration-sound');
+
+            if (!input.value) {
+                feedback.innerHTML = '<div class="alert alert-warning">Please enter an answer first!</div>';
+                return;
+            }
+
+            const userAnswer = input.value.trim();
+            const userRemainder = remainderInput ? remainderInput.value.trim() : '0';
+
+            const fullUserAnswer = userRemainder === '0' ? userAnswer : `${userAnswer} R${userRemainder}`;
+            const fullCorrectAnswer = currentRemainder === 0 ? correctAnswer.toString() : `${correctAnswer} R${currentRemainder}`;
+
+            const problemText = document.getElementById('student-problem').textContent;
+            const studentDividend = parseInt(problemText.split('÷')[0].trim());
+            const studentDivisor = parseInt(problemText.split('÷')[1].trim());
+
+            if (userAnswer == correctAnswer && (currentRemainder === 0 || userRemainder == currentRemainder)) {
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+                if (remainderInput) {
+                    remainderInput.classList.add('correct');
+                    remainderInput.classList.remove('incorrect');
+                }
+                feedback.innerHTML = '<div class="text-success fw-bold">✅ Correct!</div>';
+                document.getElementById('final-answer-box').style.display = 'none';
+
+
+                celebrationDiv.innerHTML = `
+                    <div class="celebration">
+                        <div class="reward-message">🎊 You Finished the Problem! 🎊</div>
+                        <p>The correct answer to ${studentDividend} ÷ ${studentDivisor} is <strong>${fullCorrectAnswer}</strong>.</p>
+                        <div class="division-visualization">
+                            <div class="division-row">
+                                <div class="digit-box">${studentDivisor}</div>
+                                <div class="division-symbol">)</div>
+                                <div class="digit-box">${studentDividend.toString().split('').map(d => `<span>${d}</span>`).join('')}</div>
+                            </div>
+                        </div>
+                        <p>You can see how the quotient ${correctAnswer} comes from combining the digits you found in each division step.</p>
+                        <div class="reward-emoji">🎉</div>
+                    </div>`;
+                celebrationDiv.classList.remove('hidden');
+                celebrationSound?.play();
+                confetti({ particleCount: 150, spread: 70 });
+
+                document.getElementById('next-question-btn').classList.remove('hidden');
+                score += 2;
+                document.getElementById('score').textContent = score;
+            } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+                if (remainderInput) {
+                    remainderInput.classList.add('incorrect');
+                    remainderInput.classList.remove('correct');
+                }
+                feedback.innerHTML = `<div class="text-danger">❌ Incorrect. The correct answer is ${fullCorrectAnswer}.</div>`;
+            }
+        }
+
+        function showSummary() {
+            document.getElementById('game-area').classList.add('hidden');
+            document.getElementById('summary').innerHTML = `
+                <div class="card p-4">
+                    <h2 class="text-center">🎉 Game Complete! 🎉</h2>
+                    <p class="text-center">Your final score is <strong>${score} out of ${maxQuestions * 3}</strong></p>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary" id="play-again-btn">Play Again</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateProgress() {
+            const progress = ((questionCount + 1) / maxQuestions) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        // Attach event listeners to difficulty buttons
+        document.getElementById('easy-btn').addEventListener('click', function () {
+            questionCount = 0;
+            score = 0;
+            document.getElementById('score').textContent = score;
+            setupProblem('easy');
+        });
+
+        document.getElementById('medium-btn').addEventListener('click', function () {
+            questionCount = 0;
+            score = 0;
+            document.getElementById('score').textContent = score;
+            setupProblem('medium');
+        });
+
+        document.getElementById('hard-btn').addEventListener('click', function () {
+            questionCount = 0;
+            score = 0;
+            document.getElementById('score').textContent = score;
+            setupProblem('hard');
+        });
+
+        // Submit final button
+        document.getElementById('submit-final-btn').addEventListener('click', submitFinal);
+
+        // Next question button
+        document.getElementById('next-question-btn').addEventListener('click', function () {
+            questionCount++;
+            setupProblem(currentDifficulty);
+        });
+
+        // Dark mode toggle
+        document.getElementById('toggle-theme').addEventListener('click', function () {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+            this.textContent = darkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        // Auto-populate multiplier/subtract when correct answer is typed in
+        document.addEventListener('input', function(e) {
+            const input = e.target;
+            const stepId = input.id;
+
+            if (stepId === 'step2') {
+                const correct = input.getAttribute('data-correct');
+                if (input.value === correct) {
+                    document.getElementById('step3-multiplier').textContent = correct;
+
+                    const problem = document.getElementById('student-problem').textContent;
+                    const parts = problem.split('÷');
+                    const divisor = parseInt(parts[1].trim());
+                    const digits = parts[0].trim().split('');
+                    const firstDigits = digits.slice(0, divisor.toString().length).join('');
+                    const product = divisor * parseInt(correct);
+                    document.getElementById('step3-subtract').textContent = product.toString();
+                }
+            }
+
+            if (stepId === 'step5') {
+                const correct = input.getAttribute('data-correct');
+                if (input.value === correct) {
+                    const problem = document.getElementById('student-problem').textContent;
+                    const parts = problem.split('÷');
+                    const divisor = parseInt(parts[1].trim());
+                    const digits = parts[0].trim().split('');
+                    const firstDigits = digits.slice(0, divisor.toString().length).join('');
+                    const step2Val = parseInt(document.getElementById('step2').value);
+                    const firstProduct = step2Val * divisor;
+                    const remainder = parseInt(firstDigits) - firstProduct;
+                    const nextDigit = digits[divisor.toString().length];
+                    const newDividend = remainder * 10 + parseInt(nextDigit);
+                    const product = parseInt(correct) * divisor;
+                    document.getElementById('step5-multiplier').textContent = correct;
+                    document.getElementById('step5-subtract').textContent = product.toString();
+                }
+            }
+        });
+
+        // General step check handler
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('step-check-btn')) {
+                const stepId = e.target.getAttribute('data-step-id');
+                checkStep(stepId);
+            }
+        });
+
+        // Try again buttons
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('try-again-btn')) {
+                const stepId = e.target.getAttribute('data-step-id');
+                resetStep(stepId);
+            }
+        });
+
+        // Play again button (in summary)
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('step-check-btn')) {
+                const stepId = e.target.getAttribute('data-step-id');
+                checkStep(stepId);
+            }
+            
+            if (e.target && e.target.classList.contains('try-again-btn')) {
+                const stepId = e.target.getAttribute('data-step-id');
+                resetStep(stepId);
+            }
+            
+            if (e.target && e.target.id === 'play-again-btn') {
+                document.getElementById('summary').innerHTML = '';
+                questionCount = 0;
+                score = 0;
+                document.getElementById('score').textContent = score;
+                setupProblem(currentDifficulty);
+            }
+        });
+
+        // Handle step2 yes/no selection
+        document.addEventListener('change', function(e) {
+            if (e.target && e.target.id === 'step2-yn') {
+                const container = document.getElementById('step2-input-container');
+                if (e.target.value === 'no') {
+                    container.style.display = 'none';
+                    document.getElementById('step2').value = '0';
+                } else {
+                    container.style.display = 'block';
+                    document.getElementById('step2').value = '';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
