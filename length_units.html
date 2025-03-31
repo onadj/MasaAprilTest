@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🕣 Choosing the Right Unit Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #fefeff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+      border: none;
+      background-color: #ffffff;
+    }
+    .teacher-example {
+      background-color: #fff8e6;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .teacher-example .visual-usage {
+      margin-top: 10px;
+      padding: 10px;
+      background: #fff3cd;
+      border: 2px dashed #ffc107;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .nav-buttons {
+      margin-bottom: 20px;
+    }
+    .nav-buttons .btn {
+      margin-right: 10px;
+    }
+    .question {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .result {
+      margin-top: 10px;
+    }
+    .correct { color: green; }
+    .incorrect { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <div class="nav-buttons">
+      <a href="index.html" class="btn btn-danger">🏠 Home</a>
+      <a href="length_conversions.html" class="btn btn-info">📁 Back to Length Menu</a>
+      <a href="length_conversions.html" class="btn btn-outline-primary">🕣 Conversions</a>
+      <a href="length_units.html" class="btn btn-outline-warning">📀 Choosing Units</a>
+      <a href="length_measuring.html" class="btn btn-outline-success">🕣 Measuring</a>
+    </div>
+    <div class="card p-4">
+      <h2 class="text-center mb-4">📀 Choosing the Right Unit</h2>
+      <div class="score-box text-end mb-3">Score: <span id="score">0</span> | Question <span id="question-count">1</span>/10</div>
+      <div id="teacher-example" class="teacher-example"></div>
+      <div id="quiz-area">
+        <div id="question-box" class="question mb-3"></div>
+        <input type="text" id="answer" class="form-control mb-3" placeholder="Your answer here (e.g. meter, centimeter)" />
+        <button class="btn btn-warning" onclick="checkAnswer()">Submit</button>
+        <div id="feedback" class="result fw-bold"></div>
+        <div class="mt-3">
+          <button class="btn btn-secondary" onclick="nextQuestion()">Next Question</button>
+        </div>
+      </div>
+      <div id="end-message" class="text-center mt-4 fw-bold" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script>
+    const allQuestions = [
+      { q: "What unit is best for measuring the length of a pencil?", a: "centimeter" },
+      { q: "What unit would you use to measure the length of a football field?", a: "meter" },
+      { q: "What unit is best for measuring the height of a mountain?", a: "kilometer" },
+      { q: "Which unit would be used for the thickness of a coin?", a: "millimeter" },
+      { q: "What unit is best to measure distance between cities?", a: "kilometer" },
+      { q: "What unit is used to measure your height?", a: "meter" },
+      { q: "Best unit to measure a classroom's door?", a: "meter" },
+      { q: "What unit would measure the width of a notebook?", a: "centimeter" },
+      { q: "What unit is used for the length of a bus?", a: "meter" },
+      { q: "What unit is best to measure a mobile phone's thickness?", a: "millimeter" }
+    ];
+
+    const examples = [
+      { q: "Use <strong>millimeters</strong> for very small things like a coin.", ex: "Coin thickness ➞ 1-2 mm" },
+      { q: "Use <strong>centimeters</strong> for small objects like pencils.", ex: "Pencil length ➞ ~15 cm" },
+      { q: "Use <strong>meters</strong> for medium distances like a hallway.", ex: "Hallway ➞ ~10 m" },
+      { q: "Use <strong>kilometers</strong> for long distances.", ex: "Town to town ➞ 5 km" }
+    ];
+
+    let score = 0;
+    let current = 0;
+
+    function getRandomSet(array, n) {
+      return array.sort(() => 0.5 - Math.random()).slice(0, n);
+    }
+
+    const questions = getRandomSet(allQuestions, 10);
+
+    function showTeacherExample() {
+      const example = examples[Math.floor(Math.random() * examples.length)];
+      document.getElementById("teacher-example").innerHTML = `
+        <h5>👩‍🏫 Teacher's Example</h5>
+        <p>${example.q}</p>
+        <div class="visual-usage">${example.ex}</div>`;
+    }
+
+    function showQuestion() {
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("answer").value = "";
+      document.getElementById("score").textContent = score;
+      document.getElementById("question-count").textContent = current + 1;
+
+      if (current < questions.length) {
+        document.getElementById("question-box").textContent = questions[current].q;
+        showTeacherExample();
+      } else {
+        document.getElementById("quiz-area").style.display = "none";
+        document.getElementById("teacher-example").style.display = "none";
+        const percent = Math.round((score / questions.length) * 100);
+        let msg = `You got ${score} out of ${questions.length} correct (${percent}%).\n`;
+        if (percent === 100) msg += ' 🌟 Measurement Master!';
+        else if (percent >= 90) msg += ' 👏 Excellent work!';
+        else if (percent >= 80) msg += ' 👍 Good job!';
+        else msg += ' 💡 Keep practicing!';
+        document.getElementById("end-message").textContent = msg;
+        document.getElementById("end-message").style.display = "block";
+      }
+    }
+
+    function checkAnswer() {
+      const user = document.getElementById("answer").value.trim().toLowerCase();
+      const correct = questions[current].a.toLowerCase();
+      const feedback = document.getElementById("feedback");
+
+      if (user === correct) {
+        feedback.textContent = "✅ Correct!";
+        feedback.className = "result correct";
+        score++;
+      } else {
+        feedback.textContent = `❌ Incorrect. Correct answer: ${questions[current].a}`;
+        feedback.className = "result incorrect";
+      }
+    }
+
+    function nextQuestion() {
+      current++;
+      showQuestion();
+    }
+
+    document.addEventListener("DOMContentLoaded", showQuestion);
+  </script>
+</body>
+</html>
