@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📈 Graphs Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f0fff9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+      border: none;
+      background-color: #ffffff;
+    }
+    .teacher-example {
+      background-color: #e0f7f1;
+      border-left: 4px solid #20c997;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .nav-buttons {
+      margin-bottom: 20px;
+    }
+    .nav-buttons .btn {
+      margin-right: 10px;
+    }
+    .question {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .result {
+      margin-top: 10px;
+    }
+    .correct { color: green; }
+    .incorrect { color: red; }
+    
+    /* Graph visualization styles */
+    .graph-visual {
+      width: 100%;
+      height: 200px;
+      margin: 15px 0;
+      position: relative;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+    }
+    
+    /* Pie chart */
+    .pie-chart {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #4CAF50 0% 30%,
+        #2196F3 30% 60%,
+        #FFC107 60% 100%
+      );
+      margin: 0 auto;
+    }
+    
+    /* Bar chart */
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      height: 150px;
+      padding-top: 20px;
+    }
+    .bar {
+      width: 30px;
+      background-color: #4CAF50;
+      margin: 0 5px;
+      position: relative;
+    }
+    .bar:nth-child(2) { height: 70%; background-color: #2196F3; }
+    .bar:nth-child(3) { height: 40%; background-color: #FFC107; }
+    .bar:first-child { height: 100%; }
+    
+    /* Line graph */
+    .line-graph {
+      position: relative;
+      height: 150px;
+    }
+    .line-path {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .line-path::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: #4CAF50;
+      top: 20%;
+      left: 0;
+    }
+    .line-path::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: #4CAF50;
+      top: 20%;
+      left: 0;
+      transform: translateY(0) scaleY(1);
+      animation: drawLine 1.5s forwards;
+    }
+    
+    @keyframes drawLine {
+      to {
+        transform: translateY(80px) scaleY(3);
+      }
+    }
+    
+    .dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: #4CAF50;
+      border-radius: 50%;
+    }
+    .dot:nth-child(1) { left: 10%; top: 20%; }
+    .dot:nth-child(2) { left: 30%; top: 40%; }
+    .dot:nth-child(3) { left: 50%; top: 10%; }
+    .dot:nth-child(4) { left: 70%; top: 60%; }
+    .dot:nth-child(5) { left: 90%; top: 30%; }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <div class="nav-buttons">
+      <a href="index.html" class="btn btn-danger">🏠 Home</a>
+      <a href="math_data.html" class="btn btn-info">📁 Back to Data Menu</a>
+      <a href="averages.html" class="btn btn-outline-primary">📊 Averages</a>
+      <a href="missing_average.html" class="btn btn-outline-warning">❓ Missing Number</a>
+      <a href="graphs.html" class="btn btn-outline-success">📈 Graphs</a>
+    </div>
+    <div class="card p-4">
+      <h2 class="text-center mb-4">📈 Graphs Quiz</h2>
+      <div class="score-box text-end mb-3">Score: <span id="score">0</span> | Question <span id="question-count">1</span>/10</div>
+      <div id="teacher-example" class="teacher-example"></div>
+      <div id="quiz-area">
+        <div id="question-box" class="question mb-3"></div>
+        <div id="graph-visual" class="graph-visual"></div>
+        <input type="text" id="answer" class="form-control mb-3" placeholder="Your answer here" />
+        <button class="btn btn-success" onclick="checkAnswer()">Submit</button>
+        <div id="feedback" class="result fw-bold"></div>
+        <div class="mt-3">
+          <button class="btn btn-secondary" onclick="nextQuestion()">Next Question</button>
+        </div>
+      </div>
+      <div id="end-message" class="text-center mt-4 fw-bold" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script>
+    const graphQuestions = [
+      {
+        q: "Which graph type is best for showing parts of a whole?",
+        a: "pie chart",
+        type: "pie"
+      },
+      {
+        q: "Which graph is best to show trends over time?",
+        a: "line graph",
+        type: "trend"
+      },
+      {
+        q: "What type of graph uses bars to show values?",
+        a: "bar chart",
+        type: "bar"
+      },
+      {
+        q: "If you want to compare amounts in different categories, which graph would you use?",
+        a: "bar chart",
+        type: "bar"
+      },
+      {
+        q: "What graph divides a circle into slices to show percentages?",
+        a: "pie chart",
+        type: "pie"
+      },
+      {
+        q: "Which graph would show the temperature for each day of the week?",
+        a: "line graph",
+        type: "trend"
+      },
+      {
+        q: "Which graph is good for tracking progress over time?",
+        a: "line graph",
+        type: "trend"
+      },
+      {
+        q: "Which graph is best to show how a budget is divided?",
+        a: "pie chart",
+        type: "pie"
+      },
+      {
+        q: "What graph shows changes continuously over time?",
+        a: "line graph",
+        type: "trend"
+      },
+      {
+        q: "Which graph has vertical or horizontal rectangles to show size?",
+        a: "bar chart",
+        type: "bar"
+      }
+    ];
+
+    let score = 0;
+    let current = 0;
+
+    function showGraphExample(type) {
+      const graphVisual = document.getElementById("graph-visual");
+      graphVisual.innerHTML = "";
+      
+      if (type === "bar") {
+        graphVisual.innerHTML = `
+          <div class="bar-chart">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+          <p class="text-center mt-2">Bar Chart Example: Comparing different categories</p>
+        `;
+      } else if (type === "pie") {
+        graphVisual.innerHTML = `
+          <div class="pie-chart"></div>
+          <p class="text-center mt-2">Pie Chart Example: Showing parts of a whole</p>
+        `;
+      } else if (type === "trend") {
+        graphVisual.innerHTML = `
+          <div class="line-graph">
+            <div class="line-path">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+          <p class="text-center mt-2">Line Graph Example: Showing changes over time</p>
+        `;
+      }
+    }
+
+    function showTeacherExample(q) {
+      let text = "";
+      if (q.type === "bar") {
+        text = `<p><strong>Bar Chart:</strong> Used to compare different groups or categories. Each bar's length shows the value.</p>`;
+      } else if (q.type === "pie") {
+        text = `<p><strong>Pie Chart:</strong> Shows how a whole is divided into parts. Each slice represents a part of the whole.</p>`;
+      } else if (q.type === "trend") {
+        text = `<p><strong>Line Graph:</strong> Best for showing how something changes over time. It connects data points with lines.</p>`;
+      }
+      document.getElementById("teacher-example").innerHTML = `<h5>👩‍🏫 Teacher's Example</h5>${text}`;
+      showGraphExample(q.type);
+    }
+
+    function showQuestion() {
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("answer").value = "";
+      document.getElementById("score").textContent = score;
+      document.getElementById("question-count").textContent = current + 1;
+
+      if (current < graphQuestions.length) {
+        const q = graphQuestions[current];
+        document.getElementById("question-box").textContent = q.q;
+        showTeacherExample(q);
+      } else {
+        document.getElementById("quiz-area").style.display = "none";
+        document.getElementById("teacher-example").style.display = "none";
+        const percentage = Math.round((score / graphQuestions.length) * 100);
+        let message = `You got ${score} out of ${graphQuestions.length} correct (${percentage}%).\n`;
+        if (percentage === 100) {
+          message += '🏆 Graph Genius!';
+        } else if (percentage >= 90) {
+          message += '🌟 Excellent graph reader!';
+        } else if (percentage >= 80) {
+          message += '👍 Well done!';
+        } else {
+          message += '💡 Keep practicing!';
+        }
+        document.getElementById("end-message").textContent = message;
+        document.getElementById("end-message").style.display = "block";
+      }
+    }
+
+    function checkAnswer() {
+      const user = document.getElementById("answer").value.trim().toLowerCase();
+      const correct = graphQuestions[current].a.toLowerCase();
+      const feedback = document.getElementById("feedback");
+
+      if (user === correct) {
+        feedback.textContent = "✅ Correct!";
+        feedback.className = "result correct";
+        score++;
+      } else {
+        feedback.textContent = `❌ Incorrect. Correct answer: ${graphQuestions[current].a}`;
+        feedback.className = "result incorrect";
+      }
+    }
+
+    function nextQuestion() {
+      current++;
+      showQuestion();
+    }
+
+    document.addEventListener("DOMContentLoaded", showQuestion);
+  </script>
+</body>
+</html>

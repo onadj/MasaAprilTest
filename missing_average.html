@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>❓ Missing Number Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #fff9f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+      border: none;
+      background-color: #ffffff;
+    }
+    .teacher-example {
+      background-color: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .nav-buttons {
+      margin-bottom: 20px;
+    }
+    .nav-buttons .btn {
+      margin-right: 10px;
+    }
+    .question {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .result {
+      margin-top: 10px;
+    }
+    .correct { color: green; }
+    .incorrect { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <div class="nav-buttons">
+      <a href="index.html" class="btn btn-danger">🏠 Home</a>
+      <a href="math_data.html" class="btn btn-info">📁 Back to Data Menu</a>
+      <a href="averages.html" class="btn btn-outline-primary">📊 Averages</a>
+      <a href="missing_average.html" class="btn btn-outline-warning">❓ Missing Number</a>
+      <a href="graphs.html" class="btn btn-outline-success">📈 Graphs</a>
+    </div>
+    <div class="card p-4">
+      <h2 class="text-center mb-4">❓ Missing Number Quiz</h2>
+      <div class="score-box text-end mb-3">Score: <span id="score">0</span> | Question <span id="question-count">1</span>/10</div>
+      <div id="teacher-example" class="teacher-example"></div>
+      <div id="quiz-area">
+        <div id="question-box" class="question mb-3"></div>
+        <input type="number" step="0.01" id="answer" class="form-control mb-3" placeholder="Your answer here" />
+        <button class="btn btn-warning" onclick="checkAnswer()">Submit</button>
+        <div id="feedback" class="result fw-bold"></div>
+        <div class="mt-3">
+          <button class="btn btn-secondary" onclick="nextQuestion()">Next Question</button>
+        </div>
+      </div>
+      <div id="end-message" class="text-center mt-4 fw-bold" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script>
+    function generateMissingQuestion() {
+      const knownValues = Array.from({ length: 3 }, () => Math.floor(Math.random() * 20 + 5));
+      const totalCount = knownValues.length + 1;
+      const missingValue = Math.floor(Math.random() * 20 + 5);
+      const fullSum = knownValues.reduce((a, b) => a + b, 0) + missingValue;
+      const avg = (fullSum / totalCount).toFixed(2);
+      const questionText = `The average of ${knownValues.join(', ')}, and one missing number is ${avg}. What is the missing number?`;
+      return { q: questionText, a: missingValue, knownValues, fullSum, totalCount, avg };
+    }
+
+    const totalQuestions = 10;
+    const questions = Array.from({ length: totalQuestions }, generateMissingQuestion);
+    let score = 0;
+    let current = 0;
+
+    function showTeacherExample(data) {
+      document.getElementById('teacher-example').innerHTML = `
+        <h5>👩‍🏫 Teacher's Example</h5>
+        <p>To find a <strong>missing number</strong> when the average is known:</p>
+        <ul>
+          <li>Multiply the average by the total number of values to get the total sum.</li>
+          <li>Subtract the known sum from the total to find the missing value.</li>
+        </ul>
+        <p><strong>Example:</strong> Average of ${data.knownValues.join(', ')}, ? is ${data.avg}</p>
+        <p>Step 1: ${data.avg} × ${data.totalCount} = ${data.fullSum}</p>
+        <p>Step 2: ${data.fullSum} - (${data.knownValues.join(' + ')}) = ${data.a}</p>
+      `;
+    }
+
+    function showQuestion() {
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('answer').value = '';
+      document.getElementById('score').textContent = score;
+      document.getElementById('question-count').textContent = current + 1;
+
+      if (current < questions.length) {
+        const qData = questions[current];
+        document.getElementById('question-box').textContent = qData.q;
+        showTeacherExample(qData);
+      } else {
+        document.getElementById('quiz-area').style.display = 'none';
+        document.getElementById('teacher-example').style.display = 'none';
+        const percentage = Math.round((score / totalQuestions) * 100);
+        let message = `You got ${score} out of ${totalQuestions} correct (${percentage}%).\n`;
+        if (percentage === 100) {
+          message += '🏆 Master of Averages and Logic!';
+        } else if (percentage >= 90) {
+          message += '🌟 Excellent deduction skills!';
+        } else if (percentage >= 80) {
+          message += '👍 Great effort!';
+        } else {
+          message += '💡 Keep practicing!';
+        }
+        document.getElementById('end-message').textContent = message;
+        document.getElementById('end-message').style.display = 'block';
+      }
+    }
+
+    function checkAnswer() {
+      const userAnswer = parseFloat(document.getElementById('answer').value);
+      const correctAnswer = questions[current].a;
+      const feedback = document.getElementById('feedback');
+      if (Math.abs(userAnswer - correctAnswer) < 0.1) {
+        feedback.textContent = '✅ Correct!';
+        feedback.className = 'result correct';
+        score++;
+      } else {
+        feedback.textContent = `❌ Incorrect. The correct answer is ${correctAnswer}`;
+        feedback.className = 'result incorrect';
+      }
+    }
+
+    function nextQuestion() {
+      current++;
+      showQuestion();
+    }
+
+    document.addEventListener('DOMContentLoaded', showQuestion);
+  </script>
+</body>
+</html>
