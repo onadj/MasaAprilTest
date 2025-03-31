@@ -1,0 +1,12 @@
+ 
+ .home-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+ 
+ <div class="home-button-container">
+    <a href="index.html" class="btn btn-primary">🏠 Home</a>
+  </div>
