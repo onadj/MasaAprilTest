@@ -51,7 +51,7 @@
       position: relative;
       background-color: #f8f9fa;
       border-radius: 10px;
-      overflow: hidden;
+      overflow: visible; /* Changed from hidden to visible to ensure labels show */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -274,18 +274,18 @@
       shape.style.left = `${(container.offsetWidth - displayWidth) / 2}px`;
       shape.style.top = `${(container.offsetHeight - displayHeight) / 2}px`;
       
-      // Create dimension labels
+      // Create dimension labels with adjusted positions
       createLabel(container, {
         text: `${width}${unit}`,
         position: 'bottom',
-        x: (container.offsetWidth / 2),
-        y: (container.offsetHeight + displayHeight) / 2 + 10
+        x: container.offsetWidth / 2,
+        y: (container.offsetHeight + displayHeight) / 2 + 15 // Increased from 10 to 15
       });
       
       createLabel(container, {
         text: `${width}${unit}`,
         position: 'top',
-        x: (container.offsetWidth / 2),
+        x: container.offsetWidth / 2,
         y: (container.offsetHeight - displayHeight) / 2 - 20
       });
       
@@ -328,10 +328,11 @@
       
       if (options.position === 'top' || options.position === 'bottom') {
         label.style.transform = 'translateX(-50%)';
+        label.style.textAlign = 'center';
       }
       
       if (options.rotate) {
-        label.style.transform = 'rotate(-90deg)';
+        label.style.transform = 'rotate(-90deg) translateX(-50%)';
       }
       
       container.appendChild(label);
