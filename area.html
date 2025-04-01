@@ -51,7 +51,7 @@
       position: relative;
       background-color: #f8f9fa;
       border-radius: 10px;
-      overflow: visible; /* Changed from hidden to visible to ensure labels show */
+      overflow: visible;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -266,42 +266,49 @@
       const displayWidth = width * scale;
       const displayHeight = height * scale;
       
+      // Center position for the shape
+      const shapeLeft = (container.offsetWidth - displayWidth) / 2;
+      const shapeTop = (container.offsetHeight - displayHeight) / 2;
+      
       // Create the shape
       const shape = document.createElement("div");
       shape.className = "shape";
       shape.style.width = `${displayWidth}px`;
       shape.style.height = `${displayHeight}px`;
-      shape.style.left = `${(container.offsetWidth - displayWidth) / 2}px`;
-      shape.style.top = `${(container.offsetHeight - displayHeight) / 2}px`;
+      shape.style.left = `${shapeLeft}px`;
+      shape.style.top = `${shapeTop}px`;
       
-      // Create dimension labels with adjusted positions
+      // Label positioning constants - now all use the same offset
+      const labelOffset = 25; // Consistent distance from all shape edges
+      
+      // Create dimension labels with perfectly balanced positioning
       createLabel(container, {
         text: `${width}${unit}`,
         position: 'bottom',
-        x: container.offsetWidth / 2,
-        y: (container.offsetHeight + displayHeight) / 2 + 15 // Increased from 10 to 15
+        x: shapeLeft + displayWidth/2,
+        y: shapeTop + displayHeight + labelOffset
       });
       
       createLabel(container, {
         text: `${width}${unit}`,
         position: 'top',
-        x: container.offsetWidth / 2,
-        y: (container.offsetHeight - displayHeight) / 2 - 20
+        x: shapeLeft + displayWidth/2,
+        y: shapeTop - labelOffset
       });
       
       createLabel(container, {
         text: `${height}${unit}`,
         position: 'left',
-        x: (container.offsetWidth - displayWidth) / 2 - 30,
-        y: container.offsetHeight / 2,
+        x: shapeLeft - labelOffset,
+        y: shapeTop + displayHeight/2,
         rotate: true
       });
       
       createLabel(container, {
         text: `${height}${unit}`,
         position: 'right',
-        x: (container.offsetWidth + displayWidth) / 2 + 20,
-        y: container.offsetHeight / 2,
+        x: shapeLeft + displayWidth + labelOffset,
+        y: shapeTop + displayHeight/2,
         rotate: true
       });
       
@@ -310,8 +317,8 @@
         const areaText = document.createElement("div");
         areaText.className = "shape-area-text";
         areaText.textContent = `${width} × ${height} = ${width * height}${unit}²`;
-        areaText.style.top = `${(container.offsetHeight - 30) / 2}px`;
-        areaText.style.left = `${(container.offsetWidth - 100) / 2}px`;
+        areaText.style.top = `${shapeTop + displayHeight/2 - 15}px`;
+        areaText.style.left = `${shapeLeft + displayWidth/2 - 50}px`;
         areaText.style.width = "100px";
         container.appendChild(areaText);
       }
@@ -323,16 +330,17 @@
       const label = document.createElement("div");
       label.className = "shape-label";
       label.textContent = options.text;
-      label.style.left = `${options.x}px`;
-      label.style.top = `${options.y}px`;
-      
-      if (options.position === 'top' || options.position === 'bottom') {
-        label.style.transform = 'translateX(-50%)';
-        label.style.textAlign = 'center';
-      }
       
       if (options.rotate) {
+        label.style.left = `${options.x}px`;
+        label.style.top = `${options.y}px`;
         label.style.transform = 'rotate(-90deg) translateX(-50%)';
+        label.style.transformOrigin = 'center center';
+      } else {
+        label.style.left = `${options.x}px`;
+        label.style.top = `${options.y}px`;
+        label.style.transform = 'translateX(-50%)';
+        label.style.textAlign = 'center';
       }
       
       container.appendChild(label);
