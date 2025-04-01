@@ -1,0 +1,174 @@
+<!-- File: irregular.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Irregular Shapes - Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #feedback-text { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <div class="container">
+      <a class="btn btn-secondary" href="index.html">Home</a>
+      <a class="btn btn-secondary" href="area.html">Area</a>
+      <a class="btn btn-secondary" href="perimeter.html">Perimeter</a>
+      <a class="btn btn-primary" href="irregular.html">Irregular Shapes</a>
+    </div>
+  </nav>
+  <div class="container mt-4">
+    <h1>Irregular shapes</h1>
+    <p>Some shapes are made up of rectangles joined together. We can find the area of these shapes by splitting them into smaller rectangles, finding each area, then adding them up.</p>
+    <p>For example, look at the shape below:</p>
+    <div class="text-center my-3">
+      <svg width="380" height="260">
+        <g transform="translate(40,20)">
+          <path fill="#cce5ff" stroke="#333" stroke-width="2" d="M0 0 L120 0 L120 120 L300 120 L300 210 L0 210 Z"></path>
+          <line x1="0" y1="120" x2="120" y2="120" stroke="#333" stroke-width="1" stroke-dasharray="5,5"></line>
+          <text x="10" y="105" alignment-baseline="middle" fill="#000">7m</text>
+          <text x="150" y="205" text-anchor="middle" fill="#000">10m</text>
+          <text x="60" y="14" text-anchor="middle" fill="#000">4m</text>
+          <text x="310" y="165" alignment-baseline="middle" fill="#000">3m</text>
+        </g>
+      </svg>
+    </div>
+    <p>We can split this shape into two rectangles: one 4m by 4m (top) and one 10m by 3m (bottom).</p>
+    <p>The top rectangle's area is 4 × 4 = 16 m<sup>2</sup>, and the bottom rectangle's area is 10 × 3 = 30 m<sup>2</sup>.</p>
+    <p>Add them together: 16 + 30 = 46 m<sup>2</sup>.</p>
+    <div id="quiz-container" class="mt-4">
+      <p id="question-text" class="mb-3"></p>
+      <div id="shape-container" class="text-center my-3">
+        <svg id="shape-svg" width="500" height="500">
+          <g id="shape-group" transform="translate(40,20)">
+            <path id="shape-path" fill="#cce5ff" stroke="#333" stroke-width="2"></path>
+            <text id="label-h" alignment-baseline="middle" fill="#000"></text>
+            <text id="label-w" text-anchor="middle" fill="#000"></text>
+            <text id="label-lw" text-anchor="middle" fill="#000"></text>
+            <text id="label-bh" alignment-baseline="middle" fill="#000"></text>
+          </g>
+        </svg>
+      </div>
+      <div class="mb-3">
+        <input type="text" id="answer-input" class="form-control d-inline-block w-auto me-2" placeholder="Your answer">
+        <button id="checkBtn" class="btn btn-primary">Check Answer</button>
+        <button id="nextBtn" class="btn btn-primary" style="display:none;">Next Question</button>
+      </div>
+      <p id="feedback-text"></p>
+    </div>
+    <div id="final-message" class="mt-4" style="display:none;"></div>
+  </div>
+  <script>
+    (function(){
+      const questionText = document.getElementById('question-text');
+      const answerInput = document.getElementById('answer-input');
+      const checkBtn = document.getElementById('checkBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const feedbackText = document.getElementById('feedback-text');
+      const finalMessage = document.getElementById('final-message');
+      // Shape elements for dynamic updating
+      const shapePath = document.getElementById('shape-path');
+      const labelH = document.getElementById('label-h');
+      const labelW = document.getElementById('label-w');
+      const labelLw = document.getElementById('label-lw');
+      const labelBh = document.getElementById('label-bh');
+      const scale = 30;
+      let currentQuestion = 0;
+      let score = 0;
+      let correctAnswer = 0;
+      let currentUnit = "";
+      function randInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      function generateQuestion() {
+        currentUnit = Math.random() < 0.5 ? "cm" : "m";
+        // random dimensions for shape
+        const W = randInt(6, 12);
+        const H = randInt(6, 12);
+        const Lw = randInt(2, W - 2);
+        const Bh = randInt(2, H - 2);
+        // correct area = area of two rectangles combined
+        correctAnswer = Lw * (H - Bh) + W * Bh;
+        // Update shape outline path
+        const pathD = "M0 0 L" + (Lw * scale) + " 0 L" + (Lw * scale) + " " + ((H - Bh) * scale)
+                    + " L" + (W * scale) + " " + ((H - Bh) * scale) 
+                    + " L" + (W * scale) + " " + (H * scale) 
+                    + " L0 " + (H * scale) + " Z";
+        shapePath.setAttribute("d", pathD);
+        // Update labels on the shape
+        labelH.setAttribute("x", 5);
+        labelH.setAttribute("y", (H * scale) / 2);
+        labelH.textContent = H + currentUnit;
+        labelW.setAttribute("x", (W * scale) / 2);
+        labelW.setAttribute("y", (H * scale) - 5);
+        labelW.textContent = W + currentUnit;
+        labelLw.setAttribute("x", (Lw * scale) / 2);
+        labelLw.setAttribute("y", 14);
+        labelLw.textContent = Lw + currentUnit;
+        labelBh.setAttribute("x", (W * scale) + 5);
+        labelBh.setAttribute("y", (((H - Bh) * scale) + (H * scale)) / 2);
+        labelBh.textContent = Bh + currentUnit;
+        // Set question text
+        questionText.innerHTML = "<strong>Question " + currentQuestion + " of 10:</strong> Find the area of the shape below by splitting it into two rectangles.";
+      }
+      function showFinalMessage() {
+        const percent = Math.round((score / 10) * 100);
+        let msg = "";
+        if(score === 10) {
+          msg = "Outstanding! Perfect score.";
+        } else if(score >= 8) {
+          msg = "Great job! You really understand this well.";
+        } else if(score >= 5) {
+          msg = "Good effort! Keep practicing to improve even more.";
+        } else {
+          msg = "Don't worry. Keep practicing and you'll get better.";
+        }
+        finalMessage.innerHTML = "<h3>Quiz Complete</h3>"
+          + "<p>You got " + score + " out of 10 correct (" + percent + "%).</p>"
+          + "<p>" + msg + "</p>";
+        finalMessage.style.display = "block";
+      }
+      function nextQuestion() {
+        currentQuestion++;
+        if(currentQuestion > 10) {
+          document.getElementById('quiz-container').style.display = "none";
+          showFinalMessage();
+          return;
+        }
+        generateQuestion();
+        answerInput.value = "";
+        answerInput.disabled = false;
+        feedbackText.textContent = "";
+        checkBtn.style.display = "inline-block";
+        nextBtn.style.display = "none";
+      }
+      checkBtn.addEventListener('click', function(){
+        const answer = answerInput.value.trim();
+        if(answer === "" || isNaN(answer)) {
+          alert("Please enter a number for your answer.");
+          return;
+        }
+        const userAnswer = parseFloat(answer);
+        if(userAnswer === correctAnswer) {
+          score++;
+          feedbackText.textContent = "Correct! The area is " + correctAnswer + " " + currentUnit + "².";
+          feedbackText.className = "text-success";
+        } else {
+          feedbackText.textContent = "Not quite. The correct answer is " + correctAnswer + " " + currentUnit + "².";
+          feedbackText.className = "text-danger";
+        }
+        answerInput.disabled = true;
+        checkBtn.style.display = "none";
+        nextBtn.style.display = "inline-block";
+        if(currentQuestion === 10) {
+          nextBtn.textContent = "Show Results";
+        }
+      });
+      nextBtn.addEventListener('click', nextQuestion);
+      nextQuestion();
+    })();
+  </script>
+</body>
+</html>
