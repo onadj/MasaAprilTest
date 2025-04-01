@@ -1,145 +1,811 @@
-<!-- File: perimeter.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>What is Perimeter? - Quiz</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>📏 Perimeter Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    #feedback-text { font-weight: bold; }
+    body {
+      background-color: #f0f9ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+      border: none;
+      background-color: #ffffff;
+    }
+    .teacher-example {
+      background-color: #e6f2ff;
+      border-left: 4px solid #007bff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    .teacher-example:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    #teacher-shape, #student-shape {
+      height: 250px;
+      margin-top: 20px;
+    }
+    .teacher-example .visual-scale {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      background: #f9f9f9;
+      padding: 10px;
+      border: 2px dashed #007bff;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .shape-visualization {
+      width: 100%;
+      min-height: 250px;
+      margin: 15px 0;
+      position: relative;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      overflow: visible;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .shape-label {
+      position: absolute;
+      font-weight: bold;
+      color: #333;
+      background-color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 10;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+    .unit-options {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+    .unit-btn {
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      padding: 5px 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+    .unit-btn:hover {
+      background-color: #e9ecef;
+    }
+    .unit-btn.selected {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+    .progress-container {
+      height: 10px;
+      background-color: #e9ecef;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background-color: #007bff;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    .result {
+      margin-top: 10px;
+      font-size: 1.1rem;
+    }
+    .correct {
+      color: #28a745;
+      animation: bounce 0.5s;
+    }
+    .incorrect {
+      color: #dc3545;
+    }
+    .answer-input-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .answer-input-container input {
+      flex: 1;
+      max-width: 150px;
+    }
+    .unit-display {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #495057;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .calculation-steps {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      border-left: 4px solid #28a745;
+    }
+    .teacher-shape-title {
+      font-weight: bold;
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+    .shape-explanation {
+      margin-top: 10px;
+      font-style: italic;
+      color: #6c757d;
+    }
+    
+    /* Improved CSS Shapes with connected labels */
+    .shape-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+    }
+    
+    /* Square */
+    .square-shape {
+      width: 150px;
+      height: 150px;
+      border: 3px solid #007bff;
+      background-color: #cce5ff;
+      position: relative;
+    }
+    
+    /* Rectangle */
+    .rectangle-shape {
+      width: 180px;
+      height: 100px;
+      border: 3px solid #007bff;
+      background-color: #cce5ff;
+      position: relative;
+    }
+    
+    /* Triangle */
+    .triangle-shape {
+      width: 0;
+      height: 0;
+      border-left: 75px solid transparent;
+      border-right: 75px solid transparent;
+      border-bottom: 150px solid #cce5ff;
+      position: relative;
+    }
+    .triangle-border {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 75px solid transparent;
+      border-right: 75px solid transparent;
+      border-bottom: 150px solid #007bff;
+      left: -75px;
+      top: 0;
+      z-index: -1;
+    }
+    
+    /* Pentagon */
+    .pentagon-shape {
+      width: 160px;
+      height: 160px;
+      background-color: #cce5ff;
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+      border: 3px solid #007bff;
+      position: relative;
+    }
+    
+    /* Hexagon */
+    .hexagon-shape {
+      width: 160px;
+      height: 160px;
+      background-color: #cce5ff;
+      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+      border: 3px solid #007bff;
+      position: relative;
+    }
+    
+    /* Irregular Quadrilateral */
+    .irregular-shape {
+      width: 160px;
+      height: 120px;
+      background-color: #cce5ff;
+      clip-path: polygon(0% 20%, 40% 0%, 100% 30%, 80% 100%, 20% 80%);
+      border: 3px solid #007bff;
+      position: relative;
+    }
+    
+    /* Side length indicators with connecting lines */
+    .side-label {
+      position: absolute;
+      background-color: white;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: bold;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+    .side-line {
+      position: absolute;
+      background-color: #333;
+      height: 1px;
+      transform-origin: 0 0;
+    }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-light bg-light">
-    <div class="container">
-      <a class="btn btn-secondary" href="index.html">Home</a>
-      <a class="btn btn-secondary" href="area.html">Area</a>
-      <a class="btn btn-primary" href="perimeter.html">Perimeter</a>
-      <a class="btn btn-secondary" href="irregular.html">Irregular Shapes</a>
-    </div>
-  </nav>
   <div class="container mt-4">
-    <h1>What is the perimeter? How to find it?</h1>
-    <p>Perimeter is the distance around the edge of a shape. It is measured in units (such as centimeters or meters).</p>
-    <p>You can find the perimeter by adding the lengths of all the sides of the shape.</p>
-    <p>For example, here is a square with side length 6m:</p>
-    <div class="text-center my-3">
-      <svg width="260" height="260">
-        <rect x="40" y="40" width="180" height="180" fill="#cce5ff" stroke="#333" stroke-width="2"></rect>
-        <text x="130" y="230" text-anchor="middle" fill="#000">6m</text>
-      </svg>
+    <div class="nav-buttons">
+      <a href="index.html" class="btn btn-danger">🏠 Home</a>
+      <a href="area.html" class="btn btn-outline-primary">📐 Area</a>
+      <a href="perimeter.html" class="btn btn-primary">📏 Perimeter</a>
+      <a href="irregular.html" class="btn btn-outline-success">🔺 Irregular Shapes</a>
     </div>
-    <p>Its perimeter is 6 + 6 + 6 + 6 = 24 m.</p>
-    <div id="quiz-container" class="mt-4">
-      <p id="question-text" class="mb-3"></p>
-      <div class="mb-3">
-        <input type="text" id="answer-input" class="form-control d-inline-block w-auto me-2" placeholder="Your answer">
-        <button id="checkBtn" class="btn btn-primary">Check Answer</button>
-        <button id="nextBtn" class="btn btn-primary" style="display:none;">Next Question</button>
+    
+    <div class="card p-4">
+      <h2 class="text-center mb-4">📏 Perimeter Quiz</h2>
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
       </div>
-      <p id="feedback-text"></p>
+      <div class="score-box text-end mb-3">Score: <span id="score">0</span> | Question <span id="question-count">1</span>/10</div>
+      
+      <!-- Teacher's Example -->
+      <div id="teacher-example" class="teacher-example">
+        <h5>👩‍🏫 Teacher's Example</h5>
+        <p><strong>Perimeter</strong> is the distance around the edge of a shape. We calculate it by adding the lengths of all sides.</p>
+        <div class="visual-scale">
+          <div>For squares: <strong>Perimeter = 4 × side</strong></div>
+          <div>For rectangles: <strong>Perimeter = 2 × (width + height)</strong></div>
+          <div>For polygons: <strong>Sum of all sides</strong></div>
+        </div>
+        <div class="teacher-shape-title">Example Shape:</div>
+        <div id="teacher-shape" class="shape-visualization mt-3"></div>
+        <div id="teacher-calculation" class="calculation-steps"></div>
+        <div id="shape-explanation" class="shape-explanation"></div>
+      </div>
+      
+      <!-- Quiz Area -->
+      <div id="quiz-area">
+        <div id="question-box" class="question mb-3"></div>
+        <div class="teacher-shape-title">Your Shape:</div>
+        <div id="student-shape" class="shape-visualization"></div>
+        
+        <div class="unit-options" id="unit-options">
+          <div class="unit-btn" data-unit="cm">cm</div>
+          <div class="unit-btn" data-unit="m">m</div>
+          <div class="unit-btn" data-unit="mm">mm</div>
+          <div class="unit-btn" data-unit="km">km</div>
+        </div>
+        
+        <div class="answer-input-container">
+          <input type="number" id="answer" class="form-control" placeholder="Your answer" />
+          <span class="unit-display" id="unit-display">cm</span>
+        </div>
+        
+        <button class="btn btn-success" onclick="checkAnswer()">Submit</button>
+        <div id="feedback" class="result fw-bold"></div>
+        <div class="mt-3">
+          <button class="btn btn-secondary" onclick="nextQuestion()">Next Question</button>
+        </div>
+      </div>
+      
+      <div id="end-message" class="text-center mt-4 fw-bold" style="display:none;"></div>
     </div>
-    <div id="final-message" class="mt-4" style="display:none;"></div>
   </div>
+
   <script>
-    (function(){
-      const questionText = document.getElementById('question-text');
-      const answerInput = document.getElementById('answer-input');
-      const checkBtn = document.getElementById('checkBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      const feedbackText = document.getElementById('feedback-text');
-      const finalMessage = document.getElementById('final-message');
-      let currentQuestion = 0;
-      let score = 0;
-      let correctAnswer = 0;
-      let currentUnit = "";
-      function randInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+    let questions = [];
+    let score = 0;
+    let currentQuestion = 0;
+    let correctAnswer = 0;
+    let currentUnit = "cm";
+    let selectedUnit = "";
+
+    function randInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateQuestions() {
+      const units = ["cm", "m", "mm", "km"];
+      const shapeTypes = ['square', 'rectangle', 'triangle', 'pentagon', 'hexagon', 'irregular'];
+      
+      // First create teacher example
+      const teacherShapeType = shapeTypes[randInt(0, shapeTypes.length - 1)];
+      const teacherUnit = units[randInt(0, units.length - 1)];
+      let teacherDimensions = [];
+      let teacherQuestion = "";
+      let teacherAnswer = 0;
+      
+      // Then create 10 questions with same shape type but different dimensions
+      for (let i = 0; i < 10; i++) {
+        currentUnit = units[randInt(0, units.length - 1)];
+        const shapeType = i === 0 ? teacherShapeType : shapeTypes[randInt(0, shapeTypes.length - 1)];
+        
+        let questionText, answer, dimensions = [];
+        
+        switch(shapeType) {
+          case 'square':
+            const side = randInt(2, 12);
+            questionText = `Find the perimeter of a square with sides ${side}${currentUnit}.`;
+            answer = 4 * side;
+            dimensions = [side];
+            if (i === 0) {
+              teacherDimensions = [side + 2 > 12 ? side : side + 2];
+              teacherQuestion = `Find the perimeter of a square with sides ${teacherDimensions[0]}${teacherUnit}.`;
+              teacherAnswer = 4 * teacherDimensions[0];
+            }
+            break;
+            
+          case 'rectangle':
+            const width = randInt(2, 12);
+            const height = randInt(2, 12);
+            if (width === height) height++;
+            questionText = `Find the perimeter of a rectangle ${width}${currentUnit} by ${height}${currentUnit}.`;
+            answer = 2 * (width + height);
+            dimensions = [width, height];
+            if (i === 0) {
+              teacherDimensions = [width + 2 > 12 ? width : width + 2, height + 2 > 12 ? height : height + 2];
+              teacherQuestion = `Find the perimeter of a rectangle ${teacherDimensions[0]}${teacherUnit} by ${teacherDimensions[1]}${teacherUnit}.`;
+              teacherAnswer = 2 * (teacherDimensions[0] + teacherDimensions[1]);
+            }
+            break;
+            
+          case 'triangle':
+            const side1 = randInt(3, 8);
+            const side2 = randInt(3, 8);
+            const side3 = randInt(Math.max(side1, side2) - 2, Math.max(side1, side2) + 2);
+            questionText = `Find the perimeter of a triangle with sides ${side1}${currentUnit}, ${side2}${currentUnit}, and ${side3}${currentUnit}.`;
+            answer = side1 + side2 + side3;
+            dimensions = [side1, side2, side3];
+            if (i === 0) {
+              teacherDimensions = [
+                side1 + 1 > 8 ? side1 : side1 + 1,
+                side2 + 1 > 8 ? side2 : side2 + 1,
+                side3 + 1 > 8 ? side3 : side3 + 1
+              ];
+              teacherQuestion = `Find the perimeter of a triangle with sides ${teacherDimensions[0]}${teacherUnit}, ${teacherDimensions[1]}${teacherUnit}, and ${teacherDimensions[2]}${teacherUnit}.`;
+              teacherAnswer = teacherDimensions[0] + teacherDimensions[1] + teacherDimensions[2];
+            }
+            break;
+            
+          case 'pentagon':
+            const pentagonSide = randInt(2, 6);
+            questionText = `Find the perimeter of a regular pentagon with each side ${pentagonSide}${currentUnit}.`;
+            answer = 5 * pentagonSide;
+            dimensions = [pentagonSide];
+            if (i === 0) {
+              teacherDimensions = [pentagonSide + 1 > 6 ? pentagonSide : pentagonSide + 1];
+              teacherQuestion = `Find the perimeter of a regular pentagon with each side ${teacherDimensions[0]}${teacherUnit}.`;
+              teacherAnswer = 5 * teacherDimensions[0];
+            }
+            break;
+            
+          case 'hexagon':
+            const hexagonSide = randInt(2, 5);
+            questionText = `Find the perimeter of a regular hexagon with each side ${hexagonSide}${currentUnit}.`;
+            answer = 6 * hexagonSide;
+            dimensions = [hexagonSide];
+            if (i === 0) {
+              teacherDimensions = [hexagonSide + 1 > 5 ? hexagonSide : hexagonSide + 1];
+              teacherQuestion = `Find the perimeter of a regular hexagon with each side ${teacherDimensions[0]}${teacherUnit}.`;
+              teacherAnswer = 6 * teacherDimensions[0];
+            }
+            break;
+            
+          case 'irregular':
+            const sideA = randInt(3, 7);
+            const sideB = randInt(3, 7);
+            const sideC = randInt(3, 7);
+            const sideD = randInt(3, 7);
+            questionText = `Find the perimeter of an irregular quadrilateral with sides ${sideA}${currentUnit}, ${sideB}${currentUnit}, ${sideC}${currentUnit}, and ${sideD}${currentUnit}.`;
+            answer = sideA + sideB + sideC + sideD;
+            dimensions = [sideA, sideB, sideC, sideD];
+            if (i === 0) {
+              teacherDimensions = [
+                sideA + 1 > 7 ? sideA : sideA + 1,
+                sideB + 1 > 7 ? sideB : sideB + 1,
+                sideC + 1 > 7 ? sideC : sideC + 1,
+                sideD + 1 > 7 ? sideD : sideD + 1
+              ];
+              teacherQuestion = `Find the perimeter of an irregular quadrilateral with sides ${teacherDimensions[0]}${teacherUnit}, ${teacherDimensions[1]}${teacherUnit}, ${teacherDimensions[2]}${teacherUnit}, and ${teacherDimensions[3]}${teacherUnit}.`;
+              teacherAnswer = teacherDimensions[0] + teacherDimensions[1] + teacherDimensions[2] + teacherDimensions[3];
+            }
+            break;
+        }
+        
+        questions.push({
+          question: questionText,
+          answer: answer,
+          unit: currentUnit,
+          dimensions: dimensions,
+          shapeType: shapeType,
+          teacherQuestion: i === 0 ? teacherQuestion : null,
+          teacherAnswer: i === 0 ? teacherAnswer : null,
+          teacherDimensions: i === 0 ? teacherDimensions : null,
+          teacherUnit: i === 0 ? teacherUnit : null,
+          teacherShapeType: i === 0 ? teacherShapeType : null
+        });
       }
-      function generateQuestion() {
-        const isSquare = Math.random() < 0.5;
-        currentUnit = Math.random() < 0.5 ? "cm" : "m";
-        let width, height;
-        if(isSquare) {
-          width = randInt(2, 12);
-          height = width;
-        } else {
-          width = randInt(2, 12);
-          height = randInt(2, 12);
-          if(width === height) {
-            if(height < 12) height++; else height--;
+    }
+
+    function drawShape(containerId, shapeType, dimensions, unit, isTeacherExample = false) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      
+      const shapeContainer = document.createElement('div');
+      shapeContainer.className = 'shape-container';
+      container.appendChild(shapeContainer);
+      
+      // Create the shape
+      const shape = document.createElement('div');
+      shape.className = `${shapeType}-shape`;
+      shapeContainer.appendChild(shape);
+      
+      // For triangle we need to add a border element
+      if (shapeType === 'triangle') {
+        const triangleBorder = document.createElement('div');
+        triangleBorder.className = 'triangle-border';
+        shapeContainer.appendChild(triangleBorder);
+      }
+      
+      // Add side length labels with connecting lines
+      switch(shapeType) {
+        case 'square':
+          addSideLabel(shapeContainer, dimensions[0] + unit, 75, 0, 75, -20, 'horizontal');
+          addSideLabel(shapeContainer, dimensions[0] + unit, 150, 75, 170, 75, 'vertical');
+          addSideLabel(shapeContainer, dimensions[0] + unit, 75, 150, 75, 170, 'horizontal');
+          addSideLabel(shapeContainer, dimensions[0] + unit, 0, 75, -20, 75, 'vertical');
+          break;
+          
+        case 'rectangle':
+          addSideLabel(shapeContainer, dimensions[0] + unit, 90, 0, 90, -20, 'horizontal');
+          addSideLabel(shapeContainer, dimensions[1] + unit, 180, 50, 200, 50, 'vertical');
+          addSideLabel(shapeContainer, dimensions[0] + unit, 90, 100, 90, 120, 'horizontal');
+          addSideLabel(shapeContainer, dimensions[1] + unit, 0, 50, -20, 50, 'vertical');
+          break;
+          
+        case 'triangle':
+          addSideLabel(shapeContainer, dimensions[0] + unit, 37.5, 150, 37.5, 170, 'horizontal');
+          addSideLabel(shapeContainer, dimensions[1] + unit, 112.5, 150, 130, 75, 'angled', -60);
+          addSideLabel(shapeContainer, dimensions[2] + unit, -12.5, 75, 37.5, 150, 'angled', 60);
+          break;
+          
+        case 'pentagon':
+          const pentagonPoints = [
+            {x: 80, y: 0}, {x: 160, y: 60}, {x: 130, y: 160}, 
+            {x: 30, y: 160}, {x: 0, y: 60}
+          ];
+          for (let i = 0; i < 5; i++) {
+            const nextIdx = (i + 1) % 5;
+            const midX = (pentagonPoints[i].x + pentagonPoints[nextIdx].x) / 2;
+            const midY = (pentagonPoints[i].y + pentagonPoints[nextIdx].y) / 2;
+            const angle = Math.atan2(
+              pentagonPoints[nextIdx].y - pentagonPoints[i].y,
+              pentagonPoints[nextIdx].x - pentagonPoints[i].x
+            ) * 180 / Math.PI;
+            
+            const labelX = midX + Math.cos(angle * Math.PI / 180 + Math.PI/2) * 20;
+            const labelY = midY + Math.sin(angle * Math.PI / 180 + Math.PI/2) * 20;
+            
+            addSideLabel(shapeContainer, dimensions[0] + unit, midX, midY, labelX, labelY, 'angled', angle);
           }
-        }
-        if(isSquare) {
-          correctAnswer = 4 * width;
-        } else {
-          correctAnswer = 2 * (width + height);
-        }
-        let question;
-        if(isSquare) {
-          question = "Find the perimeter of a square with sides " + width + currentUnit + ".";
-        } else {
-          question = "Find the perimeter of a rectangle " + width + currentUnit + " by " + height + currentUnit + ".";
-        }
-        questionText.innerHTML = "<strong>Question " + currentQuestion + " of 10:</strong> " + question;
+          break;
+          
+        case 'hexagon':
+          const hexagonPoints = [
+            {x: 40, y: 0}, {x: 120, y: 0}, {x: 160, y: 80}, 
+            {x: 120, y: 160}, {x: 40, y: 160}, {x: 0, y: 80}
+          ];
+          for (let i = 0; i < 6; i++) {
+            const nextIdx = (i + 1) % 6;
+            const midX = (hexagonPoints[i].x + hexagonPoints[nextIdx].x) / 2;
+            const midY = (hexagonPoints[i].y + hexagonPoints[nextIdx].y) / 2;
+            const angle = Math.atan2(
+              hexagonPoints[nextIdx].y - hexagonPoints[i].y,
+              hexagonPoints[nextIdx].x - hexagonPoints[i].x
+            ) * 180 / Math.PI;
+            
+            const labelX = midX + Math.cos(angle * Math.PI / 180 + Math.PI/2) * 20;
+            const labelY = midY + Math.sin(angle * Math.PI / 180 + Math.PI/2) * 20;
+            
+            addSideLabel(shapeContainer, dimensions[0] + unit, midX, midY, labelX, labelY, 'angled', angle);
+          }
+          break;
+          
+        case 'irregular':
+          const irregularPoints = [
+            {x: 0, y: 24}, {x: 64, y: 0}, {x: 160, y: 36}, 
+            {x: 128, y: 120}, {x: 32, y: 96}
+          ];
+          for (let i = 0; i < 4; i++) {
+            const nextIdx = (i + 1) % 4;
+            const midX = (irregularPoints[i].x + irregularPoints[nextIdx].x) / 2;
+            const midY = (irregularPoints[i].y + irregularPoints[nextIdx].y) / 2;
+            const angle = Math.atan2(
+              irregularPoints[nextIdx].y - irregularPoints[i].y,
+              irregularPoints[nextIdx].x - irregularPoints[i].x
+            ) * 180 / Math.PI;
+            
+            const labelX = midX + Math.cos(angle * Math.PI / 180 + Math.PI/2) * 20;
+            const labelY = midY + Math.sin(angle * Math.PI / 180 + Math.PI/2) * 20;
+            
+            addSideLabel(shapeContainer, dimensions[i] + unit, midX, midY, labelX, labelY, 'angled', angle);
+          }
+          break;
       }
-      function showFinalMessage() {
-        const percent = Math.round((score / 10) * 100);
-        let msg = "";
-        if(score === 10) {
-          msg = "Outstanding! Perfect score.";
-        } else if(score >= 8) {
-          msg = "Great job! You really understand this well.";
-        } else if(score >= 5) {
-          msg = "Good effort! Keep practicing to improve even more.";
-        } else {
-          msg = "Don't worry. Keep practicing and you'll get better.";
-        }
-        finalMessage.innerHTML = "<h3>Quiz Complete</h3>"
-          + "<p>You got " + score + " out of 10 correct (" + percent + "%).</p>"
-          + "<p>" + msg + "</p>";
-        finalMessage.style.display = "block";
+      
+      // If this is the teacher example, show the calculation steps
+      if (isTeacherExample) {
+        showCalculationSteps(shapeType, dimensions, unit);
+        showShapeExplanation(shapeType);
       }
-      function nextQuestion() {
-        currentQuestion++;
-        if(currentQuestion > 10) {
-          document.getElementById('quiz-container').style.display = "none";
-          showFinalMessage();
-          return;
+    }
+
+    function addSideLabel(container, text, lineX1, lineY1, labelX, labelY, type, angle = 0) {
+      // Create connecting line
+      if (type !== 'angled') {
+        const line = document.createElement('div');
+        line.className = 'side-line';
+        
+        if (type === 'horizontal') {
+          line.style.width = `${Math.abs(lineX1 - labelX)}px`;
+          line.style.left = `${Math.min(lineX1, labelX)}px`;
+          line.style.top = `${lineY1}px`;
+        } else { // vertical
+          line.style.height = `${Math.abs(lineY1 - labelY)}px`;
+          line.style.left = `${lineX1}px`;
+          line.style.top = `${Math.min(lineY1, labelY)}px`;
+          line.style.transform = 'rotate(90deg)';
         }
-        generateQuestion();
-        answerInput.value = "";
-        answerInput.disabled = false;
-        feedbackText.textContent = "";
-        checkBtn.style.display = "inline-block";
-        nextBtn.style.display = "none";
+        
+        container.appendChild(line);
+      } else {
+        const lineLength = Math.sqrt(Math.pow(labelX - lineX1, 2) + Math.pow(labelY - lineY1, 2));
+        const line = document.createElement('div');
+        line.className = 'side-line';
+        line.style.width = `${lineLength}px`;
+        line.style.left = `${lineX1}px`;
+        line.style.top = `${lineY1}px`;
+        line.style.transform = `rotate(${angle}deg)`;
+        container.appendChild(line);
       }
-      checkBtn.addEventListener('click', function(){
-        const answer = answerInput.value.trim();
-        if(answer === "" || isNaN(answer)) {
-          alert("Please enter a number for your answer.");
-          return;
-        }
-        const userAnswer = parseFloat(answer);
-        if(userAnswer === correctAnswer) {
-          score++;
-          feedbackText.textContent = "Correct! The perimeter is " + correctAnswer + " " + currentUnit + ".";
-          feedbackText.className = "text-success";
-        } else {
-          feedbackText.textContent = "Not quite. The correct answer is " + correctAnswer + " " + currentUnit + ".";
-          feedbackText.className = "text-danger";
-        }
-        answerInput.disabled = true;
-        checkBtn.style.display = "none";
-        nextBtn.style.display = "inline-block";
-        if(currentQuestion === 10) {
-          nextBtn.textContent = "Show Results";
-        }
+      
+      // Create label
+      const label = document.createElement('div');
+      label.className = 'side-label';
+      label.textContent = text;
+      label.style.left = `${labelX}px`;
+      label.style.top = `${labelY}px`;
+      label.style.transform = 'translate(-50%, -50%)';
+      container.appendChild(label);
+    }
+
+    function showCalculationSteps(shapeType, dimensions, unit) {
+      const calculationDiv = document.getElementById("teacher-calculation");
+      let calculationText = "";
+      
+      switch(shapeType) {
+        case 'square':
+          calculationText = `
+            <strong>Calculation Steps:</strong><br>
+            1. Perimeter of square = 4 × side<br>
+            2. Given side = ${dimensions[0]}${unit}<br>
+            3. Perimeter = 4 × ${dimensions[0]} = ${4 * dimensions[0]}${unit}
+          `;
+          break;
+          
+        case 'rectangle':
+          calculationText = `
+            <strong>Calculation Steps:</strong><br>
+            1. Perimeter of rectangle = 2 × (width + height)<br>
+            2. Given width = ${dimensions[0]}${unit}, height = ${dimensions[1]}${unit}<br>
+            3. Perimeter = 2 × (${dimensions[0]} + ${dimensions[1]}) = 2 × ${dimensions[0] + dimensions[1]} = ${2 * (dimensions[0] + dimensions[1])}${unit}
+          `;
+          break;
+          
+        case 'triangle':
+          calculationText = `
+            <strong>Calculation Steps:</strong><br>
+            1. Perimeter of triangle = sum of all sides<br>
+            2. Given sides = ${dimensions[0]}${unit}, ${dimensions[1]}${unit}, ${dimensions[2]}${unit}<br>
+            3. Perimeter = ${dimensions[0]} + ${dimensions[1]} + ${dimensions[2]} = ${dimensions[0] + dimensions[1] + dimensions[2]}${unit}
+          `;
+          break;
+          
+        case 'pentagon':
+          calculationText = `
+            <strong>Calculation Steps:</strong><br>
+            1. Perimeter of regular pentagon = 5 × side<br>
+            2. Given side = ${dimensions[0]}${unit}<br>
+            3. Perimeter = 5 × ${dimensions[0]} = ${5 * dimensions[0]}${unit}
+          `;
+          break;
+          
+        case 'hexagon':
+          calculationText = `
+            <strong>Calculation Steps:</strong><br>
+            1. Perimeter of regular hexagon = 6 × side<br>
+            2. Given side = ${dimensions[0]}${unit}<br>
+            3. Perimeter = 6 × ${dimensions[0]} = ${6 * dimensions[0]}${unit}
+          `;
+          break;
+          
+        case 'irregular':
+          calculationText = `
+            <strong>Calculation Steps:</strong><br>
+            1. Perimeter of irregular shape = sum of all sides<br>
+            2. Given sides = ${dimensions[0]}${unit}, ${dimensions[1]}${unit}, ${dimensions[2]}${unit}, ${dimensions[3]}${unit}<br>
+            3. Perimeter = ${dimensions[0]} + ${dimensions[1]} + ${dimensions[2]} + ${dimensions[3]} = ${dimensions[0] + dimensions[1] + dimensions[2] + dimensions[3]}${unit}
+          `;
+          break;
+      }
+      
+      calculationDiv.innerHTML = calculationText;
+    }
+
+    function showShapeExplanation(shapeType) {
+      const explanationDiv = document.getElementById("shape-explanation");
+      let explanation = "";
+      
+      switch(shapeType) {
+        case 'square':
+          explanation = "A square has 4 equal sides and 4 right angles (90°). All sides are the same length.";
+          break;
+        case 'rectangle':
+          explanation = "A rectangle has 4 sides with opposite sides equal and 4 right angles (90°).";
+          break;
+        case 'triangle':
+          explanation = "A triangle has 3 sides. The sum of its angles is always 180°.";
+          break;
+        case 'pentagon':
+          explanation = "A pentagon is a 5-sided polygon. 'Penta' means 5 in Greek. A regular pentagon has all sides and angles equal.";
+          break;
+        case 'hexagon':
+          explanation = "A hexagon is a 6-sided polygon. 'Hexa' means 6 in Greek. A regular hexagon has all sides and angles equal.";
+          break;
+        case 'irregular':
+          explanation = "An irregular quadrilateral has 4 sides of different lengths and angles that are not all equal.";
+          break;
+      }
+      
+      explanationDiv.textContent = explanation;
+    }
+
+    function showTeacherExample() {
+      const q = questions[currentQuestion];
+      
+      document.getElementById("teacher-example").innerHTML = `
+        <h5>👩‍🏫 Teacher's Example</h5>
+        <p><strong>Perimeter</strong> is the distance around the edge of a shape. We calculate it by adding the lengths of all sides.</p>
+        <div class="visual-scale">For ${q.shapeType}: <strong>${getPerimeterFormula(q.shapeType)}</strong></div>
+        <div class="teacher-shape-title">Example ${q.shapeType}:</div>
+        <div id="teacher-shape" class="shape-visualization mt-3"></div>
+        <div id="teacher-calculation" class="calculation-steps"></div>
+        <div id="shape-explanation" class="shape-explanation"></div>`;
+      
+      drawShape("teacher-shape", q.shapeType, q.dimensions, q.unit, true);
+    }
+
+    function getPerimeterFormula(shapeType) {
+      switch(shapeType) {
+        case 'square': return 'Perimeter = 4 × side';
+        case 'rectangle': return 'Perimeter = 2 × (width + height)';
+        case 'triangle': return 'Perimeter = side1 + side2 + side3';
+        case 'pentagon': return 'Perimeter = 5 × side';
+        case 'hexagon': return 'Perimeter = 6 × side';
+        case 'irregular': return 'Perimeter = sum of all sides';
+        default: return '';
+      }
+    }
+
+    function showQuestion() {
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("answer").value = "";
+      document.getElementById("score").textContent = score;
+      document.getElementById("question-count").textContent = currentQuestion + 1;
+      document.getElementById("progress-bar").style.width = `${(currentQuestion / questions.length) * 100}%`;
+      document.getElementById("unit-display").textContent = currentUnit;
+      
+      // Reset unit selection
+      document.querySelectorAll(".unit-btn").forEach(btn => {
+        btn.classList.remove("selected");
       });
-      nextBtn.addEventListener('click', nextQuestion);
-      nextQuestion();
-    })();
+      selectedUnit = currentUnit;
+      document.querySelector(`.unit-btn[data-unit="${currentUnit}"]`).classList.add("selected");
+      
+      if (currentQuestion < questions.length) {
+        const q = questions[currentQuestion];
+        document.getElementById("question-box").textContent = q.question;
+        correctAnswer = q.answer;
+        currentUnit = q.unit;
+        drawShape("student-shape", q.shapeType, q.dimensions, q.unit);
+        showTeacherExample();
+      } else {
+        endQuiz();
+      }
+    }
+
+    function checkAnswer() {
+      const userAnswer = parseFloat(document.getElementById("answer").value.trim());
+      const feedback = document.getElementById("feedback");
+      
+      if (isNaN(userAnswer)) {
+        feedback.textContent = "Please enter a valid number";
+        feedback.className = "result incorrect";
+        return;
+      }
+      
+      if (Math.abs(userAnswer - correctAnswer) < 0.001) {
+        feedback.textContent = `✅ Correct! The perimeter is ${correctAnswer} ${currentUnit}`;
+        feedback.className = "result correct";
+        score++;
+        document.getElementById("score").textContent = score;
+      } else {
+        feedback.textContent = `❌ Incorrect. The correct answer is ${correctAnswer} ${currentUnit}`;
+        feedback.className = "result incorrect";
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      showQuestion();
+    }
+
+    function endQuiz() {
+      document.getElementById("quiz-area").style.display = "none";
+      document.getElementById("teacher-example").style.display = "none";
+      
+      const percentage = Math.round((score / questions.length) * 100);
+      let message = `<h3>Quiz Complete!</h3><p>You got ${score} out of ${questions.length} correct (${percentage}%).</p>`;
+      
+      if (percentage === 100) {
+        message += '<p>🏆 Perfect score!</p>';
+      } else if (percentage >= 80) {
+        message += '<p>🌟 Excellent!</p>';
+      } else {
+        message += '<p>💡 Keep practicing!</p>';
+      }
+      
+      document.getElementById("end-message").innerHTML = message;
+      document.getElementById("end-message").style.display = "block";
+    }
+
+    // Initialize the quiz
+    document.addEventListener("DOMContentLoaded", function() {
+      generateQuestions();
+      
+      // Set up unit selection
+      document.querySelectorAll(".unit-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          document.querySelectorAll(".unit-btn").forEach(b => b.classList.remove("selected"));
+          this.classList.add("selected");
+          selectedUnit = this.getAttribute("data-unit");
+          document.getElementById("unit-display").textContent = selectedUnit;
+        });
+      });
+      
+      showQuestion();
+    });
   </script>
 </body>
 </html>
