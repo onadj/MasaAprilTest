@@ -1,156 +1,459 @@
-<!-- File: area.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>What is Area? - Quiz</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📐 Area Quiz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
-    #feedback-text { font-weight: bold; }
+    body {
+      background-color: #f0f9ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+      border: none;
+      background-color: #ffffff;
+    }
+    .teacher-example {
+      background-color: #e6f2ff;
+      border-left: 4px solid #007bff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+    #teacher-shape {
+    height: 220px; /* Increase height of teacher example shape */
+    margin-top: 20px;
+}
+    .teacher-example:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .teacher-example .visual-scale {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      background: #f9f9f9;
+      padding: 10px;
+      border: 2px dashed #007bff;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .shape-visualization {
+      width: 100%;
+      height: 200px;
+      margin: 15px 0;
+      position: relative;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .shape {
+    position: absolute;
+    background-color: #cce5ff;
+    border: 3px solid #007bff; /* Thicker border around the shape */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #333;
+}
+    .shape-label {
+      position: absolute;
+      font-weight: bold;
+      color: #333;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 2px 5px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .nav-buttons {
+      margin-bottom: 20px;
+    }
+    .nav-buttons .btn {
+      margin-right: 10px;
+    }
+    .question {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .result {
+      margin-top: 10px;
+      font-size: 1.1rem;
+    }
+    .correct { 
+      color: #28a745;
+      animation: bounce 0.5s;
+    }
+    .incorrect { 
+      color: #dc3545;
+    }
+    .unit-options {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+      flex-wrap: wrap;
+    }
+    .unit-btn {
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      padding: 5px 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+    .unit-btn:hover {
+      background-color: #e9ecef;
+    }
+    .unit-btn.selected {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .progress-container {
+      height: 10px;
+      background-color: #e9ecef;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background-color: #007bff;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    .answer-input-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .answer-input-container input {
+      flex: 1;
+      max-width: 150px;
+    }
+    .unit-display {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #495057;
+    }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-light bg-light">
-    <div class="container">
-      <a class="btn btn-secondary" href="index.html">Home</a>
-      
-      <a class="btn btn-primary" href="area.html">Area</a>
-      <a class="btn btn-secondary" href="perimeter.html">Perimeter</a>
-      <a class="btn btn-secondary" href="irregular.html">Irregular Shapes</a>
-    </div>
-  </nav>
   <div class="container mt-4">
-    <h1>What is area? How to find it?</h1>
-    <p>Area is the amount of space inside a shape. It is measured in square units (like square centimeters, cm<sup>2</sup>).</p>
-    <p>To find the area of a rectangle, multiply its width by its height.</p>
-    <p>For example, here is a rectangle 5cm by 4cm:</p>
-    <div class="text-center my-3">
-      <svg width="260" height="220">
-        <rect x="40" y="20" width="200" height="160" fill="#cce5ff" stroke="#333" stroke-width="2"></rect>
-        <text x="10" y="100" alignment-baseline="middle" fill="#000">4cm</text>
-        <text x="140" y="180" text-anchor="middle" fill="#000">5cm</text>
-      </svg>
+    <div class="nav-buttons">
+      <a href="index.html" class="btn btn-danger">🏠 Home</a>
+      <a href="area.html" class="btn btn-primary">📐 Area</a>
+      <a href="perimeter.html" class="btn btn-outline-warning">📏 Perimeter</a>
+      <a href="irregular.html" class="btn btn-outline-success">🔺 Irregular Shapes</a>
     </div>
-    <p>It has an area of 5 × 4 = 20 cm<sup>2</sup>.</p>
-    <div id="quiz-container" class="mt-4">
-      <p id="question-text" class="mb-3"></p>
-      <div class="mb-3">
-        <input type="text" id="answer-input" class="form-control d-inline-block w-auto me-2" placeholder="Your answer">
-        <button id="checkBtn" class="btn btn-primary">Check Answer</button>
-        <button id="nextBtn" class="btn btn-primary" style="display:none;">Next Question</button>
+    <div class="card p-4">
+      <h2 class="text-center mb-4">📐 Area Quiz</h2>
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
       </div>
-      <p id="feedback-text"></p>
+      <div class="score-box text-end mb-3">Score: <span id="score">0</span> | Question <span id="question-count">1</span>/10</div>
+      
+      <div id="teacher-example" class="teacher-example">
+        <h5>👩‍🏫 Teacher's Example</h5>
+        <p><strong>Area</strong> is the amount of space inside a shape. We measure it in square units.</p>
+        <div class="visual-scale">
+          <div>For rectangles: <strong>Area = width × height</strong></div>
+        </div>
+        <div id="teacher-shape" class="shape-visualization mt-3"></div>
+      </div>
+      
+      <div id="quiz-area">
+        <div id="question-box" class="question mb-3"></div>
+        
+        <div id="shape-container" class="shape-visualization"></div>
+        
+        <div class="answer-input-container">
+          <input type="number" id="answer" class="form-control" placeholder="Your answer" />
+          <span id="selected-unit-display" class="unit-display"></span>
+        </div>
+        
+        <div class="unit-options" id="unit-options">
+          <div class="unit-btn" data-unit="cm²">cm²</div>
+          <div class="unit-btn" data-unit="m²">m²</div>
+          <div class="unit-btn" data-unit="mm²">mm²</div>
+          <div class="unit-btn" data-unit="km²">km²</div>
+        </div>
+        
+        <button class="btn btn-success" onclick="checkAnswer()">Submit</button>
+        <div id="feedback" class="result fw-bold"></div>
+        <div class="mt-3">
+          <button class="btn btn-secondary" onclick="nextQuestion()">Next Question</button>
+        </div>
+      </div>
+      <div id="end-message" class="text-center mt-4 fw-bold" style="display:none;"></div>
     </div>
-    <div id="final-message" class="mt-4" style="display:none;"></div>
   </div>
+
   <script>
-    (function(){
-      const questionText = document.getElementById('question-text');
-      const answerInput = document.getElementById('answer-input');
-      const checkBtn = document.getElementById('checkBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      const feedbackText = document.getElementById('feedback-text');
-      const finalMessage = document.getElementById('final-message');
-      let currentQuestion = 0;
-      let score = 0;
-      let correctAnswer = 0;
-      let currentUnit = "";
-      // Helper: generate random integer between min and max inclusive
-      function randInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
-      function generateQuestion() {
-        // Decide square vs rectangle
+    let questions = [];
+    let score = 0;
+    let currentQuestion = 0;
+    let selectedUnit = "";
+    let correctAnswer = 0;
+    let currentUnit = "";
+
+    function generateQuestions() {
+      const units = ["cm", "m", "mm", "km"];
+      for (let i = 0; i < 10; i++) {
         const isSquare = Math.random() < 0.5;
-        // Choose unit (cm or m)
-        currentUnit = Math.random() < 0.5 ? "cm" : "m";
+        const unit = units[Math.floor(Math.random() * units.length)];
         let width, height;
-        if(isSquare) {
-          width = randInt(2, 12);
+        
+        if (isSquare) {
+          width = Math.floor(Math.random() * 10) + 1;
           height = width;
         } else {
-          width = randInt(2, 12);
-          height = randInt(2, 12);
-          // avoid making it a square (for variety)
-          if(width === height) {
-            if(height < 12) height++; else height--;
-          }
+          width = Math.floor(Math.random() * 10) + 1;
+          height = Math.floor(Math.random() * 10) + 1;
+          // Ensure it's not a square
+          if (width === height) height += 1;
         }
-        correctAnswer = width * height;
-        // Formulate question text
-        let question;
-        if(isSquare) {
-          question = "Find the area of a square with sides " + width + currentUnit + ".";
-        } else {
-          question = "Find the area of a rectangle " + width + currentUnit + " by " + height + currentUnit + ".";
-        }
-        questionText.innerHTML = "<strong>Question " + currentQuestion + " of 10:</strong> " + question;
+        
+        const answer = width * height;
+        const questionText = isSquare 
+          ? `Find the area of a square with sides ${width}${unit}.` 
+          : `Find the area of a rectangle ${width}${unit} by ${height}${unit}.`;
+        
+        questions.push({
+          question: questionText,
+          answer: answer,
+          unit: unit,
+          width: width,
+          height: height,
+          isSquare: isSquare
+        });
       }
-      function showFinalMessage() {
-        const percent = Math.round((score / 10) * 100);
-        let msg = "";
-        if(score === 10) {
-          msg = "Outstanding! Perfect score.";
-        } else if(score >= 8) {
-          msg = "Great job! You really understand this well.";
-        } else if(score >= 5) {
-          msg = "Good effort! Keep practicing to improve even more.";
-        } else {
-          msg = "Don't worry. Keep practicing and you'll get better.";
-        }
-        finalMessage.innerHTML = "<h3>Quiz Complete</h3>"
-          + "<p>You got " + score + " out of 10 correct (" + percent + "%).</p>"
-          + "<p>" + msg + "</p>";
-        finalMessage.style.display = "block";
+    }
+
+    function drawShape(containerId, width, height, isSquare, unit) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      
+      // Calculate size for visualization
+      const maxSize = 180;
+      const scale = maxSize / Math.max(width, height);
+      const displayWidth = width * scale;
+      const displayHeight = height * scale;
+      
+      const shape = document.createElement("div");
+      shape.className = "shape";
+      shape.style.width = `${displayWidth}px`;
+      shape.style.height = `${displayHeight}px`;
+      shape.style.left = `${(container.offsetWidth - displayWidth) / 2}px`;
+      shape.style.top = `${(container.offsetHeight - displayHeight) / 2}px`;
+      
+      // Add labels for all four sides with proper unit display
+      // Bottom label (width)
+      const bottomLabel = document.createElement("div");
+      bottomLabel.className = "shape-label";
+      bottomLabel.textContent = `${width}${unit}`;
+      bottomLabel.style.left = `${(container.offsetWidth / 2) - 25}px`;
+      bottomLabel.style.top = `${(container.offsetHeight - displayHeight) / 2 + displayHeight + 5}px`;
+      bottomLabel.style.width = "50px";
+      bottomLabel.style.textAlign = "center";
+      
+      // Top label (width)
+      const topLabel = document.createElement("div");
+      topLabel.className = "shape-label";
+      topLabel.textContent = `${width}${unit}`;
+      topLabel.style.left = `${(container.offsetWidth / 2) - 25}px`;
+      topLabel.style.top = `${(container.offsetHeight - displayHeight) / 2 - 25}px`;
+      topLabel.style.width = "50px";
+      topLabel.style.textAlign = "center";
+      
+      // Left label (height)
+      const leftLabel = document.createElement("div");
+      leftLabel.className = "shape-label";
+      leftLabel.textContent = `${height}${unit}`;
+      leftLabel.style.left = `${(container.offsetWidth - displayWidth) / 2 - 40}px`;
+      leftLabel.style.top = `${(container.offsetHeight / 2) - 10}px`;
+      leftLabel.style.transform = "rotate(-90deg)";
+      
+      // Right label (height)
+      const rightLabel = document.createElement("div");
+      rightLabel.className = "shape-label";
+      rightLabel.textContent = `${height}${unit}`;
+      rightLabel.style.left = `${(container.offsetWidth - displayWidth) / 2 + displayWidth + 10}px`;
+      rightLabel.style.top = `${(container.offsetHeight / 2) - 10}px`;
+      rightLabel.style.transform = "rotate(-90deg)";
+      
+      container.appendChild(shape);
+      container.appendChild(bottomLabel);
+      container.appendChild(topLabel);
+      container.appendChild(leftLabel);
+      container.appendChild(rightLabel);
+      
+      // Add area text inside shape if it fits
+      if (displayWidth > 80 && displayHeight > 40) {
+        const areaText = document.createElement("div");
+        areaText.textContent = `${width} × ${height} = ${width * height}${unit}²`;
+        areaText.style.textAlign = "center";
+        areaText.style.padding = "5px";
+        shape.appendChild(areaText);
       }
-      function nextQuestion() {
-        currentQuestion++;
-        if(currentQuestion > 10) {
-          // Quiz finished
-          document.getElementById('quiz-container').style.display = "none";
-          showFinalMessage();
-          return;
+    }
+
+    function showTeacherExample() {
+      const examples = [
+        { 
+          text: "A square with 3cm sides has area: 3cm × 3cm = 9cm²",
+          width: 3,
+          height: 3,
+          unit: "cm",
+          isSquare: true
+        },
+        { 
+          text: "A rectangle 4m by 6m has area: 4m × 6m = 24m²",
+          width: 4,
+          height: 6,
+          unit: "m",
+          isSquare: false
+        },
+        { 
+          text: "Area is always in square units. 5mm × 2mm = 10mm²",
+          width: 5,
+          height: 2,
+          unit: "mm",
+          isSquare: false
+        },
+        { 
+          text: "A large square plot 2km on each side: 2km × 2km = 4km²",
+          width: 2,
+          height: 2,
+          unit: "km",
+          isSquare: true
         }
-        // Prepare next question
-        generateQuestion();
-        // Reset input and feedback
-        answerInput.value = "";
-        answerInput.disabled = false;
-        feedbackText.textContent = "";
-        checkBtn.style.display = "inline-block";
-        nextBtn.style.display = "none";
-      }
-      checkBtn.addEventListener('click', function(){
-        const answer = answerInput.value.trim();
-        // validate answer
-        if(answer === "" || isNaN(answer)) {
-          alert("Please enter a number for your answer.");
-          return;
-        }
-        const userAnswer = parseFloat(answer);
-        // check correctness
-        if(userAnswer === correctAnswer) {
-          score++;
-          feedbackText.textContent = "Correct! The area is " + correctAnswer + " " + currentUnit + "².";
-          feedbackText.className = "text-success";
-        } else {
-          feedbackText.textContent = "Not quite. The correct answer is " + correctAnswer + " " + currentUnit + "².";
-          feedbackText.className = "text-danger";
-        }
-        // disable input and show next
-        answerInput.disabled = true;
-        checkBtn.style.display = "none";
-        nextBtn.style.display = "inline-block";
-        // if last question, change next button text to "Show Results"
-        if(currentQuestion === 10) {
-          nextBtn.textContent = "Show Results";
-        }
+      ];
+      
+      const example = examples[Math.floor(Math.random() * examples.length)];
+      document.getElementById("teacher-example").innerHTML = `
+        <h5>👩‍🏫 Teacher's Example</h5>
+        <p><strong>Example:</strong> ${example.text}</p>
+        <div class="visual-scale">${example.isSquare ? "Square" : "Rectangle"} → Area = ${example.width}${example.unit} × ${example.height}${example.unit} = ${example.width * example.height}${example.unit}²</div>
+        <div id="teacher-shape" class="shape-visualization mt-3"></div>`;
+      
+      drawShape("teacher-shape", example.width, example.height, example.isSquare, example.unit);
+    }
+
+    function showQuestion() {
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("answer").value = "";
+      document.getElementById("score").textContent = score;
+      document.getElementById("question-count").textContent = currentQuestion + 1;
+      document.getElementById("progress-bar").style.width = `${(currentQuestion / questions.length) * 100}%`;
+      document.getElementById("selected-unit-display").textContent = "";
+      
+      // Reset unit selection
+      document.querySelectorAll(".unit-btn").forEach(btn => {
+        btn.classList.remove("selected");
       });
-      nextBtn.addEventListener('click', nextQuestion);
-      // Start the first question
-      nextQuestion();
-    })();
+      selectedUnit = "";
+
+      if (currentQuestion < questions.length) {
+        const q = questions[currentQuestion];
+        document.getElementById("question-box").textContent = q.question;
+        correctAnswer = q.answer;
+        currentUnit = q.unit;
+        drawShape("shape-container", q.width, q.height, q.isSquare, q.unit);
+        showTeacherExample();
+      } else {
+        endQuiz();
+      }
+    }
+
+    function checkAnswer() {
+      const userAnswer = parseFloat(document.getElementById("answer").value.trim());
+      const feedback = document.getElementById("feedback");
+      
+      if (isNaN(userAnswer)) {
+        feedback.textContent = "Please enter a valid number";
+        feedback.className = "result incorrect";
+        return;
+      }
+      
+      if (!selectedUnit) {
+        feedback.textContent = "Please select a unit";
+        feedback.className = "result incorrect";
+        return;
+      }
+      
+      const expectedUnit = currentUnit + "²";
+      if (selectedUnit !== expectedUnit) {
+        feedback.textContent = `❌ Incorrect unit. The correct unit is ${expectedUnit}`;
+        feedback.className = "result incorrect";
+        return;
+      }
+      
+      if (Math.abs(userAnswer - correctAnswer) < 0.001) {
+        feedback.textContent = `✅ Correct! The area is ${correctAnswer}${expectedUnit}`;
+        feedback.className = "result correct";
+        score++;
+        document.getElementById("score").textContent = score;
+      } else {
+        feedback.textContent = `❌ Incorrect. The correct answer is ${correctAnswer}${expectedUnit}`;
+        feedback.className = "result incorrect";
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      showQuestion();
+    }
+
+    function endQuiz() {
+      document.getElementById("quiz-area").style.display = "none";
+      document.getElementById("teacher-example").style.display = "none";
+      
+      const percentage = Math.round((score / questions.length) * 100);
+      let message = `<h3>Quiz Complete!</h3><p>You got ${score} out of ${questions.length} correct (${percentage}%).</p>`;
+      
+      if (percentage === 100) {
+        message += '<p>🏆 Area Master! Perfect score!</p>';
+      } else if (percentage >= 80) {
+        message += '<p>🌟 Excellent! You understand area really well!</p>';
+      } else if (percentage >= 60) {
+        message += '<p>👍 Good job! Keep practicing to improve!</p>';
+      } else {
+        message += '<p>💡 Keep practicing! You\'ll get better with more practice!</p>';
+      }
+      
+      document.getElementById("end-message").innerHTML = message;
+      document.getElementById("end-message").style.display = "block";
+      document.getElementById("progress-bar").style.width = "100%";
+    }
+
+    // Initialize the quiz
+    document.addEventListener("DOMContentLoaded", function() {
+      generateQuestions();
+      
+      // Set up unit selection
+      document.querySelectorAll(".unit-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          document.querySelectorAll(".unit-btn").forEach(b => b.classList.remove("selected"));
+          this.classList.add("selected");
+          selectedUnit = this.getAttribute("data-unit");
+          document.getElementById("selected-unit-display").textContent = selectedUnit;
+        });
+      });
+      
+      showQuestion();
+    });
   </script>
 </body>
 </html>
