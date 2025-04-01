@@ -25,9 +25,9 @@
       transition: all 0.3s ease;
     }
     #teacher-shape {
-    height: 220px; /* Increase height of teacher example shape */
-    margin-top: 20px;
-}
+      height: 250px;
+      margin-top: 20px;
+    }
     .teacher-example:hover {
       transform: translateY(-3px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -41,36 +41,50 @@
       padding: 10px;
       border: 2px dashed #007bff;
       border-radius: 10px;
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: bold;
     }
     .shape-visualization {
       width: 100%;
-      height: 200px;
+      min-height: 250px;
       margin: 15px 0;
       position: relative;
       background-color: #f8f9fa;
       border-radius: 10px;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .shape {
-    position: absolute;
-    background-color: #cce5ff;
-    border: 3px solid #007bff; /* Thicker border around the shape */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: #333;
-}
+      position: absolute;
+      background-color: #cce5ff;
+      border: 3px solid #007bff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: #333;
+    }
     .shape-label {
       position: absolute;
       font-weight: bold;
       color: #333;
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 2px 5px;
-      border-radius: 3px;
+      background-color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 10;
+      font-size: 0.9rem;
       white-space: nowrap;
+    }
+    .shape-area-text {
+      position: absolute;
+      text-align: center;
+      background-color: rgba(255,255,255,0.9);
+      padding: 5px;
+      border-radius: 4px;
+      font-size: 0.9rem;
     }
     .nav-buttons {
       margin-bottom: 20px;
@@ -221,14 +235,13 @@
         } else {
           width = Math.floor(Math.random() * 10) + 1;
           height = Math.floor(Math.random() * 10) + 1;
-          // Ensure it's not a square
           if (width === height) height += 1;
         }
         
         const answer = width * height;
         const questionText = isSquare 
-          ? `Find the area of a square with sides ${width}${unit}.` 
-          : `Find the area of a rectangle ${width}${unit} by ${height}${unit}.`;
+          ? `Find the area of a square with sides ${width}${unit}. (Answer in ${unit}²)` 
+          : `Find the area of a rectangle ${width}${unit} by ${height}${unit}. (Answer in ${unit}²)`;
         
         questions.push({
           question: questionText,
@@ -245,12 +258,15 @@
       const container = document.getElementById(containerId);
       container.innerHTML = '';
       
-      // Calculate size for visualization
-      const maxSize = 180;
+      // Calculate size for visualization (with padding)
+      const containerWidth = container.offsetWidth - 40;
+      const containerHeight = container.offsetHeight - 40;
+      const maxSize = Math.min(containerWidth, containerHeight, 250);
       const scale = maxSize / Math.max(width, height);
       const displayWidth = width * scale;
       const displayHeight = height * scale;
       
+      // Create the shape
       const shape = document.createElement("div");
       shape.className = "shape";
       shape.style.width = `${displayWidth}px`;
@@ -258,55 +274,67 @@
       shape.style.left = `${(container.offsetWidth - displayWidth) / 2}px`;
       shape.style.top = `${(container.offsetHeight - displayHeight) / 2}px`;
       
-      // Add labels for all four sides with proper unit display
-      // Bottom label (width)
-      const bottomLabel = document.createElement("div");
-      bottomLabel.className = "shape-label";
-      bottomLabel.textContent = `${width}${unit}`;
-      bottomLabel.style.left = `${(container.offsetWidth / 2) - 25}px`;
-      bottomLabel.style.top = `${(container.offsetHeight - displayHeight) / 2 + displayHeight + 5}px`;
-      bottomLabel.style.width = "50px";
-      bottomLabel.style.textAlign = "center";
+      // Create dimension labels
+      createLabel(container, {
+        text: `${width}${unit}`,
+        position: 'bottom',
+        x: (container.offsetWidth / 2),
+        y: (container.offsetHeight + displayHeight) / 2 + 10
+      });
       
-      // Top label (width)
-      const topLabel = document.createElement("div");
-      topLabel.className = "shape-label";
-      topLabel.textContent = `${width}${unit}`;
-      topLabel.style.left = `${(container.offsetWidth / 2) - 25}px`;
-      topLabel.style.top = `${(container.offsetHeight - displayHeight) / 2 - 25}px`;
-      topLabel.style.width = "50px";
-      topLabel.style.textAlign = "center";
+      createLabel(container, {
+        text: `${width}${unit}`,
+        position: 'top',
+        x: (container.offsetWidth / 2),
+        y: (container.offsetHeight - displayHeight) / 2 - 20
+      });
       
-      // Left label (height)
-      const leftLabel = document.createElement("div");
-      leftLabel.className = "shape-label";
-      leftLabel.textContent = `${height}${unit}`;
-      leftLabel.style.left = `${(container.offsetWidth - displayWidth) / 2 - 40}px`;
-      leftLabel.style.top = `${(container.offsetHeight / 2) - 10}px`;
-      leftLabel.style.transform = "rotate(-90deg)";
+      createLabel(container, {
+        text: `${height}${unit}`,
+        position: 'left',
+        x: (container.offsetWidth - displayWidth) / 2 - 30,
+        y: container.offsetHeight / 2,
+        rotate: true
+      });
       
-      // Right label (height)
-      const rightLabel = document.createElement("div");
-      rightLabel.className = "shape-label";
-      rightLabel.textContent = `${height}${unit}`;
-      rightLabel.style.left = `${(container.offsetWidth - displayWidth) / 2 + displayWidth + 10}px`;
-      rightLabel.style.top = `${(container.offsetHeight / 2) - 10}px`;
-      rightLabel.style.transform = "rotate(-90deg)";
-      
-      container.appendChild(shape);
-      container.appendChild(bottomLabel);
-      container.appendChild(topLabel);
-      container.appendChild(leftLabel);
-      container.appendChild(rightLabel);
+      createLabel(container, {
+        text: `${height}${unit}`,
+        position: 'right',
+        x: (container.offsetWidth + displayWidth) / 2 + 20,
+        y: container.offsetHeight / 2,
+        rotate: true
+      });
       
       // Add area text inside shape if it fits
       if (displayWidth > 80 && displayHeight > 40) {
         const areaText = document.createElement("div");
+        areaText.className = "shape-area-text";
         areaText.textContent = `${width} × ${height} = ${width * height}${unit}²`;
-        areaText.style.textAlign = "center";
-        areaText.style.padding = "5px";
-        shape.appendChild(areaText);
+        areaText.style.top = `${(container.offsetHeight - 30) / 2}px`;
+        areaText.style.left = `${(container.offsetWidth - 100) / 2}px`;
+        areaText.style.width = "100px";
+        container.appendChild(areaText);
       }
+      
+      container.appendChild(shape);
+    }
+
+    function createLabel(container, options) {
+      const label = document.createElement("div");
+      label.className = "shape-label";
+      label.textContent = options.text;
+      label.style.left = `${options.x}px`;
+      label.style.top = `${options.y}px`;
+      
+      if (options.position === 'top' || options.position === 'bottom') {
+        label.style.transform = 'translateX(-50%)';
+      }
+      
+      if (options.rotate) {
+        label.style.transform = 'rotate(-90deg)';
+      }
+      
+      container.appendChild(label);
     }
 
     function showTeacherExample() {
